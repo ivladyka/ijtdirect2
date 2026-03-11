@@ -34,8 +34,10 @@
 
 <body class="page-body type-{{page_type}}">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P44NNZ4"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P44NNZ4"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
     <script id="BC_GraphQL_Token" type="application/json">"{{settings.storefront_api.token}}"</script>
 
@@ -51,17 +53,12 @@
     {{> components/common/footer }}
 
     <script async src="https://ecommplugins-trustboxsettings.trustpilot.com/stores/n8jwhmma29.js?settings=1578554184792"></script>
-
     <script async>
         window.lazySizesConfig = window.lazySizesConfig || {};
         window.lazySizesConfig.loadMode = 1;
     </script>
-
     <script src="{{cdn 'assets/js/theme/custom/klevu.js'}}"></script>
-
     {{#block "customfootersripts"}} {{/block}}
-
-
     <script async>window.__webpack_public_path__ = "{{cdn 'assets/dist/'}}";</script>
     <script src="{{cdn 'assets/dist/theme-bundle.main.js'}}"></script>
     <script async>
@@ -70,10 +67,8 @@
 
     <script async src="{{cdn 'assets/js/theme/custom/customscripts.js'}}"></script>
     {{{footer.scripts}}}
-    <script async src="https://bc.hexgator.com/social-login/script.js?store_hash=n8jwhmma29"></script>
-
-
-    </script>
+    <script async src="https://bc.hexgator.com/social-login/script.js?store_hash=n8jwhmma29"></script>  
+    <script async src="{{cdn 'assets/js/theme/ck-custom/pace.min.js'}}"></script>
 </body>
 
 </html>

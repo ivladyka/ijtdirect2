@@ -12,35 +12,23 @@ cart: true
 ---
 {{#partial "page"}}
 
-<div class="product-page-content cartridge-product main-section-block d-flex align-start">
+<div class="cartridge-product main-section-block d-flex align-start">
     <div class="left-block">
         {{> components/cs-custom/left-block-no-nav }}
     </div>
     <div class="middle-block" itemscope itemtype="https://schema.org/Product">
         <div class="product-header">
-            <h1 class="product-header__title" itemprop="name">{{product.title}}<span id="productViewTitleFor"></span></h1>
+            <h1 class="product-header__title productView-title" itemprop="name">{{product.title}}<span id="productViewTitleFor"></span></h1>
         </div>
         <!-- breadcrumbs -->
         {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-
+       
         {{#each product.shipping_messages}}
         {{> components/common/alert-info message}}
         {{/each}}
-        <div class="product-subheader">
-            <h4 class="product-subheader__title" itemprop="name">{{product.title}}<span id="productViewTitleFor"></span></h4>
-            {{#each product.custom_fields}}
-            {{#if name '==' 'related-printer'}}
-            {{{value}}}
-            {{/if}}
-            {{/each}}
-        </div>
         <div class="product-inner-section">
-            {{> components/products/product-view schema=true pageYield=true}}
+            {{> components/products/product-view-cartridge schema=true pageYield=true}}
             {{> components/products/tabs}}
-            <div class="productView-compatible" id="tab-compatible">
-                <h4>Printers that use {{product.brand.name}} {{product.mpn}} cartridges:</h4>
-                <ul id="compatible-list" class="productView-compatible-list"></ul>
-            </div>
             <div id="product-spec"></div>
             {{{region name="product_below_content"}}}
         </div>

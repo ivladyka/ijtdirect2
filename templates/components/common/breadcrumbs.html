@@ -1,19 +1,3 @@
-<!--<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
-    {{#unless theme_settings.hide_breadcrumbs }}
-    {{#each breadcrumbs}}
-    <li class="breadcrumb {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-        {{#or @last (if url "==" null)}}
-        <meta itemprop="item" content="{{url}}">
-        <span class="breadcrumb-label" itemprop="name">{{name}}</span>
-        {{else}}
-        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name">{{name}}</span></a>
-        {{/or}}
-        <meta itemprop="position" content="{{add @index 1}}" />
-    </li>
-    {{/each}}
-    {{/unless}}
-    </ul>
--->
 {{assignVar 'breadcrumbcount' 0}}
 {{assignVar 'breadcrumbcountcurent' 1}}
 {{assignVar 'breadcrumbcountpenultimatecurent' 1}}
@@ -47,6 +31,17 @@
     </li>
     {{else if (getVar 'breadcrumbcountcurent') '==' 2}}
     <li class="breadcrumb  {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span style="display:none">{{incrementVar 'breadcrumbcountcurent'}}</span>
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label breadcrumb-small" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{else if (getVar 'breadcrumbcountcurent') '==' 3}}
+    <li class="breadcrumb  {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" style="display:none !important;">
         <span style="display:none">{{incrementVar 'breadcrumbcountcurent'}}</span>
         {{#or @last (if url "==" null)}}
         <meta itemprop="item" content="{{url}}">

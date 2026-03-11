@@ -1,4 +1,4 @@
-<article class="card
+﻿<article class="card
     {{#if alternate}} card--alternate{{/if}}"
          data-test="card-{{id}}"
          data-event-type="{{event}}"
@@ -24,28 +24,7 @@
     {{else}}
         {{lang 'common.login_for_pricing'}}
     {{/or}}">
-    <div class="card-figcaption-body">
-        {{#if show_compare}}
-        <label class="button button--small card-figcaption-button" for="compare-{{id}}">
-            {{lang 'products.compare'}} <input type="checkbox" name="products[]" value="{{id}}" id="compare-{{id}}" data-compare-id="{{id}}">
-        </label>
-        {{/if}}
-        {{#if show_cart_action}}
-        {{#if has_options}}
-        <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{lang 'products.choose_options'}}</a>
-        {{/if}}
-        {{#if pre_order}}
-        <a href="{{pre_order_add_to_cart_url}}" data-event-type="product-click" class="button button--small card-figcaption-button">{{lang 'products.pre_order'}}</a>
-        {{/if}}
-        {{#if add_to_cart_url }}
-        <a href="{{add_to_cart_url}}" data-event-type="product-click" data-button-type="add-cart" class="button button--small card-figcaption-button">{{lang 'products.add_to_cart'}}</a>
-     
-        {{/if}}
-        {{#if out_of_stock_message }}
-        <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{out_of_stock_message}}</a>
-        {{/if}}
-        {{/if}}
-    </div>
+
     <figure class="card-figure">
         {{#if stock_level '===' 0}}
         {{#if theme_settings.pdp_sold_out_label '===' ''}}
@@ -54,13 +33,13 @@
         {{> components/products/product-badge badge-type='sold-out' badge_view=theme_settings.product_sold_out_badges badge_label=theme_settings.pdp_sold_out_label}}
         {{/if}}
         {{else}}
-            {{#or price.sale_price_with_tax.value price.sale_price_without_tax.value}}
-                {{#if theme_settings.pdp_sale_badge_label '===' ''}}
-                    {{> components/products/product-badge badge-type='sale' badge_view=theme_settings.product_sale_badges  badge_label=(lang "page_builder.pdp_sale_badge_label")}}
-                {{else}}
-                    {{> components/products/product-badge badge-type='sale' badge_view=theme_settings.product_sale_badges badge_label=theme_settings.pdp_sale_badge_label}}
-                {{/if}}
-            {{/or}}
+        {{#or price.sale_price_with_tax.value price.sale_price_without_tax.value}}
+        {{#if theme_settings.pdp_sale_badge_label '===' ''}}
+        {{> components/products/product-badge badge-type='sale' badge_view=theme_settings.product_sale_badges  badge_label=(lang "page_builder.pdp_sale_badge_label")}}
+        {{else}}
+        {{> components/products/product-badge badge-type='sale' badge_view=theme_settings.product_sale_badges badge_label=theme_settings.pdp_sale_badge_label}}
+        {{/if}}
+        {{/or}}
         {{/if}}
         <a href="{{url}}"
            class="card-figure__link"
@@ -82,7 +61,47 @@
                 {{name}}
             </a>
         </h3>
+        {{#if custom_fields}}
+        {{#each custom_fields}}
+        {{#if (occurrences value "Compatible with") '>=' 1}}
+        <span class="cart-compatible-with">{{{value}}}</span>
+        {{/if}}
 
+        {{/each}}
+        {{/if}}
+        {{#if custom_fields}}
+        <div class="cart-related-params">
+            {{#each custom_fields}}
+            {{#if name '==' 'Colour'}}
+            <span class="cart-related-param">{{{value}}}</span>
+            {{/if}}
+            {{#if (occurrences value "Compatible with") '>=' 1}}
+            <span class="cart-related-param">Compatible</span>
+            {{/if}}
+            {{#if name '==' 'Cartridge Type'}}
+            <span class="cart-related-param">{{{value}}}</span>
+            {{/if}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if product.num_reviews '>=' 1}}
+        <div class="productView-rating__card {{#if product.num_reviews '==' 0}} productView-rating__card--hidden {{/if}}" {{#if product.num_reviews '>' 0}} {{#if schema}} itemprop="aggregateRating"
+             itemscope itemtype="https://schema.org/AggregateRating" {{/if}} {{/if}}>
+            {{#if schema}}
+            <meta itemprop="ratingValue" content="{{product.rating}}">
+            <meta itemprop="ratingCount" content="{{product.num_reviews}}">
+            <meta itemprop="reviewCount" content="{{product.num_reviews}}">
+            {{/if}}
+            <div class="productView-rating__card-stars">
+                {{> components/products/ratings rating=product.rating}}
+            </div>
+            <div class="productView-rating__card-reviews">
+                <a href="{{product.url}}#product-reviews" id="productReview_link">
+                    {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
+                </a>
+            </div>
+        </div>
+        {{/if}}
         <div class="card-text" data-test-info-type="price">
             {{#or customer (unless settings.hide_price_from_guests)}}
             {{> components/products/price price=price}}
@@ -92,23 +111,106 @@
         </div>
         {{{region name="product_item_below_price"}}}
         {{> components/products/bulk-discount-rates}}
+        <div class="stock-level">
+            {{#if stock_level '===' 0}}
+            <span>Not in Stock</span>
+            {{else}}
+            <span>✔ In Stock</span>
+            {{/if}}
+        </div>
+        {{assignVar 'yields-count' 0}}
+        {{#each product.custom_fields}}
+        {{#if name '==' 'page-yields-black'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-pigment-black'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-light-black'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-matte-black'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-black'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-cyan'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-light-cyan'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-cyan'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-magenta'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-vivid-light-magenta'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-vivid-magenta'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-light-magenta'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-magenta'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-yellow'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-colour'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-colour'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-grey'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-light-grey'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-dark-grey'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-grey'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-red'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-dark-red'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-blue'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-dark-blue'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-photo-blue'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-green'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-orange'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-violet'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-chroma-optimizer'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-gloss-optimizer'}}
+        {{assignVar 'yields-count' value}}
+        {{else if name '==' 'page-yields-clear'}}
+        {{assignVar 'yields-count' value}}
+        {{/if}}
+        {{/each}}
+        {{#if (getVar "yields-count") '>=' 1}}
+        <div class="card-pages-per-cartridge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z" /></svg> {{getVar "yields-count"}} pages per cartridge</div>
+        {{/if}}
 
     </div>
-    <div class="productView-rating__card {{#if product.num_reviews '==' 0}} productView-rating__card--hidden {{/if}}" {{#if product.num_reviews '>' 0}} {{#if schema}} itemprop="aggregateRating"
-         itemscope itemtype="https://schema.org/AggregateRating" {{/if}} {{/if}}>
-        {{#if schema}}
-        <meta itemprop="ratingValue" content="{{product.rating}}">
-        <meta itemprop="ratingCount" content="{{product.num_reviews}}">
-        <meta itemprop="reviewCount" content="{{product.num_reviews}}">
+
+    <div class="card-figcaption-body">
+        {{#if show_compare}}
+        <label class="button button--small card-figcaption-button" for="compare-{{id}}">
+            {{lang 'products.compare'}} <input type="checkbox" name="products[]" value="{{id}}" id="compare-{{id}}" data-compare-id="{{id}}">
+        </label>
         {{/if}}
-        <div class="productView-rating__card-stars">
-            {{> components/products/ratings rating=product.rating}}
-        </div>
-        <div class="productView-rating__card-reviews">
-            <a href="{{product.url}}#product-reviews" id="productReview_link">
-                {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
-            </a>
-        </div>
+        {{#if show_cart_action}}
+        {{#if has_options}}
+        <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{lang 'products.choose_options'}}</a>
+        {{/if}}
+        {{#if pre_order}}
+        <a href="{{pre_order_add_to_cart_url}}" data-event-type="product-click" class="button button--small card-figcaption-button">{{lang 'products.pre_order'}}</a>
+        {{/if}}
+        {{#if add_to_cart_url }}
+        <a href="{{add_to_cart_url}}" data-event-type="product-click" data-button-type="add-cart" class="button button--small card-figcaption-button">{{lang 'products.add_to_cart'}}</a>
+
+        {{/if}}
+        {{#if out_of_stock_message }}
+        <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{out_of_stock_message}}</a>
+        {{/if}}
+        {{/if}}
     </div>
 </article>
 <!--
@@ -240,7 +342,7 @@
 
         {{else}}
         <span class="stock-level__in-stock">In Stock</span>
-  
+
         {{/if}}
     </div>
 
@@ -262,7 +364,7 @@
         {{/each}}
     </div>
 
-   
+
     <div class="ink-drop">
         {{#each custom_fields}}
         {{#if name '==' 'Inkdrop'}}
@@ -271,7 +373,7 @@
         {{/each}}
     </div>
 
-  
+
     <div class="alternate-card-text card-price js-product-price" data-test-info-type="price">
         {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
         {{> components/products/price price=price product=product}}

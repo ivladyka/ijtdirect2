@@ -14,7 +14,7 @@ cart: true
 {{#partial "page"}}
 
 
-<div class="product-page-content default-product main-section-block d-flex align-start">
+<div class="default-product main-section-block d-flex align-start">
     <div class="left-block">
         {{> components/cs-custom/left-block-no-nav }}
     </div>
@@ -23,7 +23,7 @@ cart: true
         <div class="product-header">
             {{#each product.custom_fields}}
             {{#if name '==' 'heading'}}
-            <h1 class="product-header__title" itemprop="name">{{value}}<span id="productViewTitleFor"></span></h1>
+            <h1 class="product-header__title productView-title" itemprop="name">{{value}}<span id="productViewTitleFor"></span></h1>
             {{/if}}
             {{/each}}
         </div>

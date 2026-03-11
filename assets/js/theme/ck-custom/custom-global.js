@@ -84,7 +84,8 @@ export default function (context) {
                     var homefeaturedBulletsLi = "";
                     for (let i = 0; i < homefeaturedBullets.length; i++) {
                         if (homefeaturedBullets[i].trim() != 'Wi-Fi') {
-                            homefeaturedBulletsLi += "<li>" + homefeaturedBullets[i] + "</li>";                           
+                            homefeaturedBulletsLi += "<li>" + homefeaturedBullets[i] + "</li>";
+                         
                         }
                         $(this).find(".deal-featured-ul").html("<ul>" + homefeaturedBulletsLi + "</ul>");
                     }

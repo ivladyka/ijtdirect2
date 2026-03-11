@@ -50,6 +50,7 @@ export default class Global extends PageManager {
         sideMenu();
         globalAddToCart();
         brandGrid();
+     
         custom_Global();
         this.customHomeCarusel();
 
@@ -57,15 +58,15 @@ export default class Global extends PageManager {
     customHomeCarusel() {
         if ($(".home-categories").length > 0) {
             function toggleSlickSlider() {
-                console.log('home-categories-scroll');
+              
                 if (window.innerWidth < 1024) {
                     if ($('.home-categories-slider').hasClass('slick-initialized')) {
-                        console.log('unslick');
+                      
                         $('.home-categories-slider').slick('unslick');
                     }
                 } else {
                     if (!$('.home-categories-slider').hasClass('slick-initialized')) {
-                        console.log('slick');
+                      
                         $('.home-categories-slider').slick({
                             slidesToShow: 3,
                             slidesToScroll: 1,
@@ -74,8 +75,13 @@ export default class Global extends PageManager {
                         });
                     }
                 }
-            }  
-    
+            }
+
+          
+
+
+            
+              //  toggleSlickSlider();
                 $(window).on('resize', function () {
                     toggleSlickSlider();
                 });

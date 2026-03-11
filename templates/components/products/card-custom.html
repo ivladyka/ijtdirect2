@@ -1,13 +1,10 @@
-
 <div class="card js-product"
     {{#each custom_fields}}
         {{#if name '==' 'PromoCategory'}}
             data-promo-category={{value}}
         {{/if}}
     {{/each}} 
-    {{#if settings.data_tag_enabled}} data-event-type="{{event}}" data-entity-id="{{id}}" data-position="{{position}}" data-name="{{name}}" data-product-category="{{#each category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{brand.name}}" data-product-price="{{#if price.with_tax}}{{price.with_tax.value}}{{else}}{{price.without_tax.value}}{{/if}}"  {{/if}}
->
-    <!-- Product Image -->
+    {{#if settings.data_tag_enabled}} data-event-type="{{event}}" data-entity-id="{{id}}" data-position="{{position}}" data-name="{{name}}" data-product-category="{{#each category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{brand.name}}" data-product-price="{{#if price.with_tax}}{{price.with_tax.value}}{{else}}{{price.without_tax.value}}{{/if}}"  {{/if}}>
     <figure class="card-figure">
         <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}} aria-label="{{name}} image" alt="{{name}}">
             <div class="card-img-container">
@@ -20,13 +17,11 @@
         <h4 class="card-title">
             <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}} aria-label="{{name}}" alt="{{name}}">{{name}}</a>
         </h4>
-
         <!-- Product SKU -->
         <div class="product-sku">
             <span class="productView-info-name sku-label">Our code:</span>
             <span class="productView-info-value" data-product-sku{{#if schema}} itemprop="sku"{{/if}}>{{sku}}</span>
         </div>
-
         <!-- Stock Level -->
         <div class="stock-level">
             {{#if stock_level '===' 0}}
@@ -37,7 +32,6 @@
               <!-- <svg><use xlink:href="#icon-verified"></use></svg> -->
             {{/if}}
         </div>
-
         <div class="product-mpn">
             {{#each custom_fields}}
               {{#if name '==' 'Condition'}}
@@ -46,7 +40,6 @@
               {{/if}}
             {{/each}}
         </div>
-
         <div class="product-mpn">
           {{#each custom_fields}}
             {{#if name '==' 'MPN'}}
@@ -55,7 +48,6 @@
             {{/if}}
           {{/each}}
         </div>
-
         <!-- Product ink value -->
         <div class="ink-drop">
             {{#each custom_fields}}
@@ -64,7 +56,6 @@
                 {{/if}}
             {{/each}}
         </div>
-
         <!-- Product Price -->
         <div class="alternate-card-text card-price js-product-price" data-test-info-type="price">
             {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
@@ -73,7 +64,6 @@
                 {{> components/common/login-for-pricing}}
             {{/or}}
         </div>
-
         <!-- Amount of cartridges -->
         <div class="product-cartridge">
             {{#each custom_fields}}
@@ -82,7 +72,6 @@
                 {{/if}}
             {{/each}}
         </div>
-
         <div class="productView-rating__card {{#if product.num_reviews '==' 0}} productView-rating__card--hidden {{/if}}" {{#if product.num_reviews '>' 0}}{{#if schema}} itemprop="aggregateRating"
             itemscope itemtype="https://schema.org/AggregateRating" {{/if}}{{/if}}>
                 {{#if schema}}
@@ -100,9 +89,7 @@
                 </div>
         </div>
     </div>
-
     <div class="card-figcaption-body">
-
         {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
          <!-- Buy btn -->
          <div class="productView-options">

@@ -7,7 +7,7 @@ import _ from 'lodash';
 export default class CommonJS {
 
     constructor($container) {
-        console.log('common');
+
    }
 
    initForProduct() {
@@ -81,4 +81,4 @@ export default class CommonJS {
       });
    }
 }
-/* eslint-enable */
+

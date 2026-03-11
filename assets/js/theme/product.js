@@ -86,7 +86,7 @@ export default class Product extends PageManager {
         // Get the ID of the current product category
         const allCategories = this.context.categories;
         const allCartridges = allCategories.find(category => category.is_active);
-        if (allCartridges.children != null)
+        if (allCartridges != null && allCartridges.children != null)
         {
             const cartridgeType = allCartridges.children.find(cartridge => cartridge.is_active);
             const cartridgeBrand = cartridgeType.children.find(brand => brand.is_active);

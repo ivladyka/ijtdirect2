@@ -9,10 +9,7 @@
 {{inject "categories" categories}}
 <div class="productView js-product" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
     <section class="productView-images" data-image-gallery>
-        {{!--
-            Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
-            for variant/rule image replacement
-        --}}
+
         <div class="product-mainImg-box">
             <figure class="productView-image"
                     data-image-gallery-main
@@ -110,7 +107,7 @@
                 {{#each product.custom_fields}}
                 {{#if name '==' 'condition'}}
                 <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
-              <dd class="productView-info-value  productcondition-value">
+                 <dd class="productView-info-value  productcondition-value">
                             {{{value}}}
                             <div class="product-condition-value-box">
                                 {{#if value '==' 'New'}}
@@ -594,12 +591,7 @@
                                 <meta itemprop="priceCurrency" content="{{product.price.with_tax.currency}}">
                                 <link itemprop="availability" href="https://schema.org/InStock">
                                 <meta itemprop="eligibleQuantity" content="1">
-
                             </td>
-
-
-
-
                         </tr>
                         {{else}}
                         <tr itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -611,11 +603,7 @@
                                 <meta itemprop="priceCurrency" content="{{product.price.with_tax.currency}}">
                                 <link itemprop="availability" href="https://schema.org/InStock">
                                 <meta itemprop="eligibleQuantity" content="1-{{subtract product.bulk_discount_rates.[0].min 1}}">
-
                             </td>
-
-
-
                         </tr>
                         {{/if}}
                         {{/if}}
@@ -630,8 +618,6 @@
                                 <meta itemprop="eligibleQuantity" content="1-{{max}}">
                             </td>
                         </tr>
-
-
                         {{/each}}
                     </table>
                 </div>

@@ -1,7 +1,5 @@
 <div class="form-field form-field--increments">
-    <label class="form-label form-label--alternate"
-           for="qty[]">{{lang 'products.quantity'}}</label>
-
+    <label class="form-label form-label--alternate" for="qty[]">{{lang 'products.quantity'}}</label>
     <div class="form-increment" data-quantity-change>
         <button class="js-dec-qty button button--icon" data-action="dec" type="button">
             <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
@@ -9,26 +7,15 @@
                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" /></svg>
             </i>
         </button>
-        <input class="js-qty-input form-input form-input--incrementTotal"
-                         id="qty[]"
-                         name="qty[]"
-                         type="tel"
-                         value="{{#if product.min_purchase_quantity}}{{product.min_purchase_quantity}}{{else}}1{{/if}}"
-                         data-quantity-min="{{product.min_purchase_quantity}}"
-                         data-quantity-max="{{product.max_purchase_quantity}}"
-                         min="1"
-                         pattern="[0-9]*"
-                         aria-live="polite">
+        <input class="js-qty-input form-input form-input--incrementTotal" id="qty[]" name="qty[]" type="tel" value="{{#if product.min_purchase_quantity}}{{product.min_purchase_quantity}}{{else}}1{{/if}}" data-quantity-min="{{product.min_purchase_quantity}}" data-quantity-max="{{product.max_purchase_quantity}}" min="1" pattern="[0-9]*" aria-live="polite">
         <button class="js-inc-qty button button--icon" data-action="inc" type="button">
             <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
             <i class="icon" aria-hidden="true"> 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" /></svg>
             </i>
-        </button> 
-        
+        </button>         
     </div>
 </div>
-
 {{#or product.min_purchase_quantity product.max_purchase_quantity}}
     <div class="min-max-purchase">
 {{/or}}
@@ -47,7 +34,6 @@
 {{#or product.min_purchase_quantity product.max_purchase_quantity}}
     </div>
 {{/or}}
-
 <div class="alertBox productAttributes-message" style="display:none">
     <div class="alertBox-column alertBox-icon">
         <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>

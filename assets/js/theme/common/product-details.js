@@ -1,4 +1,4 @@
-/*eslint-disable*/
+﻿/*eslint-disable*/
 import utils from '@bigcommerce/stencil-utils';
 import 'foundation-sites/js/foundation/foundation';
 import 'foundation-sites/js/foundation/foundation.reveal';
@@ -16,7 +16,7 @@ import get from 'bigcommerce-graphql'
 
 export default class ProductDetails {
     constructor($scope, context, productAttributesData = {}) {
-        console.log('ProductDetails 4');
+ 
         this.$overlay = $('[data-cart-item-add] .loadingOverlay');
         this.$scope = $scope;
         this.context = context;
@@ -64,6 +64,8 @@ export default class ProductDetails {
 
         this.CommonJS = new CommonJS($(this.$scope));
         this.CommonJS.initForProduct();
+        this.roundingProductWeight();
+        this.loadRelatedProducts();
     }
 
     /**
@@ -112,18 +114,47 @@ export default class ProductDetails {
         })
     }
     getCompatibleProductsNew() {
-        console.log('getCompatibleProductsNew');
-        get('{ site { product (entityId: ' + this.context.productId + ') { name, entityId, categories { edges { node { name, path } } } } } }', false).then((data) => {
+
+        const categoryListNew = $("#divCompatibleList div");
+        var compatibleListNew = document.getElementById("compatible-list-new");
+        if (compatibleListNew != null)
+        {
+            if (categoryListNew.length <= 6) {
+                $("#aMoreCompatibles").hide();
+            }
+            else {
+                $("#aMoreCompatibles").html("+ " + (categoryListNew.length - 5) + " more models");
+            }
+            for (let i = 0; i < categoryListNew.length; i++)
+            {
+                if (i > 4 && categoryListNew.length > 6)
+                {
+                    break;
+                }
+                compatibleListNew.appendChild($(categoryListNew[i]).clone()[0]);
+                if (i > 1) {
+                    $('.compatible-section').show();
+                }
+            }
+        }
+    
+        /*get('{ site { product (entityId: ' + this.context.productId + ') { name, entityId, categories { edges { node { name, path } } } } } }', false).then((data) => {
             const productDataNew = data.site;
             const categoryListNew = productDataNew.product.categories.edges;
             let compatibleProductNameNew;
             let compatibleProductUrlNew;
-            const compatibleListNew = document.getElementById("compatible-list-new");
-
-            if (compatibleListNew != null) {
-              
-                for (let i = 0; i < categoryListNew.length; i++) {
-        
+            var compatibleListNew = document.getElementById("compatible-list-new");
+            const divCompatibleList = document.getElementById("divCompatibleList");
+            if (compatibleListNew != null)
+            {
+                if (categoryListNew.length <= 6) {
+                    $("#aMoreCompatibles").hide();
+                }
+                else {
+                    $("#aMoreCompatibles").html("+ " + (categoryListNew.length - 5) + " more models");
+                }
+                for (let i = 0; i < categoryListNew.length; i++)
+                {
                     compatibleProductNameNew = categoryListNew[i].node.name;
                     compatibleProductUrlNew = categoryListNew[i].node.path;
 
@@ -138,44 +169,54 @@ export default class ProductDetails {
                     // Create and add the children elements to the list
                     listItemNew.appendChild(listItemAnchorNew);
                     listItemAnchorNew.appendChild(textnode);
-                    compatibleListNew.appendChild(listItemNew);
+                    if (i > 4 && categoryListNew.length > 6) {
+                        divCompatibleList.appendChild($(listItemAnchorNew).clone()[0]);
+                    }
+                    else 
+                    {
+                        compatibleListNew.appendChild(listItemNew);
+                    }
+                    if (i <= 4)
+                    {
+                        divCompatibleList.appendChild($(listItemAnchorNew).clone()[0]);
+                    }
                     if (i > 1) {
                         $('.compatible-section').show();
                     }
                 }
             }
-            $('#compatible-list-new').slick({
-                slidesToShow: 4,
-                slidesToScroll: 4,
-                arrows: false,
-                variableWidth: true,
-                fade: false,
-                "responsive": [
-                    {
-                        "breakpoint": 1024,
-                        "settings": {
-                            "slidesToScroll": 3,
-                            "slidesToShow": 3
-                        }
-                    },
-                    {
-                        "breakpoint": 767,
-                        "settings": {
-                            "slidesToScroll": 2,
-                            "slidesToShow": 2
-                        }
-                    },
-                    {
-                        "breakpoint": 480,
-                        "settings": {
-                            "slidesToScroll": 1,
-                            "slidesToShow": 1
-                        }
-                    }
-                ]
+        });*/
 
-            });
-        })
+        $("#tbSerachCompatible").on("keyup", function ()
+        {
+          
+            var searchCompatibleVal = $(this).val().toLowerCase();
+            
+            if (searchCompatibleVal == "")
+            {
+                $("#divCompatibleList div").removeClass('compatible-green');
+                $("#divCompatibleList div").show();
+            }
+            else
+            {
+                $("#divCompatibleList div").each(function () {
+                    if ($(this).text().toLowerCase().indexOf(searchCompatibleVal) < 0)
+                    {
+                        $(this).hide();
+                        $(this).removeClass('compatible-green');
+                    }
+                    else {
+                        $(this).show();
+                        $(this).addClass('compatible-green');
+                    }
+                });
+            }
+
+            /*$("#divCompatibleList a:contains(" + $(this).val() + ")").show();
+            $("#divCompatibleList a:contains(" + $(this).val() + ")").addClass('compatible-green');
+            $("#divCompatibleList a:not(:contains(" + $(this).val() + "))").hide();
+            $("#divCompatibleList a:not(:contains(" + $(this).val() + "))").removeClass('compatible-green')*/
+        });
     }
 
     filterEmptyFilesFromForm(formData) {
@@ -281,9 +322,9 @@ export default class ProductDetails {
             if (view.attr('data-event-type')) {
                 view.attr('data-product-variant', productVariant);
             } else {
-                const productName = view.find('.productView-title')[0].innerText;
+                /*const productName = view.find('.productView-title')[0].innerText;
                 const card = $(`[data-name="${productName}"]`);
-                card.attr('data-product-variant', productVariant);
+                card.attr('data-product-variant', productVariant);*/
             }
         }
     }
@@ -766,10 +807,6 @@ export default class ProductDetails {
 
         return $parent ? $parent.data('productAttribute') : null;
     }
-
-    /**
-     * Allow radio buttons to get deselected
-     */
     initRadioAttributes() {
         $('[data-product-attribute] input[type="radio"]', this.$scope).each((i, radio) => {
             const $radio = $(radio);
@@ -794,9 +831,6 @@ export default class ProductDetails {
         });
     }
 
-    /**
-     * Check for fragment identifier in URL requesting a specific tab
-     */
     getTabRequests() {
         if (window.location.hash && window.location.hash.indexOf('#tab-') === 0) {
             const $activeTab = $('.tabs').has(`[href='${window.location.hash}']`);
@@ -813,6 +847,36 @@ export default class ProductDetails {
                     .removeClass('is-active');
             }
         }
+    }
+
+    roundingProductWeight() {
+
+        if ($('#product-weight-round').length > 0) {           
+            let floatNumber = parseFloat($('#product-weight-round').html());
+            $('#product-weight-round').html(floatNumber);
+        }
+    }
+
+    loadRelatedProducts() {   
+        $(".related-product-img-container div.related-product-img span").each((index, placeholder) => {    
+            let template = 'cs-custom/ajax-related-product-img';
+            utils.api.getPage($(placeholder).html(), { template }, (err, resp) => {
+                var rpPrice = $(resp).attr("data-product-related-price");
+                var rpPriceDec = 0;
+                if (!isNaN(parseFloat(rpPrice)))
+                {
+                    rpPriceDec = parseFloat(rpPrice);
+                    var pPrice = parseFloat($("div.product-detail-first-section span.price--withTax").attr("data-price"));
+                    if (pPrice > rpPriceDec)
+                    {
+                        $(".related-product-text > H3").text("You could save £" + (pPrice - rpPriceDec).toFixed(2) + " by swapping to our own brand");
+                    }
+                }
+
+                $(placeholder).next().html(resp);
+            });
+        });
+       
     }
 }
 /*eslint-enable*/

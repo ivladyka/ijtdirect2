@@ -1,4 +1,220 @@
+{{assignVar 'Compatibleproductcount' 0}}
+{{assignVar 'Compatibleproductcatstring1' '/ "'}}
+{{assignVar 'Compatibleproductcatstring2' '/ "'}}
+{{assignVar 'Compatibleproductcatstring3' '/ "'}}
+{{assignVar 'Compatibleproductcatstring4' '/ "'}}
+{{assignVar 'Compatibleproductcatstring5' '/ "'}}
+{{#each product.category}}
+<span style="display:none;">{{{incrementVar 'Compatibleproductcount'}}}</span>
+{{#if (getVar 'Compatibleproductcount') '<=' 30}}
+{{assignVar 'CatName' (multiConcat  (getVar 'Compatibleproductcatstring1') (last (split this "/")) '" / "')}}
+{{assignVar 'Compatibleproductcatstring1' (getVar 'CatName')}}
+{{else if (getVar 'Compatibleproductcount') '<=' 60}}
+{{#if  (getVar 'Compatibleproductcount') '>' 30}}
+{{assignVar 'CatName' (multiConcat  (getVar 'Compatibleproductcatstring2') (last (split this "/")) '" / "')}}
+{{assignVar 'Compatibleproductcatstring2' (getVar 'CatName')}}
+{{/if}}
+{{else if (getVar 'Compatibleproductcount') '<=' 90}}
+{{#if  (getVar 'Compatibleproductcount') '>' 60}}
+{{assignVar 'CatName' (multiConcat  (getVar 'Compatibleproductcatstring3') (last (split this "/")) '" / "')}}
+{{assignVar 'Compatibleproductcatstring3' (getVar 'CatName')}}
+{{/if}}
+{{else if (getVar 'Compatibleproductcount') '<=' 120}}
+{{#if  (getVar 'Compatibleproductcount') '>' 90}}
+{{assignVar 'CatName' (multiConcat  (getVar 'Compatibleproductcatstring4') (last (split this "/")) '" / "')}}
+{{assignVar 'Compatibleproductcatstring4' (getVar 'CatName')}}
+{{/if}}
+{{else}}
+{{#if  (getVar 'Compatibleproductcount') '>' 120}}
+{{assignVar 'CatName' (multiConcat  (getVar 'Compatibleproductcatstring5') (last (split this "/")) '" / "')}}
+{{assignVar 'Compatibleproductcatstring5' (getVar 'CatName')}}
+{{/if}}
+{{/if}}
+{{/each}}
 <section class="compatible-section" style="display:none">
     <h4>Compatible printer models</h4>
-    <div id="compatible-list-new" class=""></div>
+    <div class="compatible-list-box">
+        <div id="compatible-list-new" class="">
+        </div>
+        <div class="modal-button-container">
+            <a id="aMoreCompatibles" href="#" data-reveal-id="modal-compatible">Show me the Modal</a>
+        </div>
+    </div>
 </section>
+<div id="modal-compatible" class="modal" data-reveal data-prevent-quick-search-close>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-header-title">Compatible printer models</h5>
+            <button class="modal-close" aria-label="{{lang 'common.close'}}" type="button" title="Close">
+                <span aria-hidden="true">&#215;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <input id="tbSerachCompatible" class="form-input" placeholder="Type your printer model..." maxlength="128" />
+            <hr />
+            <div id="divCompatibleList">
+                {{#each categories}}
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+
+                {{/if}}
+
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+
+                {{/if}}
+
+                {{#each children}}
+
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+
+                {{/if}}
+
+                {{#each children}}
+
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+
+                {{#each children}}
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+
+                {{#each children}}
+
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+
+                {{#each children}}
+
+                {{#if (occurrences (getVar 'Compatibleproductcatstring1') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring2') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring3') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring4') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{else if (occurrences (getVar 'Compatibleproductcatstring5') (multiConcat '"' name '"')) '==' 1}}
+                <div><a href="{{url}}">{{name}}</a></div>
+                {{/if}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="loadingOverlay"></div>
+</div>
+
+

@@ -20,7 +20,7 @@
 <div class="tabs-contents tab-content-custom accordion" >
     {{#if product.description}}
     <div class="tab-content is-active" id="tab-description">
-        <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+        <div class="accordion-block" style="  ">
             <div class="accordion-navigation toggleLink is-open"  role="button"  data-collapsible="#tab-description-content">                    
                 <h5 class="accordion-title">
                      Product Description
@@ -34,7 +34,7 @@
                {{{product.description}}}
             </div>
         </div>
-        <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+        <div class="accordion-block" style="  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimensions'}}display:block; {{/if}} {{/each}}">
             <div class="accordion-navigation toggleLink "  role="button"  data-collapsible="#tab-key-features">                    
                 <h5 class="accordion-title">
                     {{lang 'products.key_features'}}
@@ -97,155 +97,160 @@
                     </div>
                 </div>
                 <div id="tab-Overview" class="accordion-content  is-open">
-                  <ul>  
-                  <li><strong>Product Name:</strong> {{product.title}}</li>
-                   <li {{#unless product.upc}} style="display: none;" {{/unless}}><strong>{{lang 'products.upc'}}: </strong>{{product.upc}}</li>
-                    {{#each product.custom_fields}}
-                            {{#if name '==' 'OEM Part Number'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'Ink Type'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                           {{else if name '==' 'Cartridge Colour'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                           {{else if name '==' 'Colour'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'Ink Volume (ML)'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'Ink Volume'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'Page Yield'}}
-                                <li><strong>{{name}}: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-black'}}
-                              <li><strong>Page Yield Black: </strong>{{{value}}}</li>
-                              
-                                {{else if name '==' 'page-yields-pigment-black'}}
-                              <li><strong>Page Yield Pigment Black: </strong>{{{value}}}</li>
-                              
-                            {{else if name '==' 'page-yields-light-black'}}
-                               <li><strong>Page Yield Light Black: </strong>{{{value}}}</li>
-                               
-                            {{else if name '==' 'page-yields-matte-black'}}
-                                <li><strong>Page Yield Matte Black: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-photo-black'}}
-                                <li><strong>Page Yield Photo Black: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-cyan'}}
-                                <li><strong>Page Yield Cyan: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-light-cyan'}}
-                                <li><strong>Page Yield Light Cyan: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-photo-cyan'}}
-                                <li><strong>Page Yield Photo Cyan: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-magenta'}}
-                                <li><strong>Page Yield Magenta: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-vivid-light-magenta'}}
-                                <li><strong>Page Yield Vivid Light Magenta: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-vivid-magenta'}}
-                                <li><strong>Yield Vivid Magenta: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-light-magenta'}}
-                                <li><strong>Page Yield Light Magenta: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-photo-magenta'}}
-                               <li><strong>Page Yield Photo Magenta: </strong>{{{value}}}</li>
-                               
-                            {{else if name '==' 'page-yields-yellow'}}
-                                <li><strong>Page Yield Yellow: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-colour'}}
-                               <li><strong>Page Yield Colour: </strong>{{{value}}}</li>
-                               
-                            {{else if name '==' 'page-yields-photo-colour'}}
-                                <li><strong>Page Yield Photo Colour: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-grey'}}
-                                <li><strong>Page Yield Grey: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-light-grey'}}
-                                <li><strong>Page Yield Light Grey: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-dark-grey'}}
-                                <li><strong>Page Yield Dark Grey: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-photo-grey'}}
-                                <li><strong>Page Yield Photo Grey: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-red'}}
-                                <li><strong>Page Yield Red: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-dark-red'}}
-                                <li><strong>Page Yield Dark Red: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-blue'}}
-                                <li><strong>Page Yield Blue: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-dark-blue'}}
-                                <li><strong>Page Yield Dark Blue: </strong>{{{value}}}</li>
-                                
-                            {{else if name '==' 'page-yields-photo-blue'}}
-                                <li><strong>Page Yield Photo Blue: </strong>{{{value}}}</li>
-                            {{else if name '==' 'page-yields-green'}}
-                                <li><strong>Page Yield Green: </strong>{{{value}}}</li>
-                            {{else if name '==' 'page-yields-orange'}}
-                                <li><strong>Page Yield Orange: </strong>{{{value}}}</li>
-                            {{else if name '==' 'page-yields-violet'}}
-                               <li><strong>Page Yield Violet: </strong>{{{value}}}</li>
-                            {{else if name '==' 'page-yields-chroma-optimizer'}}
-                                <li><strong>Page Yield Chroma Optimizer: </strong>{{{value}}}</li>
-                           {{else if name '==' 'page-yields-gloss-optimizer'}}
-                                <li><strong>Page Yield Gloss Optimizer: </strong>{{{value}}}</li>
-                            {{else if name '==' 'page-yields-clear'}}
-                                <li><strong>Page Yield Clear: </strong>{{{value}}}</li>
-                            {{else if name '==' 'Print Technology'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                             {{else if name '==' 'Cartridge Type'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                            {{/if}}
-                     {{/each}}
+                    <ul>
+                        <li><strong>Product Name:</strong> {{product.title}}</li>
+                        <li {{#unless product.upc}} style="display: none;" {{/unless}}><strong>{{lang 'products.upc'}}: </strong>{{product.upc}}</li>
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'OEM Part Number'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Ink Type'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Cartridge Colour'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Colour'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Ink Volume (ML)'}}
+                        <li><strong>Ink Volume (ml): </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Ink Volume'}}
+                        <li><strong>{{name}} (ml): </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'Page Yield'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-black'}}
+                        <li><strong>Page Yield Black: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-pigment-black'}}
+                        <li><strong>Page Yield Pigment Black: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-light-black'}}
+                        <li><strong>Page Yield Light Black: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-matte-black'}}
+                        <li><strong>Page Yield Matte Black: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-black'}}
+                        <li><strong>Page Yield Photo Black: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-cyan'}}
+                        <li><strong>Page Yield Cyan: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-light-cyan'}}
+                        <li><strong>Page Yield Light Cyan: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-cyan'}}
+                        <li><strong>Page Yield Photo Cyan: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-magenta'}}
+                        <li><strong>Page Yield Magenta: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-vivid-light-magenta'}}
+                        <li><strong>Page Yield Vivid Light Magenta: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-vivid-magenta'}}
+                        <li><strong>Yield Vivid Magenta: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-light-magenta'}}
+                        <li><strong>Page Yield Light Magenta: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-magenta'}}
+                        <li><strong>Page Yield Photo Magenta: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-yellow'}}
+                        <li><strong>Page Yield Yellow: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-colour'}}
+                        <li><strong>Page Yield Colour: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-colour'}}
+                        <li><strong>Page Yield Photo Colour: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-grey'}}
+                        <li><strong>Page Yield Grey: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-light-grey'}}
+                        <li><strong>Page Yield Light Grey: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-dark-grey'}}
+                        <li><strong>Page Yield Dark Grey: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-grey'}}
+                        <li><strong>Page Yield Photo Grey: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-red'}}
+                        <li><strong>Page Yield Red: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-dark-red'}}
+                        <li><strong>Page Yield Dark Red: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-blue'}}
+                        <li><strong>Page Yield Blue: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-dark-blue'}}
+                        <li><strong>Page Yield Dark Blue: </strong>{{{value}}}</li>
+
+                        {{else if name '==' 'page-yields-photo-blue'}}
+                        <li><strong>Page Yield Photo Blue: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-green'}}
+                        <li><strong>Page Yield Green: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-orange'}}
+                        <li><strong>Page Yield Orange: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-violet'}}
+                        <li><strong>Page Yield Violet: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-chroma-optimizer'}}
+                        <li><strong>Page Yield Chroma Optimizer: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-gloss-optimizer'}}
+                        <li><strong>Page Yield Gloss Optimizer: </strong>{{{value}}}</li>
+                        {{else if name '==' 'page-yields-clear'}}
+                        <li><strong>Page Yield Clear: </strong>{{{value}}}</li>
+                        {{else if name '==' 'Print Technology'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+                        {{else if name '==' 'Cartridge Type'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+                        {{/if}}
+                        {{/each}}
                     </ul>              
                 </div>
     </div>
- <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+ <div class="accordion-block" style="display:none;   {{#all product.width product.height product.depth}} display: block; {{/all}} {{#if product.width}} display: block;  {{/if}} {{#each product.custom_fields}}{{#if name '==' 'Size'}}
+display: block; {{else if name '==' 'Pack Size'}} display: block; {{/if}}{{/each}}">
                 <div class="accordion-navigation toggleLink"
                      role="button"
                      data-collapsible="#tab-physical-specifications">
                     <h5 class="accordion-title">
-                        Physical Specifications
+                        Physical Specifications 
                     </h5>
                     <div class="accordion-navigation-actions">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
                     </div>
                 </div>
-                <div id="tab-physical-specifications" class="accordion-content">
-                  <ul>  
-                    {{#each product.custom_fields}}
-                            {{#if name '==' 'Weight'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                            
-                            {{else if name '==' 'Dimmensions'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                             {{else if name '==' 'Size'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                              {{else if name '==' 'Pack Size'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                               {{else if name '==' 'Pack Size'}}
-                            <li><strong>{{name}}: </strong>{{{value}}}</li>
-                            {{/if}}
-                        {{/each}}
-                    </ul>              
+                <div id="tab-physical-specifications" class="accordion-content">                  
+                    <ul>
+
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'Size'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+                        {{else if name '==' 'Pack Size'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+                        {{else if name '==' 'Pack Size'}}
+                        <li><strong>{{name}}: </strong>{{{value}}}</li>
+                        {{/if}}
+                        {{/each}}    
+                        {{#all product.width product.height product.depth}}
+                        <li>
+                            <strong>Dimensions {{#if settings.measurements.length '==' 'Centimeters'}}({{lang 'products.measurement.metric'}}){{else}}({{lang 'products.measurement.imperial'}}){{/if}}: </strong>{{toFixed product.width 0}} x  {{toFixed product.height 0}} x {{toFixed product.depth 0}}
+                        </li>
+                        {{/all}}
+                        {{#all product.weight theme_settings.show_product_weight}}
+                    <li><strong>Weight (kg): </strong><span id="product-weight-round">{{trim (strReplace product.weight " KGS" " ")}}</span></li>
+                        {{/all}}
+                    </ul>
                 </div>
     </div>
    <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Print Resoultion'}}display:block;  {{else if name '==' 'Operating Temp'}}display:block; {{else if name '==' 'Storage Temp'}}display:block; {{else if name '==' 'Operating Humidity'}}display:block; {{else if name '==' 'Storage Humidity'}}display:block; {{else if name '==' 'Shelf Life'}}display:block;{{/if}} {{/each}}">

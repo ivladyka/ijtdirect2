@@ -1,13 +1,19 @@
 {{#each product.reviews.messages}}
-    {{#if error}}
-        {{> components/common/alert-error error}}
-    {{/if}}
-    {{#if success}}
-        {{> components/common/alert-success success}}
-    {{/if}}
+{{#if error}}
+{{> components/common/alert-error error}}
+{{/if}}
+{{#if success}}
+{{> components/common/alert-success success}}
+{{/if}}
 {{/each}}
 {{inject "categories" categories}}
-<div class="productView productView-with-options js-product" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+<div class="product-subheader">
+    <h2 class="product-subheader__title" itemprop="name">{{product.title}}<span id="productViewTitleFor"></span></h2>
+</div>
+<div class="productView productView-with-options js-product" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name='{{product.title}}' data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option" {{/if}}>
+
+        <h1 class="product-subheader__title productView-title" itemprop="name" style="display:none;">{{product.title}}</h1>
+
     <section class="productView-images" data-image-gallery>
 
         <div class="product-mainImg-box">
@@ -58,12 +64,12 @@
             </li>
             {{/each}}
         </ul>
-       
+
     </section>
 
     <div class="hidden-box-img" style="display: none;">
         {{#each product.images}}
-            <a class="{{#if (stripQuerystring (getImage ../product.main_image 'product_size' (cdn ../theme_settings.default_image_product))) '==' (stripQuerystring (getImage this 'product_size' (cdn ../theme_settings.default_image_product))) }}is-active{{/if}}" data-fancybox="gallery" href="{{stripQuerystring (getImage this 'original_size' (cdn ../theme_settings.default_image_product))}}" rel="nofollow">click</a>
+        <a class="{{#if (stripQuerystring (getImage ../product.main_image 'product_size' (cdn ../theme_settings.default_image_product))) '==' (stripQuerystring (getImage this 'product_size' (cdn ../theme_settings.default_image_product))) }}is-active{{/if}}" data-fancybox="gallery" href="{{stripQuerystring (getImage this 'original_size' (cdn ../theme_settings.default_image_product))}}" rel="nofollow">click</a>
         {{/each}}
     </div>
 
@@ -105,67 +111,67 @@
                         {{#each product.custom_fields}}
                         {{#if name '==' 'condition'}}
                         <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
-                         <dd class="productView-info-value  productcondition-value">
+                        <dd class="productView-info-value  productcondition-value">
                             {{{value}}}
                             <div class="product-condition-value-box">
                                 {{#if value '==' 'New'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                 Brand new unused product. Includes surplus, aged and unopened return stock. Sold with a 12 month manufacturer warranty. In original packaging. Unless otherwise specified.
+                                    Brand new unused product. Includes surplus, aged and unopened return stock. Sold with a 12 month manufacturer warranty. In original packaging. Unless otherwise specified.
                                 </p>
                                 {{else if value '==' 'As New'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                 Open boxed returns/cancellations/surplus or full factory reconditioned stocks in Good As New condition. Sold with a full 12 month warranty. Shipped in retail or plain box. Packaging may show marks. Check individual items for additional specifications or special conditions.
+                                    Open boxed returns/cancellations/surplus or full factory reconditioned stocks in Good As New condition. Sold with a full 12 month warranty. Shipped in retail or plain box. Packaging may show marks. Check individual items for additional specifications or special conditions.
                                 </p>
                                 {{else if value '==' 'Refurbished / Grade A1'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                 Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                    Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
                                 </p>
-                                 {{else if value '==' 'Refurbished / Grade A'}}
+                                {{else if value '==' 'Refurbished / Grade A'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                    Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
                                 </p>
                                 {{else if value '==' 'Refurbished / Grade A2'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                  Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                    Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
                                 </p>
-                                  {{else if value '==' 'Refurbished / Grade B'}}
+                                {{else if value '==' 'Refurbished / Grade B'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                  Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                    Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
                                 </p>
                                 {{else if value '==' 'Pre-Owned'}}
                                 <h5>{{{value}}}</h5>
                                 <p>
-                                  All items are thoroughly tested, sold in working condition. Products are pre-owned (not refurbished) and may have significant cosmetic marks, scratches or dents but none that affect the functionality of the item. All items are sold with a 30 day UK warranty unless otherwise stated.
+                                    All items are thoroughly tested, sold in working condition. Products are pre-owned (not refurbished) and may have significant cosmetic marks, scratches or dents but none that affect the functionality of the item. All items are sold with a 30 day UK warranty unless otherwise stated.
                                 </p>
                                 {{/if}}
                             </div>
                         </dd>
-                        <br>
+                        <br />
                         {{/if}}
                         {{/each}}
                         {{#if product.warranty}}
                         <dt class="productView-info-name">{{lang 'products.warranty'}}</dt>
                         <dd class="productView-info-value">{{{product.warranty}}}</dd>
-                        <br>
+                        <br />
                         {{/if}}
                         {{#each product.custom_fields}}
                         {{#if name '==' 'page-yields'}}
                         <dt class="productView-info-name">{{lang 'products.page_yield'}}</dt>
                         <dd class="productView-info-value">{{{value}}}</dd>
-                        <br>
+                        <br />
                         {{/if}}
                         {{/each}}
                         {{#if product.availability}}
                         <dt class="productView-info-name">{{lang 'products.availability'}}</dt>
                         <dd class="productView-info-value">{{product.availability}}</dd>
                         {{/if}}
-                        {{#all product.weight theme_settings.show_product_weight}}
+                        <!--{{#all product.weight theme_settings.show_product_weight}}
                         <dt class="productView-info-name">{{lang 'products.weight'}}</dt>
                         <dd class="productView-info-value" data-product-weight>{{product.weight}}</dd>
                         {{/all}}
@@ -197,7 +203,7 @@
                             ({{lang 'products.measurement.imperial'}})
                             {{/if}}
                         </dd>
-                        {{/all}}
+                        {{/all}}-->
                         {{#if product.min_purchase_quantity}}
                         <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
                         <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
@@ -676,7 +682,7 @@
                         <form></form>
                         <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
                               data-cart-item-add>
-                            <div data-product-option-change style="display:none;" class="data-product-option-change {{#if product.out_of_stock}}out_of_stock{{/if}} {{#if product.can_purchase}}{{else}}out_of_stock{{/if}}" >
+                            <div data-product-option-change style="display:none;" class="data-product-option-change {{#if product.out_of_stock}}out_of_stock{{/if}} {{#if product.can_purchase}}{{else}}out_of_stock{{/if}}">
                                 {{#each product.options}}
                                 {{{dynamicComponent 'components/products/options'}}}
                                 {{/each}}
@@ -734,21 +740,21 @@
                                     {{#or product.min_purchase_quantity product.max_purchase_quantity}}
                                 </div>
                                 {{/or}}
-                                
+
                                 <div class="alertBox productAttributes-message" style="display:none">
                                     <div class="alertBox-column alertBox-icon">
                                         <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
                                     </div>
                                     <p class="alertBox-column alertBox-message"></p>
                                 </div>
-                                
+
                                 {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
                                 <div class="form-action">
                                     <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary button--green" type="submit"
                                            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}" {{#if product.custom_fields}} {{#filter product.custom_fields "related-product" property="name"}} data-product-raleted="true" {{/filter}} {{/if}}>
                                 </div>
                                 {{/or}}
-                                
+
                                 <link itemprop="availability" href="https://schema.org/InStock" />
                                 {{/if}}
                                 {{#if product.call_for_price}}
@@ -789,68 +795,68 @@
                                 </div>
                             </div>
                             {{/if}}
-                              {{#if product.out_of_stock}}
-                                        <div class="stock-level">
-                                            <span class="stock-level__out-of-stock" id="pdp-out-of-stock-message">Not in Stock</span>
-                                            <link itemprop="availability" href="https://schema.org/OutOfStock" />
-                                        </div>
-                                 {{/if}}
-                                {{#if product.can_purchase}}
-                                {{else}}
-                                <div class="alertBox alertBox--error alertBox-out-of-stock">
-                                    <div class="alertBox-column alertBox-icon">
-                                        <icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
-                                    </div>
-                                    <p class="alertBox-column alertBox-message">
-                                        <span id="alertBox-message-text">Out of stock</span>
-                                    </p>
+                            {{#if product.out_of_stock}}
+                            <div class="stock-level">
+                                <span class="stock-level__out-of-stock" id="pdp-out-of-stock-message">Not in Stock</span>
+                                <link itemprop="availability" href="https://schema.org/OutOfStock" />
+                            </div>
+                            {{/if}}
+                            {{#if product.can_purchase}}
+                            {{else}}
+                            <div class="alertBox alertBox--error alertBox-out-of-stock">
+                                <div class="alertBox-column alertBox-icon">
+                                    <icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
                                 </div>
-                                {{/if}} 
-         
+                                <p class="alertBox-column alertBox-message">
+                                    <span id="alertBox-message-text">Out of stock</span>
+                                </p>
+                            </div>
+                            {{/if}}
+
                     </div>
-                  
+
                     </form>
                 </div>
             </div>
-             
+
             <p class="productView-details-with-options-note">Please note that any upgrades will delay shipping by approximately 2-3 working days</p>
-             <div class="productView-rating" {{#if product.num_reviews '>' 0}} {{#if schema}} itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" {{/if}} {{/if}}>
-            {{#if settings.show_product_rating}}
-            {{#if product.num_reviews '>' 0}}
-            {{#if schema}}
-            <meta itemprop="ratingValue" content="{{product.rating}}">
-            <meta itemprop="ratingCount" content="{{product.num_reviews}}">
-            <meta itemprop="reviewCount" content="{{product.num_reviews}}">
-            {{/if}}
-            {{/if}}
-            {{> components/products/ratings rating=product.rating}}
-            {{#if product.num_reviews '>' 0}}
-            <a href="{{product.url}}#product-reviews" id="productReview_link">
-                {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
-            </a>
-            {{else}}
-            <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
-            {{/if}}
-            {{/if}}
-            {{#if settings.show_product_reviews}}
-            <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
-               class="productView-reviewLink productView-reviewLink--new"
-               {{#unless is_ajax}} data-reveal-id="modal-review-form" {{/unless}}
-               role="button">
-                {{lang 'products.reviews.new'}}
-            </a>
-            {{> components/products/modals/writeReview}}
-            {{/if}}
+            <div class="productView-rating" {{#if product.num_reviews '>' 0}} {{#if schema}} itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" {{/if}} {{/if}}>
+                {{#if settings.show_product_rating}}
+                {{#if product.num_reviews '>' 0}}
+                {{#if schema}}
+                <meta itemprop="ratingValue" content="{{product.rating}}">
+                <meta itemprop="ratingCount" content="{{product.num_reviews}}">
+                <meta itemprop="reviewCount" content="{{product.num_reviews}}">
+                {{/if}}
+                {{/if}}
+                {{> components/products/ratings rating=product.rating}}
+                {{#if product.num_reviews '>' 0}}
+                <a href="{{product.url}}#product-reviews" id="productReview_link">
+                    {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
+                </a>
+                {{else}}
+                <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
+                {{/if}}
+                {{/if}}
+                {{#if settings.show_product_reviews}}
+                <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
+                   class="productView-reviewLink productView-reviewLink--new"
+                   {{#unless is_ajax}} data-reveal-id="modal-review-form" {{/unless}}
+                   role="button">
+                    {{lang 'products.reviews.new'}}
+                </a>
+                {{> components/products/modals/writeReview}}
+                {{/if}}
+            </div>
         </div>
-        </div>    
     </section>
 
 </div>
-<article class="productView-description"{{#if schema}} itemprop="description"{{/if}}>
+<article class="productView-description" {{#if schema}} itemprop="description" {{/if}}>
     {{#if theme_settings.show_product_details_tabs}}
-        {{> components/products/description-tabs}}
+    {{> components/products/description-tabs}}
     {{else}}
-        {{> components/products/description}}
+    {{> components/products/description}}
     {{/if}}
 </article>
 
@@ -861,4 +867,4 @@
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>
-    
+

@@ -86,13 +86,13 @@ cart: true
 
 
                 {{#if category.products}}
-                <div id="cartridgeListing" class="cartridge-listing cartridge-listing-custom" action="{{urls.compare}}" method='POST' {{#if settings.data_tag_enabled}} data-list-name="Category: {{category.name}}" {{/if}} data-product-compare>
-                    {{#if settings.data_tag_enabled}}
-                    {{> components/products/list products=category.products theme_settings=theme_settings event="list" }}
-                    {{else}}
-                    {{> components/products/list products=category.products theme_settings=theme_settings}}
-                    {{/if}}
-                </div>
+            <div id="cartridgeListing" class="cartridge-listing cartridge-listing-custom" action="{{urls.compare}}" method='POST' {{#if settings.data_tag_enabled}} data-list-name="Category: {{category.name}}" {{/if}} data-product-compare>
+                {{#if settings.data_tag_enabled}}
+                {{> components/products/list-new products=category.products theme_settings=theme_settings event="list" }}
+                {{else}}
+                {{> components/products/list-new products=category.products theme_settings=theme_settings}}
+                {{/if}}
+            </div>
                 {{else}}
                 <p>{{lang 'brands.no_products'}}</p>
                 {{/if}}

@@ -1,0 +1,56 @@
+---
+cart: true
+---
+{{#partial "page"}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<main class="page">
+    {{#unless theme_settings.hide_page_heading }}
+    <h1 class="page-heading">{{ page.title }}</h1>
+    {{/unless}}
+
+    {{#if page.sub_pages}}
+    <nav class="navBar navBar--sub">
+        <ul class="navBar-section account-navigation">
+            {{#each page.sub_pages}}
+            <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+            {{/each}}
+        </ul>
+    </nav>
+    {{/if}}
+
+    <!-- Show cartridge selector on ink cartridge and toner cartridge web pages -->
+
+
+    <div class="page-content page-content--centered ">
+        {{#replace '%%Syndicate%%' page.content}}
+        {{> components/page/rss_feed}}
+        {{else}}
+        {{#if page.content}}
+        <p>{{{page.content}}}</p>
+        {{else}}
+        <div class="no-content">
+            <div class="no-content-inner">
+                <p>There is no content on this page, Please go to the admin and put some content on this page.</p>
+            </div>
+        </div>
+        {{/if}}
+        {{/replace}}
+    </div>
+
+    {{#if page.feed}}
+    <ul>
+        {{#each page.feed}}
+        <li>
+            <h6><a href="{{url}}" target="_blank">{{title}}</a></h6>
+            <p>{{content}}</p>
+        </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+</main>
+
+{{/partial}}
+
+{{> layout/base}}

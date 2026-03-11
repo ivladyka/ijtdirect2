@@ -1,0 +1,16 @@
+---
+blog:
+    posts:
+        limit: 15
+        pages: 3
+        summary: 200
+cart: true
+---
+
+{{#partial "page"}}
+    <div class="new-blog-post">
+        {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+        {{> components/blog/post post=blog.post show_tags=true}}
+    </div>
+{{/partial}}
+{{> layout/base}}

@@ -1,0 +1,28 @@
+<ul class="navPage-subMenu-list">
+  {{#each categories}}
+  {{#if is_active}}
+    {{#each children}}
+        <li class="navPage-subMenu-item">
+            <a
+                class="first-level navPage-subMenu-action navPages-action has-subMenu{{#if is_active}} activePage{{/if}} 123"
+                href="{{url}}"
+                data-collapsible="navPages-{{id}}"
+                data-collapsible-disabled-breakpoint="medium"
+                data-collapsible-disabled-state="open"
+                data-collapsible-enabled-state="closed">
+                {{name}}
+            </a>
+            {{#if children}}
+              <ul class="navPage-childList" id="navPages-{{id}}">
+                  {{#each children}}
+                  <li class="navPage-childList-item">
+                      <a class="navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                  </li>
+                  {{/each}}
+              </ul>
+            {{/if}}
+        </li>
+     {{/each}}
+     {{/if}}
+  {{/each}}
+</ul>

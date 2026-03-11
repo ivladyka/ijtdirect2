@@ -1,0 +1,27 @@
+<section class="productCarousel" data-slick='{
+  "slidesToShow": 3,
+  "slidesToScroll": 3,
+  "arrows":false,
+  "responsive": [
+      {
+          "breakpoint": 1260,
+          "settings": {
+              "slidesToShow": 3,
+              "slidesToScroll": 1
+          }
+      },
+      {
+          "breakpoint": 550,
+          "settings": {
+              "slidesToShow": 1,
+              "slidesToScroll": 1
+          }
+      }
+  ]
+}'>
+  {{#each products}}
+    <div class="productCarousel-slide js-product-slide">
+        {{> components/products/card product=this settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
+    </div>
+  {{/each}}
+</section>

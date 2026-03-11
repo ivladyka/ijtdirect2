@@ -1,0 +1,43 @@
+{{assignVar "featured" "0"}}
+{{#each post.tags}}{{#if name '==' 'featured'}}{{assignVar "featured" "featuredpost"}}{{/if}}{{/each}}
+
+{{#if post.body}}
+    <article class="blog">
+        <h1 class="blog-title">{{post.title}}</h1>
+        <img class="blog-img-container" src="{{getImage post.thumbnail}}"/>
+        <p style="text-align: right; font-weight: bold;">{{post.date_published}}<br>{{post.author}}</p>
+        <p>{{{post.body}}}</p>
+    </article>
+{{else}}
+{{#if (getVar 'featured') '==' '0'}}
+    <div class="blog-item">
+           
+            <div class="blog-item-content">
+                <figure class="blog-thumbnail"  style="background-image: url('{{getImageSrcset post.thumbnail 1x="640w"}}'); ">
+                    <a href="{{post.url}}">
+                        {{> components/common/responsive-img image=post.thumbnail fallback_size=theme_settings.blog_size lazyload=theme_settings.lazyload_mode  }}
+                    </a>
+                </figure>
+                <div class="blog-preview">
+                    <!-- <ul class="topic-tags">
+          {{#each post.tags}}
+          <li>
+              <a href="{{url}}">{{name}}</a>
+          </li>
+          {{/each}}
+      </ul>-->
+                    <div class="blog-text">
+                        <h3 class="blog-item-title">
+                            <a href="{{post.url}}">{{post.title}}</a>
+                        </h3>
+                        {{{post.summary}}}
+
+                    </div> 
+                    {{#if post.show_read_more}}
+                    <a class="blog-read-more" href="{{url}}">Read more...</a>
+                    {{/if}}
+                </div>
+            </div>
+    </div>
+{{/if}}
+{{/if}}

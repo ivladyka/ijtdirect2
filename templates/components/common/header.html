@@ -1,0 +1,117 @@
+{{#if banners.top}}
+<div class="banners" data-banner-location="top">
+    {{#each (limit banners.top_metadata 1)}}
+    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
+        <div data-event-type="promotion-click">
+            {{{this.content}}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+<header class="header" role="banner">
+    {{> components/common/navigation}}
+    <div class="container container-header">
+        <div class="logo-section mobile">
+            {{> components/common/store-logo}}
+        </div>
+        <div class="middle-section d-flex">
+            <div class="mobile-menu-open-btn clearfix">
+                <a href="#" class="mobileMenu-button" data-mobile-menu-toggle="menu" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="mobile-menu-close-btn align-right clearfix">
+                <a href="javascript:void(0)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="logo-section desktop">
+                {{> components/common/store-logo}}
+            </div>
+            <div class="responsive-search">
+                <ul>
+                    <li class="searc-icon">
+                        <a class="navUser-action--quickSearch mobile-quickSearch" href="javascript:void(0)" data-search="quickSearch" aria-controls="quickSearch" aria-expanded="false" aria-label="Quick Search"><svg><use xlink:href="#icon-mobile-search"></use></svg></a>
+                    </li>
+                    <li class="user-icon">
+                        <a href="{{urls.account.index}}" aria-label="User"><svg><use xlink:href="#icon-user"></use></svg></a>
+                    </li>
+                    <li class="phone-icon">
+                        <a href="tel:0800 083 4555" aria-label="Phone"><svg><use xlink:href="#icon-phone"></use></svg></a>
+                    </li>
+                    <li class="cart-icon-tablet">
+                        <div class="cart-section-tablet navUser-item--cart">
+                            <a class="navUser-action"
+                               data-cart-preview
+                               data-dropdown="cart-preview-dropdown-tablet"
+                               data-options="align:right"
+                               href="{{urls.cart}}" aria-label="Cart">
+                                <span class="navUser-item-cartLabel">{{lang 'common.cart'}}</span>
+                                <span class="cart-item-counts item-text"><strong></strong></span>
+                                <svg><use xlink:href="#icon-cart"></use></svg>
+                            </a>
+                            <div class="dropdown-menu" id="cart-preview-dropdown-tablet" data-dropdown-content></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="middle-right-section">
+                <div class="search-bar desktop" id="quickSearch" tabindex="-1" data-prevent-quick-search-close>
+                    {{> components/common/quick-search-desktop}}
+                </div>
+                <div class="cart-section navUser-item--cart">
+                    {{assignVar "cart-quantity" cart.quantity}}
+                    {{assignVar "6667S-quantity" 0}}
+                    {{assignVar "6668S-quantity" 0}}
+                    {{#each cart.items}}
+                    {{#if sku '==' '6667S'}}{{assignVar "6667S-quantity" quantity}}{{/if}}
+                    {{#if sku '==' '6668S'}}{{assignVar "6668S-quantity" quantity}}{{/if}}
+                    {{/each}}
+                    <i class="quantity-6667S">{{getVar "6667S-quantity"}}</i>
+                    <i class="quantity-6668S">{{getVar "6668S-quantity"}}</i>
+
+                    <a class="navUser-action"
+                       data-cart-preview
+                       data-dropdown="cart-preview-dropdown"
+                       data-options="align:right"
+                       href="{{urls.cart}}" aria-label="Cart">
+                        <span class="navUser-item-cartLabel">{{lang 'common.cart'}}</span>
+                        <span class="cart-item-counts item-text">
+                            <strong></strong>
+                        </span>
+                        <svg><use xlink:href="#icon-cart"></use></svg>
+                    </a>
+                    <div class="dropdown-menu" id="cart-preview-dropdown" data-dropdown-content aria-hidden="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-section" id="menu" data-menu>
+        <div class="container container-header">
+            {{> components/common/navigation-menu}}
+        </div>
+    </div>
+    {{> components/cs-custom/mobile-menu}}
+</header>
+<div class="search-bar mobile" id="quickSearch" tabindex="-1" data-prevent-quick-search-close>
+    {{> components/common/quick-search}}
+</div>
+<div class="usp-section">
+    <div class="container">
+        {{> components/cs-custom/usp-section}}
+    </div>
+</div>
+<div class=" cartridge-finder-accordion">
+    <div class="cartridge-accordion-block">
+        <div id="home-cartridge-finder" class=" usp-section">
+            <div class="container">
+                {{> components/cs-custom/find-section }}
+            </div>
+        </div>
+    </div>
+</div>

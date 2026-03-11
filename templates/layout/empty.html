@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ head.title }}</title>
+    {{{ head.meta_tags }}}
+    {{{ head.config }}}
+
+    <link href="{{ head.favicon }}" rel="shortcut icon">
+    {{#block "head"}}{{/block}}
+</head>
+
+    <body>
+        <script id="BC_GraphQL_Token" type="application/json">"{{settings.storefront_api.token}}"</script>
+    
+    {{#block "page"}}{{/block}}
+</body>
+</html>

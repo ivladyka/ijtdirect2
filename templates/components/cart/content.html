@@ -1,0 +1,477 @@
+
+<table class="cart" data-cart-quantity="{{cart.quantity}}">
+    <thead class="cart-header">
+        <tr>
+            <th class="cart-header-item" colspan="2">{{lang 'cart.checkout.item'}}</th>
+            <th class="cart-header-item">{{lang 'cart.checkout.price'}}</th>
+            <th class="cart-header-item cart-header-quantity">{{lang 'cart.checkout.quantity'}}</th>
+            <th class="cart-header-item">{{lang 'cart.checkout.total'}}</th>
+        </tr>
+    </thead>
+    <tbody class="cart-list">
+        {{#each cart.items}}
+        <tr class="cart-item {{#if custom_fields}}{{#each custom_fields}}{{#if name '==' 'related-product'}}cart-with-related-product{{/if}}{{/each}}{{/if}}" data-item-row style="{{#if name '==' 'Thank you for Swapping & Saving'}}display: none; {{else if name '==' 'Swap & Save'}}display: none;{{/if}}">
+            <td class="cart-item-block cart-item-figure">
+                {{#if type '==' 'GiftCertificate'}}
+                <img class="cart-item-fixed-image"
+                     src="{{cdn ../theme_settings.default_image_gift_certificate}}"
+                     alt="{{lang 'cart.gift_certificate'}}"
+                     title="{{lang 'cart.gift_certificate'}}">
+                {{else}}
+                {{> components/common/responsive-img  image=image  class="cart-item-image"  fallback_size=../theme_settings.productthumb_size lazyload='disabled'  default_image=../theme_settings.default_image_product}}
+                {{/if}}
+            </td>
+            <td class="cart-item-block cart-item-title">
+                {{#if brand.name}}
+                <p class="cart-item-brand">{{brand.name}}</p>
+                {{/if}}
+                <h2 class="cart-item-name">
+                    <a class="cart-item-name__label" href="{{url}}">{{name}}</a>
+                </h2>
+                <div class="cart-item-sku" style="{{#if sku '==' '6667S'}}display:none;{{/if}}">
+                    <p class="cart-item-sku-label">{{lang 'products.sku'}}</p>
+                    <p class="cart-item-sku-value">{{sku}}</p>
+                    <div class="cart-item-yields">
+                        {{#if custom_fields}}
+                        {{#filter custom_fields "page-yields-black" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Black">
+                                <svg class="page-yield-item-inkdrop--black"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-pigment-black" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Pigment Black">
+                                <svg class="page-yield-item-inkdrop--pigment-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-light-black" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Light Black">
+                                <svg class="page-yield-item-inkdrop--light-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-matte-black" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Matte Black">
+                                <svg class="page-yield-item-inkdrop--matte-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-black" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Black">
+                                <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-cyan" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Cyan">
+                                <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-light-cyan" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Light Cyan">
+                                <svg class="page-yield-item-inkdrop--light-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-cyan" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Cyan">
+                                <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-magenta" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Magenta">
+                                <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-vivid-light-magenta" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Vivid Light Magenta">
+                                <svg class="page-yield-item-inkdrop--vivid-light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-vivid-magenta" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Vivid Magenta">
+                                <svg class="page-yield-item-inkdrop--vivid-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-light-magenta" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Light Magenta">
+                                <svg class="page-yield-item-inkdrop--light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-magenta" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Magenta">
+                                <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-yellow" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Yellow">
+                                <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-colour" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Colour">
+                                <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-colour" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Colour">
+                                <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-grey" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Grey">
+                                <svg class="page-yield-item-inkdrop--grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-light-grey" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Light Grey">
+                                <svg class="page-yield-item-inkdrop--light-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-dark-grey" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Dark Grey">
+                                <svg class="page-yield-item-inkdrop--dark-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-grey" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Grey">
+                                <svg class="page-yield-item-inkdrop--photo-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-red" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Red">
+                                <svg class="page-yield-item-inkdrop--red"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-dark-red" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Dark Red">
+                                <svg class="page-yield-item-inkdrop--dark-red"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-blue" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Blue">
+                                <svg class="page-yield-item-inkdrop--blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-dark-blue" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Dark Blue">
+                                <svg class="page-yield-item-inkdrop--dark-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-photo-blue" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Photo Blue">
+                                <svg class="page-yield-item-inkdrop--photo-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-green" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Green">
+                                <svg class="page-yield-item-inkdrop--green"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-orange" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Orange">
+                                <svg class="page-yield-item-inkdrop--orange"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-violet" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Violet">
+                                <svg class="page-yield-item-inkdrop--violet"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-chroma-optimizer" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Chroma Optimizer">
+                                <svg class="page-yield-item-inkdrop--chroma-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-gloss-optimizer" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Gloss Optimizer">
+                                <svg class="page-yield-item-inkdrop--gloss-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{#filter custom_fields "page-yields-clear" property="name"}}
+                        <div class="cart-item-yield">
+                            <div class="page-yield-item-inkdrop" title="Clear">
+                                <svg class="page-yield-item-inkdrop--clear"><use xlink:href="#icon-inkdrop"></use></svg>
+                            </div>
+                            <div class="page-yield-item-value">
+                                <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                            </div>
+                        </div>
+                        {{/filter}}
+                        {{/if}}
+                    </div>
+                </div>
+
+                {{#if release_date}}
+                <p>({{release_date}})</p>
+                {{/if}}
+
+                {{#if options}}
+                <dl class="definitionList">
+                    {{#each options}}
+                    {{#unless name '===' 'CATEGORY_ID'}}
+                    <dt class="definitionList-key" data-option-name="{{name}}">{{name}}:</dt>
+                    <dd class="definitionList-value">
+                        {{#if is_file}}
+                        <a href="/viewfile.php?attributeId={{id}}&cartitem={{../id}}">{{value}}</a>
+                        {{else}}
+                        {{{ sanitize value}}}
+                        {{/if}}
+                    </dd>
+                    {{/unless}}
+                    {{/each}}
+                </dl>
+                {{!-- <a href="#" data-item-edit="{{id}}">{{lang 'cart.checkout.change'}}</a> --}}
+                {{/if}}
+                {{#if type '==' 'GiftCertificate'}}
+                <a href="{{edit_url}}">{{lang 'cart.checkout.change'}}</a>
+                {{/if}}
+                {{> components/cart/item-giftwrap this}}
+                {{#if event_date}}
+                <dl class="cart-item-options">
+                    <dt class="cart-item-option-title">
+                        {{event_date.name}}
+                    </dt>
+
+                    <dd class="cart-item-option-description">
+                        {{event_date.date}}
+                    </dd>
+                </dl>
+                {{/if}}
+            </td>
+            <td class="cart-item-block cart-item-info">
+                <span class="cart-item-label">{{lang 'cart.checkout.price'}}</span>
+                {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+                <span class="cart-item-value {{#if price_discounted}}price--discounted{{/if}}">{{price.formatted}}</span>
+                {{#if price_discounted}}
+                <span class="cart-item-value">{{price_discounted.formatted}}</span>
+                {{/if}}
+                {{else}}
+                {{> components/common/login-for-pricing}}
+                {{/or}}
+            </td>
+            <td class="cart-item-block cart-item-info cart-item-quantity">
+                <label class="form-label cart-item-label" for="qty-{{id}}">{{lang 'products.quantity'}}</label>
+                <div class="form-increment">
+                    <input class="form-input form-input--incrementTotal cart-item-qty-input"
+                           id="qty-{{id}}"
+                           name="qty-{{id}}"
+                           type="tel"
+                           value="{{quantity}}"
+                           data-quantity-min="{{min_purchase_quantity}}"
+                           data-quantity-max="{{max_purchase_quantity}}"
+                           data-quantity-min-error="{{lang 'products.quantity_min' quantity=min_purchase_quantity}}"
+                           data-quantity-max-error="{{lang 'products.quantity_max' quantity=max_purchase_quantity}}"
+                           min="1"
+                           pattern="[0-9]*"
+                           data-cart-itemid="{{id}}"
+                           data-action="manualQtyChange"
+                           aria-live="polite" {{#unless can_modify}} disabled{{/unless}}>
+                    {{#if can_modify}}
+                    <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="inc">
+                        <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
+                        <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-up" /></svg></i>
+                    </button>
+                    {{/if}}
+                    {{#if can_modify}}
+                    <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="dec">
+                        <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
+                        <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-down" /></svg></i>
+                    </button>
+                    {{/if}}
+                </div>
+
+            </td>
+
+            <td class="cart-item-block cart-item-info">
+                <span class="cart-item-label">{{lang 'cart.checkout.total'}}</span>
+                {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+                <strong class="cart-item-value {{#if total_discounted}}price--discounted{{/if}}">{{total.formatted}}</strong>
+                {{#if total_discounted}}
+                <strong class="cart-item-value">{{total_discounted.formatted}}</strong>
+                {{/if}}
+                {{else}}
+                {{> components/common/login-for-pricing}}
+                {{/or}}
+                {{#or can_modify (if type '==' 'GiftCertificate')}}
+                <button class="cart-remove icon"
+                        data-cart-itemid="{{id}}"
+                        data-confirm-delete="{{lang 'cart.confirm_delete'}}"
+                        aria-label="{{lang 'cart.remove_item'}}">
+                    <svg><use xlink:href="#icon-close"></use></svg>
+                </button>
+                {{/or}}
+                {{assignVar "cart-prod-mainprice" price.value}}
+            </td>
+
+        </tr>
+
+        {{#if custom_fields}}
+        {{#each custom_fields}}
+
+        {{#if name '==' 'related-product'}}
+        <tr class="cart-related-product-container">
+
+            <td colspan="5">
+                <div class="cart-related-product" cart-prod-mainprice="{{getVar 'cart-prod-mainprice'}}">
+                    <span style="display:none;">{{value}}</span>
+                    <div class="cart-related-product-container"></div>
+                </div>
+            </td>
+        </tr>
+        {{/if}}
+        {{/each}}
+        {{/if}}
+
+        {{/each}}
+    </tbody>
+</table>

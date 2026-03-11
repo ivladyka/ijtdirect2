@@ -1,0 +1,384 @@
+{{inject "productId" product.id}}
+<ul class="tabs" data-tab>
+    {{#if product.description}}
+    <li class="tab is-active">
+        <a class="tab-title" href="#tab-description">{{lang 'products.description'}}</a>
+    </li>
+    {{/if}}
+
+    <li class="tab ">
+        <a class="tab-title" href="#tab-specification">{{lang 'products.specification'}}</a>
+    </li>
+
+    <li class="tab">
+        <a class="tab-title"  href="#tab-deliveryinformation">
+            {{lang 'products.deliveryinformation'}}
+        </a>
+    </li>
+
+</ul>
+<div class="tabs-contents tab-content-custom accordion" >
+    {{#if product.description}}
+    <div class="tab-content is-active" id="tab-description">
+        <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+            <div class="accordion-navigation toggleLink is-open"  role="button"  data-collapsible="#tab-description-content">                    
+                <h5 class="accordion-title">
+                     Product Description
+                 </h5>
+                 <div class="accordion-navigation-actions">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                  </div>
+            </div>
+           <div id="tab-description-content" class="accordion-content is-open">
+               {{{product.description}}}
+            </div>
+        </div>
+        <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+            <div class="accordion-navigation toggleLink "  role="button"  data-collapsible="#tab-key-features">                    
+                <h5 class="accordion-title">
+                    {{lang 'products.key_features'}}
+                 </h5>
+                 <div class="accordion-navigation-actions">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                  </div>
+            </div>
+           <div id="tab-key-features" class="accordion-content">
+                  <ul>
+            {{#each product.custom_fields}}
+            {{#if name '==' 'features1'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features2'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features3'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features4'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features5'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features6'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features7'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features8'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features9'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{#if name '==' 'features10'}}
+            <li>{{{value}}}</li>
+            {{/if}}
+            {{/each}}
+        </ul>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+<div class="tab-content accordion" id="tab-specification">   
+ <div class="accordion-block" >
+                <div class="accordion-navigation toggleLink  is-open"
+                     role="button"
+                     data-collapsible="#tab-Overview">
+                    <h5 class="accordion-title">
+                       Overview
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-Overview" class="accordion-content  is-open">
+                  <ul>  
+                  <li><strong>Product Name:</strong> {{product.title}}</li>
+                   <li {{#unless product.upc}} style="display: none;" {{/unless}}><strong>{{lang 'products.upc'}}: </strong>{{product.upc}}</li>
+                    {{#each product.custom_fields}}
+                            {{#if name '==' 'OEM Part Number'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'Ink Type'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                           {{else if name '==' 'Cartridge Colour'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                           {{else if name '==' 'Colour'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'Ink Volume (ML)'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'Ink Volume'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'Page Yield'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-black'}}
+                              <li><strong>Page Yield Black: </strong>{{{value}}}</li>
+                              
+                                {{else if name '==' 'page-yields-pigment-black'}}
+                              <li><strong>Page Yield Pigment Black: </strong>{{{value}}}</li>
+                              
+                            {{else if name '==' 'page-yields-light-black'}}
+                               <li><strong>Page Yield Light Black: </strong>{{{value}}}</li>
+                               
+                            {{else if name '==' 'page-yields-matte-black'}}
+                                <li><strong>Page Yield Matte Black: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-photo-black'}}
+                                <li><strong>Page Yield Photo Black: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-cyan'}}
+                                <li><strong>Page Yield Cyan: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-light-cyan'}}
+                                <li><strong>Page Yield Light Cyan: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-photo-cyan'}}
+                                <li><strong>Page Yield Photo Cyan: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-magenta'}}
+                                <li><strong>Page Yield Magenta: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-vivid-light-magenta'}}
+                                <li><strong>Page Yield Vivid Light Magenta: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-vivid-magenta'}}
+                                <li><strong>Yield Vivid Magenta: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-light-magenta'}}
+                                <li><strong>Page Yield Light Magenta: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-photo-magenta'}}
+                               <li><strong>Page Yield Photo Magenta: </strong>{{{value}}}</li>
+                               
+                            {{else if name '==' 'page-yields-yellow'}}
+                                <li><strong>Page Yield Yellow: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-colour'}}
+                               <li><strong>Page Yield Colour: </strong>{{{value}}}</li>
+                               
+                            {{else if name '==' 'page-yields-photo-colour'}}
+                                <li><strong>Page Yield Photo Colour: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-grey'}}
+                                <li><strong>Page Yield Grey: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-light-grey'}}
+                                <li><strong>Page Yield Light Grey: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-dark-grey'}}
+                                <li><strong>Page Yield Dark Grey: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-photo-grey'}}
+                                <li><strong>Page Yield Photo Grey: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-red'}}
+                                <li><strong>Page Yield Red: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-dark-red'}}
+                                <li><strong>Page Yield Dark Red: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-blue'}}
+                                <li><strong>Page Yield Blue: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-dark-blue'}}
+                                <li><strong>Page Yield Dark Blue: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'page-yields-photo-blue'}}
+                                <li><strong>Page Yield Photo Blue: </strong>{{{value}}}</li>
+                            {{else if name '==' 'page-yields-green'}}
+                                <li><strong>Page Yield Green: </strong>{{{value}}}</li>
+                            {{else if name '==' 'page-yields-orange'}}
+                                <li><strong>Page Yield Orange: </strong>{{{value}}}</li>
+                            {{else if name '==' 'page-yields-violet'}}
+                               <li><strong>Page Yield Violet: </strong>{{{value}}}</li>
+                            {{else if name '==' 'page-yields-chroma-optimizer'}}
+                                <li><strong>Page Yield Chroma Optimizer: </strong>{{{value}}}</li>
+                           {{else if name '==' 'page-yields-gloss-optimizer'}}
+                                <li><strong>Page Yield Gloss Optimizer: </strong>{{{value}}}</li>
+                            {{else if name '==' 'page-yields-clear'}}
+                                <li><strong>Page Yield Clear: </strong>{{{value}}}</li>
+                            {{else if name '==' 'Print Technology'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                             {{else if name '==' 'Cartridge Type'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                            {{/if}}
+                     {{/each}}
+                    </ul>              
+                </div>
+    </div>
+ <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Weight'}}display:block;  {{else if name '==' 'Dimmensions'}}display:block; {{/if}} {{/each}}">
+                <div class="accordion-navigation toggleLink"
+                     role="button"
+                     data-collapsible="#tab-physical-specifications">
+                    <h5 class="accordion-title">
+                        Physical Specifications
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-physical-specifications" class="accordion-content">
+                  <ul>  
+                    {{#each product.custom_fields}}
+                            {{#if name '==' 'Weight'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                            
+                            {{else if name '==' 'Dimmensions'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                             {{else if name '==' 'Size'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                              {{else if name '==' 'Pack Size'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                               {{else if name '==' 'Pack Size'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                            {{/if}}
+                        {{/each}}
+                    </ul>              
+                </div>
+    </div>
+   <div class="accordion-block" style="display:none;  {{#each product.custom_fields}} {{#if name '==' 'Print Resoultion'}}display:block;  {{else if name '==' 'Operating Temp'}}display:block; {{else if name '==' 'Storage Temp'}}display:block; {{else if name '==' 'Operating Humidity'}}display:block; {{else if name '==' 'Storage Humidity'}}display:block; {{else if name '==' 'Shelf Life'}}display:block;{{/if}} {{/each}}">
+                <div class="accordion-navigation toggleLink "
+                     role="button"
+                     data-collapsible="#tab-technicaldetails">
+                    <h5 class="accordion-title">
+                        Technical Details
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-technicaldetails" class="accordion-content ">
+                  <ul>  
+                    {{#each product.custom_fields}}
+                             {{#if name '==' 'Print Resoultion'}}
+                            <li><strong>{{name}}: </strong>{{{value}}}</li>
+                            
+                           {{else if name '==' 'Operating Temp'}}
+                                <li><strong>Operating Temperature Range: </strong>{{{value}}}</li>
+                            
+                            {{else if name '==' 'Storage Temp'}}
+                                <li><strong>Storage Temperature Range: </strong>{{{value}}}</li>
+                            
+                           {{else if name '==' 'Operating Humidity'}}
+                                <li><strong>Operating Humidity Range: </strong>{{{value}}}</li>
+                            
+                           {{else if name '==' 'Storage Humidity'}}
+                                <li><strong>Storage Humidity Range: </strong>{{{value}}}</li>
+                                
+                            {{else if name '==' 'Shelf Life'}}
+                                <li><strong>{{name}}: </strong>{{{value}}}</li>
+                            {{/if}} 
+                        {{/each}}
+                    </ul>              
+                </div>
+    </div>
+</div>
+
+    <div class="tab-content accordion" id="tab-deliveryinformation">      
+            <div class="accordion-block">
+                <div class="accordion-navigation toggleLink is-open"
+                     role="button"
+                     data-collapsible="#tab-delivery1">
+                    <h5 class="accordion-title">
+                        Fast Dispatch
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+
+                <div id="tab-delivery1" class="accordion-content is-open">
+                    We dispatch 95% of orders the same day when placed before 3pm (Monday to Friday). Orders placed after 3pm, on weekends, or on bank holidays will be shipped the next working day.
+                </div>
+            </div>
+            <div class="accordion-block">
+                <div class="accordion-navigation toggleLink "
+                     role="button"
+                     data-collapsible="#tab-delivery2">
+                    <h5 class="accordion-title">
+                        Standard Shipping
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-delivery2" class="accordion-content">
+                    Most orders are sent via Royal Mail 1st Class or Royal Mail 24hr Tracked. Delivery usually takes 1–3 working days. Please note that delivery times are not guaranteed for untracked services.
+                </div>
+            </div>
+            <div class="accordion-block">
+                <div class="accordion-navigation toggleLink "
+                     role="button"
+                     data-collapsible="#tab-delivery3">
+                    <h5 class="accordion-title">
+                        Express Courier Option
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-delivery3" class="accordion-content ">
+                    For faster delivery, you can choose a DPD Express Courier service at checkout. Orders received before 3pm will be dispatched for next working day delivery (UK Mainland only).
+                    You’ll receive tracking updates, including delivery time estimates, via email or SMS directly from DPD.
+                </div>
+            </div>
+            <div class="accordion-block">
+                <div class="accordion-navigation toggleLink "
+                     role="button"
+                     data-collapsible="#tab-delivery4">
+                    <h5 class="accordion-title">
+                        Delivery Areas
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+                <div id="tab-delivery4" class="accordion-content ">
+                    We deliver throughout the UK and select European countries.
+
+                    Free UK Mainland delivery on orders over £30
+
+                    Small surcharges apply for delivery to Northern Ireland, Highlands, Channel Islands, and the following European countries: France, Spain, Germany, Netherlands, Ireland, and others.
+                </div>
+            </div>
+            <div class="accordion-block">
+                <div class="accordion-navigation toggleLink "
+                     role="button"
+                     data-collapsible="#tab-delivery5">
+                    <h5 class="accordion-title">
+                        Restricted Items
+                    </h5>
+                    <div class="accordion-navigation-actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--off" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon accordion-indicator toggleLink-text toggleLink-text--on" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" /></svg>
+                    </div>
+                </div>
+
+                <div id="tab-delivery5" class="accordion-content ">
+                    A limited number of products, such as power banks and lithium battery items, may be subject to additional shipping restrictions and delivery charges due to air freight limitations.
+                </div>
+            </div>
+       
+    </div>  
+</div>
+
+
+
+

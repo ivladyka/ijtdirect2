@@ -1,0 +1,39 @@
+<div class="header-top-section-inner">
+  <div class="container container-header">
+    <div class="header-top-bar">
+      <div class="header-top-section">
+        <div class="navUser">
+            <ul class="navUser-section navUser-section--alt d-flex align-v-center">
+                <li class="navUser-item call-item">
+                  {{#if settings.phone_number}}
+                    <a href="tel:{{lang 'footer.call_us' phone_number=settings.phone_number}}">
+                      <svg id="icon-phone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 107.386 106.913"><path d="M60.368,18.947A29.041,29.041,0,0,1,89.377,47.956a1.706,1.706,0,1,0,3.412,0A32.457,32.457,0,0,0,60.368,15.534a1.707,1.707,0,1,0,0,3.413Z"/><path d="M60.368,29.185a18.793,18.793,0,0,1,18.77,18.771,1.707,1.707,0,0,0,3.413,0A22.209,22.209,0,0,0,60.368,25.772a1.707,1.707,0,1,0,0,3.413Z"/><path d="M60.368,39.424A8.542,8.542,0,0,1,68.9,47.956a1.706,1.706,0,0,0,3.412,0A11.958,11.958,0,0,0,60.368,36.011a1.706,1.706,0,1,0,0,3.412Z"/><path d="M102.057,80.867h0L81.331,67.045a6.049,6.049,0,0,0-8.1,1.316l-6.038,7.762a2.58,2.58,0,0,1-3.308.7l-1.149-.633c-3.807-2.076-8.544-4.659-18.088-14.206S32.516,47.693,30.441,43.893l-.63-1.149a2.583,2.583,0,0,1,.682-3.32l7.758-6.036a6.052,6.052,0,0,0,1.317-8.1L25.746,4.562a6.017,6.017,0,0,0-8.112-1.826L8.967,7.942a12.229,12.229,0,0,0-5.575,7.235c-3.121,11.372-.773,31,28.137,59.911,23,23,40.118,29.179,51.886,29.179a30.213,30.213,0,0,0,8.02-1.047,12.215,12.215,0,0,0,7.235-5.575l5.211-8.662A6.019,6.019,0,0,0,102.057,80.867Z"/></svg>
+                      <span>Call us</span>
+                      {{lang 'footer.call_us' phone_number=settings.phone_number}}
+                    </a>
+                  {{/if}}
+                </li>
+                <li class="navUser-item">
+                  <a class="navUser-action" href="{{urls.account.index}}">{{lang 'common.account'}}</a>
+                </li>
+                {{#if customer}}
+                <li class="navUser-item">
+                  <a class="navUser-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+                </li>
+                {{else}}
+                <li class="navUser-item">
+                  <a class="navUser-action remove" href="{{urls.auth.login}}">{{lang 'common.login'}}</a><span>/</span><a class="navUser-action sign" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
+                </li>
+                {{/if}}
+                <li class="navUser-item">
+                  <a class="navUser-action" href="{{urls.account.orders.all}}">Fast Re-order</a>
+                </li>
+                <li class="navUser-item">
+                  <a class="navUser-action" href="/contact-us/">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

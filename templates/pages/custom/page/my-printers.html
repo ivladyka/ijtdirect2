@@ -1,0 +1,22 @@
+---
+cart: true
+---
+{{#each categories}}
+{{#if name '===' 'Cartridges'}}
+{{inject 'cartridges' this}}
+{{/if}}
+{{/each}}
+{{inject 'customer' customer}}
+
+{{#partial "page"}}
+<div class="account account--fixedLarge">
+    <h2 class="page-heading">{{lang 'account.my_printers.heading'}}</h2>
+    {{> components/account/navigation account_page='my_printers'}}
+
+    <div class="my-printers">
+        <h3 class="account--heading">My Printers</h3>
+        <div class="my-printers__table" id="my-printers-table"></div>
+    </div>
+</div>
+{{/partial}}
+{{> layout/base}}

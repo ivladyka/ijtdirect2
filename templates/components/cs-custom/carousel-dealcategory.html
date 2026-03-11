@@ -1,0 +1,44 @@
+<div class="productCarousel dealCategorySlider"
+     data-slick='{
+              "dots": false,
+              "infinite": true,
+               "arrow": true,
+              "slidesToShow": 2,
+              "slidesToScroll": 1,
+              "autoplay": true,
+              "swipe": true,
+              "swipeToSlide": true,
+              "autoplaySpeed": 4000,
+              "mobileFirst": true,
+              "slide": "[free-printer-deal2]",
+
+                  "responsive": [
+                 {
+                     "breakpoint": 768,
+                     "settings": {
+                     "slidesToScroll": 1,
+                     "slidesToShow": 4
+                     }
+                 },
+                 {
+                     "breakpoint": 1024,
+                     "settings": {
+                     "slidesToScroll": 1,
+                     "slidesToShow": 7
+                           }
+                 }
+
+               ]
+          }'>
+    {{#each category.products}}
+ 
+  
+        {{> components/products/card-deal  settings=../../settings show_compare=../../show_compare   show_rating=../../settings.show_product_rating theme_settings=../../theme_settings customer=../../customer show_aside=../../show_aside show_bulk_order=true event=../../event position=(add @index 1)}}
+
+
+   
+
+    {{/each}}
+</div>
+
+

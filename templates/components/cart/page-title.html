@@ -1,0 +1,8 @@
+<h1 class="page-heading" data-cart-page-title>
+    {{assignVar "cart-quantity" cart.quantity}}
+    {{assignVar "6667S-quantity" 0}}
+    {{assignVar "6668S-quantity" 0}}
+    {{#each cart.items}}{{#if sku '==' '6667S'}}{{assignVar "6667S-quantity" quantity}}{{/if}} {{#if sku '==' '6668S'}}{{assignVar "6668S-quantity" quantity}}{{/if}}{{/each}}
+    <!--  {{subtract (subtract (getVar "cart-quantity") (getVar "6667S-quantity")) (getVar "6668S-quantity")}}-->
+    {{lang 'cart.label' quantity=(subtract (subtract (getVar "cart-quantity") (getVar "6667S-quantity")) (getVar "6668S-quantity"))}}
+</h1>

@@ -1,0 +1,130 @@
+---
+cart: true
+---
+{{#partial "page"}}
+
+{{!-- EMPTY CART --}}
+<script>
+    const loadingOverlay = document.getElementsByClassName("loadingOverlay");
+    
+    fetch('/api/storefront/cart', {
+        credentials: 'include'
+    }).then(function(response) {
+        return response.json();
+    }).then(function(cartData) {
+        clearCart = function() {
+            if (cartData.length) {
+                for (var i=0; i < cartData.length; i++) {
+                    $.ajax({
+                        url: '/api/storefront/carts/' + cartData[i].id,
+                        contentType: 'application/json',
+                        type: 'DELETE',
+                        success: response => {
+                            loadingOverlay[0].style.display = "block";
+                            location.reload();
+                        }
+                    });
+                }
+            }
+            localStorage.removeItem('globalPromo');
+            Cookies.remove('ijtd_SwitchedItems');
+        }
+    });
+</script>
+    
+{{!-- GLOBAL PROMO --}}
+<script>
+    {{#if cart.items.length}}
+        {{#unless cart.coupons.length}}
+            // No cart promo exists
+            $(function() {
+                const sessionGlobalPromo = JSON.parse(localStorage.getItem('globalPromo'));
+                const couponInput = document.getElementById('couponcode');
+
+                // Add coupon to cart
+                if (sessionGlobalPromo) {
+                    couponInput.value = sessionGlobalPromo.coupon_code;
+                    setTimeout(function(){
+                        $('#couponCodeAdd').click();
+                        $('#couponCodeApply').click();
+                        couponInput.value = '';
+                    },300);
+                }
+            });
+        {{/unless}}
+    {{/if}}
+
+    $(function() {
+        // Remove coupon from cart
+        $('#removeCoupon').on('click', function(event){
+            event.preventDefault();
+            localStorage.removeItem('globalPromo');
+            window.location = $(this).attr('href');
+        });
+    });
+
+</script>
+
+<div class="page">
+
+    <main class="page-content" data-cart>
+        {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+        {{> components/cart/page-title}}
+
+        <div data-cart-status>
+            {{> components/cart/status-messages}}
+
+        </div>
+        <div class="raleted-product-message"  style="display:none">
+            <div class="alertBox alertBox--info">
+           
+                <p class="alertBox-column alertBox-message">
+                    <span>Thanks for swapping to IJT Direct</span>
+                </p>
+            </div>
+        </div>
+        {{#if cart.items.length}}
+        <div class="loadingOverlay"></div>
+
+        <div data-cart-content>
+            {{> components/cart/content}}
+        </div>
+
+        <div data-cart-totals>
+            {{> components/cart/totals}}
+        </div>
+
+        {{#if cart.show_primary_checkout_button}}
+        <div class="cart-actions">
+            <a class="button button--primary" href="{{urls.checkout.single_address}}" title="{{lang 'cart.checkout.title'}}">{{lang 'cart.checkout.button'}}</a>
+            {{#if cart.show_multiple_address_shipping}}
+            <a class="checkoutMultiple" href="{{urls.checkout.multiple_address}}">
+                {{lang 'cart.preview.checkout_multiple'}}
+            </a>
+            {{/if}}
+            <a class="button" href="javascript:clearCart()" title="{{lang 'cart.checkout.title'}}">Empty Cart</a>
+        </div>
+        {{else}}
+        <div class="cart-actions">
+            <a class="button" href="{{urls.home}}" title="{{lang 'cart.continue_shopping'}}">{{lang 'cart.continue_shopping'}}</a>
+        </div>
+        {{/if}}
+
+        {{#if cart.additional_checkout_buttons}}
+        <div class="cart-additionalCheckoutButtons">
+            {{#each cart.additional_checkout_buttons}}
+            {{{this}}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{else}}
+        <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
+        {{/if}}
+
+    </main>
+</div>
+
+{{/partial}}
+
+{{> layout/base-cart}}

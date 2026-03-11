@@ -1,0 +1,864 @@
+{{#each product.reviews.messages}}
+    {{#if error}}
+        {{> components/common/alert-error error}}
+    {{/if}}
+    {{#if success}}
+        {{> components/common/alert-success success}}
+    {{/if}}
+{{/each}}
+{{inject "categories" categories}}
+<div class="productView productView-with-options js-product" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+    <section class="productView-images" data-image-gallery>
+
+        <div class="product-mainImg-box">
+            <figure class="productView-image"
+                    data-image-gallery-main
+                    {{#if product.main_image}}
+                    data-zoom-image="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size }}"
+                    {{/if}}>
+                <div class="productView-img-container">
+                    {{!-- Remove the surrounding a-element if there is no main image. --}}
+                    {{#if product.main_image}}
+                    <a href="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size}}"
+                       target="_blank" {{#if schema}} itemprop="image" {{/if}}>
+                        {{/if}}
+                        {{> components/common/responsive-img  image=product.main_image class="productView-image--default" fallback_size=theme_settings.product_size lazyload=theme_settings.lazyload_mode default_image=theme_settings.default_image_product  otherAttributes="data-main-image"}}
+                        {{!-- Remove the surrounding a-element if there is no main image. --}}
+                        {{#if product.main_image}}
+                    </a>
+                    {{/if}}
+                </div>
+            </figure>
+            <a class="fancy-image" href="javascript:void(0)" rel="nofollow">
+                <svg>
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+            </a>
+        </div>
+
+
+        <ul class="productView-thumbnails" {{#gt product.images.length 4}} data-slick='{
+                "infinite": false,
+                "slidesToShow": 3,
+                "arrows":false,
+                "dots":true,
+                "slidesToScroll": 1
+            }' {{/gt}}>
+            {{#each product.images}}
+            <li class="productView-thumbnail">
+                <a class="productView-thumbnail-link {{#if (stripQuerystring (getImage ../product.main_image 'product_size' (cdn ../theme_settings.default_image_product))) '==' (stripQuerystring (getImage this 'product_size' (cdn ../theme_settings.default_image_product))) }}is-active{{/if}}"
+                   href="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.zoom_size}}"
+                   data-image-gallery-item
+                   data-image-gallery-new-image-url="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.product_size}}"
+                   data-image-gallery-new-image-srcset="{{getImageSrcset this use_default_sizes=true}}"
+                   data-image-gallery-zoom-image-url="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.zoom_size}}"
+                   data-orginal-img="{{stripQuerystring (getImage this 'original_size' (cdn ../theme_settings.default_image_product))}}">
+                    {{> components/common/responsive-img image=this fallback_size=../theme_settings.productview_thumb_size lazyload=../theme_settings.lazyload_mode}}
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+       
+    </section>
+
+    <div class="hidden-box-img" style="display: none;">
+        {{#each product.images}}
+            <a class="{{#if (stripQuerystring (getImage ../product.main_image 'product_size' (cdn ../theme_settings.default_image_product))) '==' (stripQuerystring (getImage this 'product_size' (cdn ../theme_settings.default_image_product))) }}is-active{{/if}}" data-fancybox="gallery" href="{{stripQuerystring (getImage this 'original_size' (cdn ../theme_settings.default_image_product))}}" rel="nofollow">click</a>
+        {{/each}}
+    </div>
+
+    <section class="productView-details productView-details-with-options">
+        <div class="productView-product">
+            <div class="productView-details-with-options-top">
+                <div class="productView-details-with-options-top-left">
+                    {{product.detail_messages}}
+                    <dl class="productView-info">
+                        <dt class="productView-info-name brand-name" {{#unless product.brand.name}} style="display: none;" {{/unless}}>{{product.brand.name}}</dt>
+                        <br>
+                        <dt class="productView-info-name sku-label" {{#unless product.sku}} style="display: none;" {{/unless}}>{{lang 'products.sku'}}</dt>
+                        <dd class="productView-info-value" data-product-sku{{#if schema}} itemprop="sku" {{/if}}>{{product.sku}}</dd>
+                        <br>
+                        <dt class="productView-info-name upc-label" {{#unless product.upc}} style="display: none;" {{/unless}}>{{lang 'products.upc'}}</dt>
+                        <dd class="productView-info-value" data-product-upc {{#unless product.upc}} style="display: none;" {{/unless}}>{{product.upc}}</dd>
+                        <br>
+                        <dt class="productView-info-name" {{#unless product.mpn}} style="display: none;" {{/unless}}>MPN: <span class="normaltxt">{{product.mpn}}</span></dt>
+                        <br>
+                        {{#if schema}}
+                        {{#if product.mpn}}
+                        <meta itemprop="mpn" content="{{product.mpn}}" />
+                        {{/if}}
+                        {{#if product.gtin}}
+                        <meta itemprop="gtin" content="{{product.gtin}}" />
+                        {{/if}}
+                        {{/if}}
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'cartridges-included'}}
+                        {{{value}}}
+                        <br>
+                        {{/if}}
+                        {{/each}}
+                        {{#if product.condition}}
+                        <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
+                        <dd class="productView-info-value">{{product.condition}}</dd>
+                        <br>
+                        {{/if}}
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'condition'}}
+                        <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
+                         <dd class="productView-info-value  productcondition-value">
+                            {{{value}}}
+                            <div class="product-condition-value-box">
+                                {{#if value '==' 'New'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                 Brand new unused product. Includes surplus, aged and unopened return stock. Sold with a 12 month manufacturer warranty. In original packaging. Unless otherwise specified.
+                                </p>
+                                {{else if value '==' 'As New'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                 Open boxed returns/cancellations/surplus or full factory reconditioned stocks in Good As New condition. Sold with a full 12 month warranty. Shipped in retail or plain box. Packaging may show marks. Check individual items for additional specifications or special conditions.
+                                </p>
+                                {{else if value '==' 'Refurbished / Grade A1'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                 Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                </p>
+                                 {{else if value '==' 'Refurbished / Grade A'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                Thoroughly tested and inspected. Products may show minor cosmetic marks and signs of use, including small scratches, dents or wear marks on keyboards/screens/touchpads. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                </p>
+                                {{else if value '==' 'Refurbished / Grade A2'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                  Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                </p>
+                                  {{else if value '==' 'Refurbished / Grade B'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                  Thoroughly tested and inspected. Products may show medium cosmetic marks and signs of use, including medium scratches, dents or wear marks on keyboards/screens/touchpads or minor cosmetic damage. Sold boxed with charging cable. 12 month UK warranty included unless otherwise stated. No defect will affect item use/performance. Check individual items for additional specifications or special conditions.
+                                </p>
+                                {{else if value '==' 'Pre-Owned'}}
+                                <h5>{{{value}}}</h5>
+                                <p>
+                                  All items are thoroughly tested, sold in working condition. Products are pre-owned (not refurbished) and may have significant cosmetic marks, scratches or dents but none that affect the functionality of the item. All items are sold with a 30 day UK warranty unless otherwise stated.
+                                </p>
+                                {{/if}}
+                            </div>
+                        </dd>
+                        <br>
+                        {{/if}}
+                        {{/each}}
+                        {{#if product.warranty}}
+                        <dt class="productView-info-name">{{lang 'products.warranty'}}</dt>
+                        <dd class="productView-info-value">{{{product.warranty}}}</dd>
+                        <br>
+                        {{/if}}
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'page-yields'}}
+                        <dt class="productView-info-name">{{lang 'products.page_yield'}}</dt>
+                        <dd class="productView-info-value">{{{value}}}</dd>
+                        <br>
+                        {{/if}}
+                        {{/each}}
+                        {{#if product.availability}}
+                        <dt class="productView-info-name">{{lang 'products.availability'}}</dt>
+                        <dd class="productView-info-value">{{product.availability}}</dd>
+                        {{/if}}
+                        {{#all product.weight theme_settings.show_product_weight}}
+                        <dt class="productView-info-name">{{lang 'products.weight'}}</dt>
+                        <dd class="productView-info-value" data-product-weight>{{product.weight}}</dd>
+                        {{/all}}
+                        {{#all product.width product.height product.depth theme_settings.show_product_dimensions}}
+                        <dt class="productView-info-name">{{lang 'products.width'}}</dt>
+                        <dd class="productView-info-value" data-product-width>
+                            {{product.width}}
+                            {{#if settings.measurements.length '==' 'Centimeters'}}
+                            ({{lang 'products.measurement.metric'}})
+                            {{else}}
+                            ({{lang 'products.measurement.imperial'}})
+                            {{/if}}
+                        </dd>
+                        <dt class="productView-info-name">{{lang 'products.height'}}</dt>
+                        <dd class="productView-info-value" data-product-height>
+                            {{product.height}}
+                            {{#if settings.measurements.length '==' 'Centimeters'}}
+                            ({{lang 'products.measurement.metric'}})
+                            {{else}}
+                            ({{lang 'products.measurement.imperial'}})
+                            {{/if}}
+                        </dd>
+                        <dt class="productView-info-name">{{lang 'products.depth'}}</dt>
+                        <dd class="productView-info-value" data-product-depth>
+                            {{product.depth}}
+                            {{#if settings.measurements.length '==' 'Centimeters'}}
+                            ({{lang 'products.measurement.metric'}})
+                            {{else}}
+                            ({{lang 'products.measurement.imperial'}})
+                            {{/if}}
+                        </dd>
+                        {{/all}}
+                        {{#if product.min_purchase_quantity}}
+                        <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
+                        {{/if}}
+                        {{#if product.max_purchase_quantity}}
+                        <dt class="productView-info-name">{{lang 'products.max_purchase_quantity'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.max_purchase_quantity}}</dd>
+                        {{/if}}
+                        {{#if product.gift_wrapping_available}}
+                        <dt class="productView-info-name">{{lang 'products.gift_wrapping'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.gift_wrapping_available'}}</dd>
+                        {{/if}}
+                        {{#each product.custom_fields}}
+                        {{#if name '==' 'printer'}}
+                        <dt class="productView-info-name">{{name}}:</dt>
+                        <dd class="productView-info-value">{{value}}</dd>
+                        {{/if}}
+                        {{/each}}
+                        {{#if product.shipping}}
+                        {{#if product.shipping.calculated}}
+                        <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.shipping_calculated'}}</dd>
+                        {{else}}
+                        {{#if product.shipping.price.value '===' 0}}
+                        <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.shipping_free'}}</dd>
+                        {{else}}
+                        <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.shipping_fixed' amount=product.shipping.price.formatted}}</dd>
+                        {{/if}}
+                        {{/if}}
+                        {{/if}}
+                    </dl>
+
+                    <div class="page-yield-info">
+                        <p class="listItem-title js-page-yield-title">Page Yields</p>
+                        <ul>
+                            {{#each product.custom_fields}}
+                            {{#if name '==' 'page-yields-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Black">
+                                    <svg class="page-yield-item-inkdrop--black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-pigment-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Pigment Black">
+                                    <svg class="page-yield-item-inkdrop--pigment-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-light-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Black">
+                                    <svg class="page-yield-item-inkdrop--light-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-matte-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Matte Black">
+                                    <svg class="page-yield-item-inkdrop--matte-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Black">
+                                    <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Cyan">
+                                    <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-light-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Cyan">
+                                    <svg class="page-yield-item-inkdrop--light-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Cyan">
+                                    <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Magenta">
+                                    <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-vivid-light-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Vivid Light Magenta">
+                                    <svg class="page-yield-item-inkdrop--vivid-light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-vivid-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Vivid Magenta">
+                                    <svg class="page-yield-item-inkdrop--vivid-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-light-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Magenta">
+                                    <svg class="page-yield-item-inkdrop--light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Magenta">
+                                    <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-yellow'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Yellow">
+                                    <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-colour'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Colour">
+                                    <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-colour'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Colour">
+                                    <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Grey">
+                                    <svg class="page-yield-item-inkdrop--grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-light-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Grey">
+                                    <svg class="page-yield-item-inkdrop--light-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-dark-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Grey">
+                                    <svg class="page-yield-item-inkdrop--dark-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Grey">
+                                    <svg class="page-yield-item-inkdrop--photo-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-red'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Red">
+                                    <svg class="page-yield-item-inkdrop--red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-dark-red'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Red">
+                                    <svg class="page-yield-item-inkdrop--dark-red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Blue">
+                                    <svg class="page-yield-item-inkdrop--blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-dark-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Blue">
+                                    <svg class="page-yield-item-inkdrop--dark-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-photo-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Blue">
+                                    <svg class="page-yield-item-inkdrop--photo-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-green'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Green">
+                                    <svg class="page-yield-item-inkdrop--green"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-orange'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Orange">
+                                    <svg class="page-yield-item-inkdrop--orange"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-violet'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Violet">
+                                    <svg class="page-yield-item-inkdrop--violet"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-chroma-optimizer'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Chroma Optimizer">
+                                    <svg class="page-yield-item-inkdrop--chroma-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-gloss-optimizer'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Gloss Optimizer">
+                                    <svg class="page-yield-item-inkdrop--gloss-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{#if name '==' 'page-yields-clear'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Clear">
+                                    <svg class="page-yield-item-inkdrop--clear"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li>
+                            {{/if}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="productView-details-with-options-top-right">
+                    <div class="productView-details__key-features">
+                        <ul>
+                            {{#each product.custom_fields}}
+                            {{#if name '==' 'features1'}}
+                            <strong>{{lang 'products.key_features'}}</strong>
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features2'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features3'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features4'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features5'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features6'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features7'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features8'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features9'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{#if name '==' 'features10'}}
+                            <li>{{{value}}}</li>
+                            {{/if}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="productView__price-and-purchase">
+                <h5>Upgrade Options</h5>
+                {{#if product.bulk_discount_rates.length}}
+                <div class="js-bulk-price-table productView-info-bulkPricing"
+                     {{#if page_type '===' 'product'}}
+                     data-proid={{product.id}}
+                     {{else}}
+                     data-proid={{id}}
+                     {{/if}}
+                     {{#each product.custom_fields}}
+                     {{#if name '==' 'promoCategory'}}
+                     data-promoCat={{value}}
+                     {{/if}}
+                     {{/each}}
+                     data-price={{price.with_tax.value}}
+                     data-curr={{price.with_tax.currency}}
+                     {{#each product.custom_fields}}
+                     {{#if name '==' 'PromoCategory'}}
+                     data-promo-category={{value}}
+                     {{/if}}
+                     {{/each}}>
+                    <!-- {{> components/products/bulk-discount-rates productpage="productpage" bulk_discount_rates=product.bulk_discount_rates}} -->
+                    <!-- editing here -->
+                    <table>
+                        <th class="productView-info-bulkPricing__title" colspan="2">{{lang 'products.bulk_pricing.instructions'}}</th>
+                        {{#if product.bulk_discount_rates.[0].min '>' 1}}
+                        {{#if (subtract product.bulk_discount_rates.[0].min 1) '==' 1}}
+                        <tr itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <td>1</td>
+                            <td class="js-bulk-price">{{product.price.with_tax.formatted}}</td>
+                            <td style='display: none'>
+                                <!-- meta1 -->
+                                <meta itemprop="price" content="{{product.price.with_tax.value}}">
+                                <meta itemprop="priceCurrency" content="{{product.price.with_tax.currency}}">
+                                <link itemprop="availability" href="https://schema.org/InStock">
+                                <meta itemprop="eligibleQuantity" content="1">
+                            </td>
+                        </tr>
+                        {{else}}
+                        <tr itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <td>1 - {{subtract product.bulk_discount_rates.[0].min 1 }}</td>
+                            <td class="js-bulk-price">{{product.price.with_tax.formatted}}</td>
+                            <td style='display: none'>
+                                <!-- meta2 -->
+                                <meta itemprop="price" content="{{product.price.with_tax.value}}">
+                                <meta itemprop="priceCurrency" content="{{product.price.with_tax.currency}}">
+                                <link itemprop="availability" href="https://schema.org/InStock">
+                                <meta itemprop="eligibleQuantity" content="1-{{subtract product.bulk_discount_rates.[0].min 1}}">
+                            </td>
+                        </tr>
+                        {{/if}}
+                        {{/if}}
+                        {{#each product.bulk_discount_rates}}
+                        <tr class='testclass'>
+                            <td>{{lang 'products.bulk_pricing.range' min=min max=max}}</td>
+                            <td class="js-bulk-price">{{#if type '===' 'percent'}}{{lang 'products.bulk_pricing.percent' discount=discount.formatted}}{{/if}}{{#if type '===' 'fixed'}}{{lang 'products.bulk_pricing.fixed' discount=discount.formatted}}{{/if}}{{#if type '===' 'price'}}{{lang 'products.bulk_pricing.price' discount=discount.formatted}}{{/if}}</td>
+                            <td style='display: none'>
+                                <meta itemprop="price" content="{{product.price.with_tax.value}}">
+                                <meta itemprop="priceCurrency" content="{{product.price.with_tax.currency}}">
+                                <link itemprop="availability" href="https://schema.org/InStock">
+                                <meta itemprop="eligibleQuantity" content="1-{{max}}">
+                            </td>
+                        </tr>
+
+
+                        {{/each}}
+                    </table>
+                </div>
+                {{else}}
+                <div class="product-detail-first-section" style="{{#if product.out_of_stock}}justify-content: space-between;{{/if}} {{#if product.can_purchase}}{{else}}justify-content: space-between;{{/if}}">
+
+
+                    {{{region name="product_below_price"}}}
+
+                    <div class="productView-options">
+                        {{#if product.release_date }}
+                        <p>{{product.release_date}}</p>
+                        {{/if}}
+                        <form></form>
+                        <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
+                              data-cart-item-add>
+                            <div data-product-option-change style="display:none;" class="data-product-option-change {{#if product.out_of_stock}}out_of_stock{{/if}} {{#if product.can_purchase}}{{else}}out_of_stock{{/if}}" >
+                                {{#each product.options}}
+                                {{{dynamicComponent 'components/products/options'}}}
+                                {{/each}}
+                            </div>
+                            <input type="hidden" name="action" value="add">
+                            <input type="hidden" name="product_id" value="{{product.id}}" />
+                            <div class="productView-card-box">
+                                {{#if product.can_purchase}}
+                                <div class="form-field form-field--increments">
+                                    <label class="form-label form-label--alternate"
+                                           for="qty[]">{{lang 'products.quantity'}}</label>
+
+                                    <div class="form-increment" data-quantity-change>
+                                        <button class="js-dec-qty button button--icon" data-action="dec" type="button">
+                                            <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
+                                            <i class="icon" aria-hidden="true">
+                                                -
+                                            </i>
+                                        </button>
+                                        <input class="js-qty-input form-input form-input--incrementTotal"
+                                               id="qty[]"
+                                               name="qty[]"
+                                               type="tel"
+                                               value="{{#if product.min_purchase_quantity}}{{product.min_purchase_quantity}}{{else}}1{{/if}}"
+                                               data-quantity-min="{{product.min_purchase_quantity}}"
+                                               data-quantity-max="{{product.max_purchase_quantity}}"
+                                               min="1"
+                                               pattern="[0-9]*"
+                                               aria-live="polite">
+                                        <button class="js-inc-qty button button--icon" data-action="inc" type="button">
+                                            <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
+                                            <i class="icon" aria-hidden="true">
+                                                +
+                                            </i>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                                {{#or product.min_purchase_quantity product.max_purchase_quantity}}
+                                <div class="min-max-purchase">
+                                    {{/or}}
+                                    {{#if product.min_purchase_quantity}}
+                                    <div>
+                                        <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
+                                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
+                                    </div>
+                                    {{/if}}
+                                    {{#if product.max_purchase_quantity}}
+                                    <div>
+                                        <dt class="productView-info-name">{{lang 'products.max_purchase_quantity'}}</dt>
+                                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.max_purchase_quantity}}</dd>
+                                    </div>
+                                    {{/if}}
+                                    {{#or product.min_purchase_quantity product.max_purchase_quantity}}
+                                </div>
+                                {{/or}}
+                                
+                                <div class="alertBox productAttributes-message" style="display:none">
+                                    <div class="alertBox-column alertBox-icon">
+                                        <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+                                    </div>
+                                    <p class="alertBox-column alertBox-message"></p>
+                                </div>
+                                
+                                {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                                <div class="form-action">
+                                    <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary button--green" type="submit"
+                                           value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}" {{#if product.custom_fields}} {{#filter product.custom_fields "related-product" property="name"}} data-product-raleted="true" {{/filter}} {{/if}}>
+                                </div>
+                                {{/or}}
+                                
+                                <link itemprop="availability" href="https://schema.org/InStock" />
+                                {{/if}}
+                                {{#if product.call_for_price}}
+                                <p class="productView-price">
+                                    <span>{{product.call_for_price}}</span>
+                                </p>
+                                {{/if}}
+                                <div class="productView-price js-product-price">
+                                    {{#if product.price.retail_price_range}}
+                                    {{#if product.price.retail_price_range.max.with_tax.value}}
+                                    {{#if product.price.with_tax.value '!==' product.price.retail_price_range.max.with_tax.value}}
+                                    <span class="price-formatted without-or">{{product.price.retail_price_range.max.with_tax.formatted}}</span>
+                                    {{/if}}
+                                    {{/if}}
+                                    {{else}}
+                                    {{product.price.rrp_with_tax.value}}
+                                    {{/if}}
+                                    {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                                    {{#if product.price.retail_price_range}}
+                                    {{#if product.price.retail_price_range.max.with_tax.value}}
+                                    {{#if product.price.with_tax.value '!==' product.price.retail_price_range.max.with_tax.value}}
+                                    <span class="price-formatted">{{product.price.retail_price_range.max.with_tax.formatted}}</span>
+                                    {{/if}}
+                                    {{/if}}
+                                    {{else}}
+
+
+                                    {{#if product.price.non_sale_price_with_tax.value '!=' product.price.sale_price_with_tax.value}}
+                                    Was:  <span class="strikethrough">{{product.price.non_sale_price_with_tax.formatted}}</span>
+                                    {{/if}}
+
+
+                                    {{/if}}
+                                    {{> components/products/price price=product.price schema_org=schema product=product}}
+                                    {{else}}
+                                    {{> components/common/login-for-pricing}}
+                                    {{/or}}
+                                </div>
+                            </div>
+                            {{/if}}
+                              {{#if product.out_of_stock}}
+                                        <div class="stock-level">
+                                            <span class="stock-level__out-of-stock" id="pdp-out-of-stock-message">Not in Stock</span>
+                                            <link itemprop="availability" href="https://schema.org/OutOfStock" />
+                                        </div>
+                                 {{/if}}
+                                {{#if product.can_purchase}}
+                                {{else}}
+                                <div class="alertBox alertBox--error alertBox-out-of-stock">
+                                    <div class="alertBox-column alertBox-icon">
+                                        <icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+                                    </div>
+                                    <p class="alertBox-column alertBox-message">
+                                        <span id="alertBox-message-text">Out of stock</span>
+                                    </p>
+                                </div>
+                                {{/if}} 
+         
+                    </div>
+                  
+                    </form>
+                </div>
+            </div>
+             
+            <p class="productView-details-with-options-note">Please note that any upgrades will delay shipping by approximately 2-3 working days</p>
+             <div class="productView-rating" {{#if product.num_reviews '>' 0}} {{#if schema}} itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" {{/if}} {{/if}}>
+            {{#if settings.show_product_rating}}
+            {{#if product.num_reviews '>' 0}}
+            {{#if schema}}
+            <meta itemprop="ratingValue" content="{{product.rating}}">
+            <meta itemprop="ratingCount" content="{{product.num_reviews}}">
+            <meta itemprop="reviewCount" content="{{product.num_reviews}}">
+            {{/if}}
+            {{/if}}
+            {{> components/products/ratings rating=product.rating}}
+            {{#if product.num_reviews '>' 0}}
+            <a href="{{product.url}}#product-reviews" id="productReview_link">
+                {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
+            </a>
+            {{else}}
+            <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
+            {{/if}}
+            {{/if}}
+            {{#if settings.show_product_reviews}}
+            <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
+               class="productView-reviewLink productView-reviewLink--new"
+               {{#unless is_ajax}} data-reveal-id="modal-review-form" {{/unless}}
+               role="button">
+                {{lang 'products.reviews.new'}}
+            </a>
+            {{> components/products/modals/writeReview}}
+            {{/if}}
+        </div>
+        </div>    
+    </section>
+
+</div>
+<article class="productView-description"{{#if schema}} itemprop="description"{{/if}}>
+    {{#if theme_settings.show_product_details_tabs}}
+        {{> components/products/description-tabs}}
+    {{else}}
+        {{> components/products/description}}
+    {{/if}}
+</article>
+
+<div id="previewModal" class="modal modal--large" data-reveal>
+    <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
+        <span aria-hidden="true">&#215;</span>
+    </a>
+    <div class="modal-content"></div>
+    <div class="loadingOverlay"></div>
+</div>
+    

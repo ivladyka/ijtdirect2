@@ -1,0 +1,88 @@
+<div class="mobile-menu-block">
+  <div class="mobile-menu-inner clearfix">
+    <div class="mobile-menu-item">
+      <ul class="mobile-menu-list treeview">
+        {{#unless theme_settings.hide_content_navigation}}
+            {{#each pages}}
+              {{#if name '==' 'Hardware'}}
+                {{#each children}}
+                  <li class="mobile-menu-list-item">
+                    <a class="menu-item" href="{{url}}">{{name}}</a>
+                    {{#if children}}
+                      <ul>
+                        {{#each children}}
+                          <li>
+                            <a href="{{url}}" class="{{name}}">{{name}}</a>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    {{/if}}
+                  </li>
+                {{/each}}
+              {{/if}}
+            {{/each}}
+        {{/unless}}
+      </ul>
+      <a href='{{GLOBAL_ShopPath}}/categories' class='me_viewall'>VIEW ALL CATEGORIES</a>
+    </div>
+    <div class="account-sidebar-section">
+      <ul class="navUser-section">
+        <li class="navUser-item">
+          <a class="navUser-action" href="{{urls.account.index}}">{{lang 'common.account'}}</a>
+        </li>
+        {{#if customer}}
+        <li class="navUser-item">
+          <a class="navUser-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+        </li>
+        {{else}}
+        <li class="navUser-item account-link">
+          <a class="navUser-action remove" href="{{urls.auth.login}}">{{lang 'common.login'}}</a><span>/</span><a class="navUser-action sign" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
+        </li>
+        {{/if}}
+        <li class="navUser-item">
+          <a class="navUser-action" href="{{urls.account.orders.all}}">Fast Re-order</a>
+        </li>
+        <li class="navUser-item">
+          <a class="navUser-action" href="/contact-us/">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+    <div class="webpages-section">
+      {{#each pages}}
+        {{#if name '==' 'Footer Navigation'}}
+          {{#each children}}
+            {{#if name '==' 'SHOPPING ONLINE'}}
+              <ul class="navUser-section">
+                {{#each children}}
+                  <li class="navUser-item"><a class="navUser-action" href="{{url}}">{{name}}</a></li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      {{/each}}
+    </div>
+    <div class="contact-section">
+      {{#if settings.phone_number}}
+        <div class="contact-icon">
+          <svg><use xlink:href="#icon-phone"></use></svg>
+        </div>
+        <div class="contact-content">
+          <span>Call us</span>
+          <a href="tel:{{lang 'footer.call_us' phone_number=settings.phone_number}}">
+            {{lang 'footer.call_us' phone_number=settings.phone_number}}
+          </a>
+        </div>
+      {{/if}}
+    </div>
+    <div class="social-icon-section">
+      {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
+          <div class="footer-info-col--social footer-info-col--{{#if theme_settings.social_icon_placement_bottom '===' 'bottom_left'}}left{{else}}right{{/if}}"
+              data-section-type="footer-webPages">
+                  <h5 class="footer-info-heading">{{lang 'social.connect'}}</h5>
+                  {{> components/common/social-links}}
+          </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

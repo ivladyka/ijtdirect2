@@ -1,0 +1,46 @@
+<div class="list-quantity-box">
+  <div class="form-field form-field--increments">
+      <label class="form-label form-label--alternate"
+             for="qty[]">{{lang 'products.quantity'}}</label>
+
+            {{#each custom_fields}}
+                {{#if (concat 'CATEGORY-' ../category_name) '==' name}}
+                    <div class="form-increment">
+                        <button class="button button-dec" data-action="dec">
+                            <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
+
+                            <i class="icon" aria-hidden="true">
+                                <svg>
+                                    <use xlink:href="#icon-keyboard-arrow-down"></use>
+                                </svg>
+                            </i>
+                        </button>
+                        <input class="form-input form-input--incrementTotal list-qty" id="qty-{{id}}" name="qty"
+                             type="text"
+                             value="1"
+                             pattern="[0-9]*"
+                             data-product-sku="{{{sanitize value}}}"
+                             >
+                        <button class="button button-inc" data-action="inc">
+                            <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
+
+                            <i class="icon" aria-hidden="true">
+                                <svg>
+                                    <use xlink:href="#icon-keyboard-arrow-up"></use>
+                                </svg>
+                            </i>
+                        </button>
+                   </div>
+                   
+                    <div class="form-action">
+                       
+                        <a href="/cart.php?action=add&qty=1&sku={{#startsWith "SKU" value}}{{#withAfter (split value "-") 1}}{{this}}{{/withAfter}}{{else}}{{{sanitize value}}}{{/startsWith}}" data-product-id="{{id}}" data-event-type="product-click" data-product-sku="{{value}}" class="button button--small card-figcaption-button cartadd">
+                            {{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_carts'}}{{/if}}
+                        </a>
+                    </div>
+
+                {{/if}}
+                
+            {{/each}}
+  </div>
+</div>

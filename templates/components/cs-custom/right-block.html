@@ -1,0 +1,116 @@
+<!-- Global Promo Banner -->
+<div id="globalPromoBanner" class="global-promo-banner">
+    <p>Applied: <span id="globalPromoBannerMessage"></span></p>
+</div>
+<script>
+    // This ensures there is no delay in populating the global promo banner if a promo is already applied at page load
+    const sessionGlobalPromo = JSON.parse(localStorage.getItem('globalPromo'));
+    if (sessionGlobalPromo) {
+        document.getElementById('globalPromoBanner').classList.add('show');
+        document.getElementById('globalPromoBannerMessage').textContent = sessionGlobalPromo.name;
+    }
+</script>
+<!-- Global Promo Input -->
+<div id="globalPromo" class="signup-section global-promo-input">
+    <div class="loadingOverlay"></div>
+
+    <form id="globalPromoForm" class="global-promo-input__form form">
+        <div class="form-field insertcode">
+            <p>Enter your promo </br>code here</p>
+            <div class="form-prefixPostfix d-flex align-v-center ">
+                <input id="globalPromoInput" class="form-input" type="text" placeholder="Insert Code">
+                <button id="globalPromoSubmit" class="button codeSubmit" type="button" aria-label="Submit">
+                    <svg>
+                        <use xlink:href="#icon-down-arrow"></use>
+                    </svg>
+                </button>
+            </div>
+            <div id="couponMessage" class="global-promo-input__message"></div>
+        </div>
+    </form>
+    <div id="globalPromoRemove" class="form-prefixPostfix d-flex align-v-center global-promo-input__remove">
+        <div>Promo Code Applied: </div>
+        <div id="globalPromoApplied" class="global-promo-input__applied-code"></div>
+        <button id="globalPromoRemoveCode" class="global-promo-input__remove-btn">Remove</button>
+    </div>
+</div>
+{{{region name="right-block__banner--deal1"}}}
+{{!> components/content-spots/banner--deal1 }}
+{{> components/cs-custom/new-free-printer-deals-rightcol }}
+<div id="globalPromo" class="signup-section global-promo-input">
+    <div class="loadingOverlay"></div>
+
+    <form id="globalPromoForm" class="global-promo-input__form form">
+        <div class="form-field insertcode">
+            <p>Enter your promo </br>code here</p>
+            <div class="form-prefixPostfix d-flex align-v-center ">
+                <input id="globalPromoInput" class="form-input" type="text" placeholder="Insert Code">
+                <button id="globalPromoSubmit" class="button codeSubmit" type="button" aria-label="Submit">
+                    <svg>
+                        <use xlink:href="#icon-down-arrow"></use>
+                    </svg>
+                </button>
+            </div>
+            <div id="couponMessage" class="global-promo-input__message"></div>
+        </div>
+    </form>
+    <div id="globalPromoRemove" class="form-prefixPostfix d-flex align-v-center global-promo-input__remove">
+        <div>Promo Code Applied: </div>
+        <div id="globalPromoApplied" class="global-promo-input__applied-code"></div>
+        <button id="globalPromoRemoveCode" class="global-promo-input__remove-btn">Remove</button>
+    </div>
+</div>
+{{> components/cs-custom/new-free-printer-bundles-rightcol }}
+<!--
+<div class="printer-section custom-text sidebar-marketing-banner-section desktop">
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner1--global"}}}
+    </div>
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner3--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner4--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner5--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner6--global"}}}
+    </div>
+</div>-->
+{{{region name="right-block__banner--deal2"}}}
+{{!> components/content-spots/banner--deal2 }}
+<!--<div class="printer-section custom-text sidebar-marketing-banner-section desktop">
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_1--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_2--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_3--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_4--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_5--global"}}}
+    </div>
+
+    <div class="sidebar-marketing-section">
+        {{{region name="sidebar_marketing_banner2_6--global"}}}
+    </div>
+</div>
+-->

@@ -1,0 +1,7 @@
+<ul class="productGrid {{#if prod_custom_list}}productGridCustom{{/if}}">
+    {{#each products}}
+    <li class="product" {{#if ../custom}}data-custom-product-id="{{id}}"{{/if}}>
+        {{>components/products/card product=this settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
+    </li>
+    {{/each}}
+</ul>

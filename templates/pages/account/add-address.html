@@ -1,0 +1,188 @@
+---
+cart: true
+---
+{{#partial "page"}}
+
+{{!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} --}}
+
+{{#if forms.address.address_id}}
+<h2 class="page-heading">{{lang 'forms.address.edit.heading'}}</h2>
+{{else}}
+<h2 class="page-heading">{{lang 'forms.address.add.heading'}}</h2>
+{{/if}}
+
+{{> components/account/navigation account_page='addresses'}}
+
+<div class="account account--fixed">
+
+    {{#if forms.address.error}}
+    {{> components/common/alert-error forms.address.error}}
+    {{/if}}
+
+    <div class="account-body">
+        <form action="{{forms.address.action}}" data-address-form class="form" method="post">
+            {{#if forms.address.address_id }}
+            <input type="hidden" name="shipid" value="{{forms.address.address_id}}">
+            {{/if}}
+            <fieldset class="form-fieldset">
+                <div class="form-row form-row--half">
+                    {{#each forms.address.shipping_fields }}
+                    {{{dynamicComponent 'components/common/forms'}}}
+                    {{/each}}
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <input type="submit" class="button button--primary" value="{{lang 'forms.address.submit_value'}}">
+                <a href="{{urls.account.addresses}}" class="button">{{lang 'common.cancel'}}</a>
+                {{inject 'required' (lang 'common.required')}}
+                {{inject 'state_error' (lang 'errors.state_error')}}
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{{/partial}}
+{{> layout/base}}
+<script src="https://sdk.woosmap.com/localities/localitieswidget.2.0.js?key=woos-0b6b9839-0893-397a-9f94-9e6b78f4337f"></script>
+<script>
+    let localitiesWidget = new woosmap.localities.Autocomplete(
+        $("input[data-field-type='AddressLine1']").attr('id'),
+        {
+            minLength: 3,
+            components: {
+                country: ["gb"]
+            },
+            data: "advanced",
+            types: "address"
+        }
+    );
+
+    localitiesWidget.addListener("selected_suggestion", () => {
+        let selection = localitiesWidget.getSelectedSuggestionDetails();
+        console.log(selection.address_components);
+        $("input[data-field-type='City']").val(MC_GetLongNamdByType(selection.address_components, "locality"));
+        $("input[data-field-type='State']").val(MC_GetLongNamdByType(selection.address_components, "state"));
+        $("input[data-field-type='Zip']").val(MC_GetLongNamdByType(selection.address_components, "postal_code"));
+        $("input[data-field-type='AddressLine1']").val(MC_GetLongNamdByType(selection.address_components, "street_number") + " " + MC_GetLongNamdByType(selection.address_components, "route"));
+    });
+
+    $("select[data-field-type='Country']").on("change", function () {
+        if (localitiesWidget != null) {
+            var countryCode = "gb";
+            switch ($(this).val()) {
+                case "Guernsey":
+                    countryCode = "gg";
+                    break;
+                case "Isle of Man":
+                    countryCode = "im";
+                    break;
+                case "Jersey":
+                    countryCode = "je";
+                    break;
+                case "Ireland":
+                    countryCode = "ie";
+                    break;
+                case "Austria":
+                    countryCode = "at";
+                    break;
+                case "Belgium":
+                    countryCode = "be";
+                    break;
+                case "Bulgaria":
+                    countryCode = "bg";
+                    break;
+                case "Croatia":
+                    countryCode = "hr";
+                    break;
+                case "Czech Republic":
+                    countryCode = "cz";
+                    break;
+                case "Denmark":
+                    countryCode = "dk";
+                    break;
+                case "Estonia":
+                    countryCode = "ee";
+                    break;
+                case "Finland":
+                    countryCode = "fi";
+                    break;
+                case "France":
+                    countryCode = "fr";
+                    break;
+                case "Germany":
+                    countryCode = "de";
+                    break;
+                case "Gibraltar":
+                    countryCode = "gi";
+                    break;
+                case "Greece":
+                    countryCode = "gr";
+                    break;
+                case "Hungary":
+                    countryCode = "hu";
+                    break;
+                case "Iceland":
+                    countryCode = "is";
+                    break;
+                case "Italy":
+                    countryCode = "it";
+                    break;
+                case "Latvia":
+                    countryCode = "lv";
+                    break;
+                case "Lithuania":
+                    countryCode = "lt";
+                    break;
+                case "Luxembourg":
+                    countryCode = "lu";
+                    break;
+                case "Netherlands":
+                    countryCode = "nl";
+                    break;
+                case "Norway":
+                    countryCode = "no";
+                    break;
+                case "Poland":
+                    countryCode = "pl";
+                    break;
+                case "Portugal":
+                    countryCode = "pt";
+                    break;
+                case "Romania":
+                    countryCode = "ro";
+                    break;
+                case "Slovakia":
+                    countryCode = "sk";
+                    break;
+                case "Slovenia":
+                    countryCode = "si";
+                    break;
+                case "Spain":
+                    countryCode = "es";
+                    break;
+                case "Sweden":
+                    countryCode = "se";
+                    break;
+                case "Switzerland":
+                    countryCode = "ch";
+                    break;
+            }
+            localitiesWidget.setComponentRestrictions({ country: [countryCode] });
+        }
+    });
+
+    setTimeout(function () {
+        $("input[data-field-type='AddressLine1']").after($("ul.localities-container"));
+    }, 1000);
+
+    function MC_GetLongNamdByType(address_components, typeName) {
+        for (var addrComp in address_components) {
+            if (address_components[addrComp].types.length > 0 && address_components[addrComp].types[0] == typeName) {
+                return address_components[addrComp].long_name;
+            }
+        }
+        return "";
+    }
+
+</script>

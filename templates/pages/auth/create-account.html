@@ -1,0 +1,267 @@
+---
+cart: true
+---
+{{inject 'passwordRequirements' settings.password_requirements}}
+{{#partial "page"}}
+<div class="create-account-page">
+    {{!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} --}}
+    <h1 class="page-heading">{{lang 'create_account.heading' }}</h1>
+    <div class="create-account-steps">
+        <ul>
+            <li class="create-account-step-1 active"><a href=" ">About You</a></li>
+            <li class="create-account-step-2"><a href=" ">Billing Details</a></li>
+            <!-- <li class="create-account-step-3"><a href=" ">Marketing</a></li>-->
+        </ul>
+    </div>
+    <div class="account account--fixed">
+        <div class="account-body">
+            {{#if forms.create_account.error}}
+            {{> components/common/alert-error forms.create_account.error}}
+            {{/if}}
+            {{#if settings.account_creation_enabled}}
+            <!--<div class="alertBox alertBox--info alertBox--country">
+                <div class="alertBox-column alertBox-icon">
+                    <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+                </div>
+                <p class="alertBox-column alertBox-message">
+                    <span>Please note that additional shipping costs may apply</span>
+                </p>
+            </div>-->
+            <form action="{{urls.auth.save_new_account}}" data-create-account-form method="post" class="form">
+                <div class="form-row form-row--half">
+                    {{#each forms.create_account.account_fields }}
+                    {{{dynamicComponent 'components/common/forms'}}}
+                    {{/each}}
+                    {{#each forms.create_account.address_fields }}
+                    {{{dynamicComponent 'components/common/forms'}}}
+                    {{/each}}
+                    {{inject 'required' (lang 'common.required')}}
+                    {{inject 'state_error' (lang 'errors.state_error')}}
+                    <div class="form-field create_account-next-btn">
+                        <a id="aNextStep1" class="create-account-nextstep" href=" ">Next</a>
+                    </div>
+                    <div class="form-field create_account-recaptcha">
+                        {{{ forms.create_account.recaptcha.markup}}}
+                    </div>
+
+                    <div class="form-field form-actions">
+                        <input type="submit" class="button button--primary" value="{{lang 'forms.create_account.submit_value' }}" />
+                    </div>
+
+                </div>
+            </form>
+
+            {{/if}}
+
+
+        </div>
+    </div>
+</div>
+<div class="form-field social-login-field">
+    <h6 style="text-align:center;">
+        Alternatively Log in with your Social Media or Google Account below </p>
+        <div class="sp-social-login_buttons"></div>
+</div>
+{{/partial}}
+{{> layout/base}}
+<script src="https://sdk.woosmap.com/localities/localitieswidget.2.0.js?key=woos-0b6b9839-0893-397a-9f94-9e6b78f4337f"></script>
+<script>
+
+    let localitiesWidget = new woosmap.localities.Autocomplete(
+        $("input[data-field-type='AddressLine1']").attr('id'),
+        {
+            minLength: 3,
+            components: {
+                country: ["gb"]
+            },
+            data: "advanced",
+            types: "address"
+        }
+    );
+
+    localitiesWidget.addListener("selected_suggestion", () => {
+        let selection = localitiesWidget.getSelectedSuggestionDetails();
+        console.log(selection.address_components);
+        $("input[data-field-type='City']").val(MC_GetLongNamdByType(selection.address_components, "locality"));
+        $("input[data-field-type='State']").val(MC_GetLongNamdByType(selection.address_components, "state"));
+        $("input[data-field-type='Zip']").val(MC_GetLongNamdByType(selection.address_components, "postal_code"));
+        $("input[data-field-type='AddressLine1']").val(MC_GetLongNamdByType(selection.address_components, "street_number") + " " + MC_GetLongNamdByType(selection.address_components, "route"));
+    });
+
+    $("select[data-field-type='Country']").on("change", function () {
+        if ($("div.create-account-steps li.create-account-step-2.active").length > 0) {
+            /* if ($(this).val() == "United Kingdom") {
+                 $("div.alertBox--country").hide();
+             }
+             else {
+                 $("div.alertBox--country").show();
+             }*/
+        }
+        if (localitiesWidget != null) {
+            var countryCode = "gb";
+            switch ($(this).val()) {
+                case "Guernsey":
+                    countryCode = "gg";
+                    break;
+                case "Isle of Man":
+                    countryCode = "im";
+                    break;
+                case "Jersey":
+                    countryCode = "je";
+                    break;
+                case "Ireland":
+                    countryCode = "ie";
+                    break;
+                case "Austria":
+                    countryCode = "at";
+                    break;
+                case "Belgium":
+                    countryCode = "be";
+                    break;
+                case "Bulgaria":
+                    countryCode = "bg";
+                    break;
+                case "Croatia":
+                    countryCode = "hr";
+                    break;
+                case "Czech Republic":
+                    countryCode = "cz";
+                    break;
+                case "Denmark":
+                    countryCode = "dk";
+                    break;
+                case "Estonia":
+                    countryCode = "ee";
+                    break;
+                case "Finland":
+                    countryCode = "fi";
+                    break;
+                case "France":
+                    countryCode = "fr";
+                    break;
+                case "Germany":
+                    countryCode = "de";
+                    break;
+                case "Gibraltar":
+                    countryCode = "gi";
+                    break;
+                case "Greece":
+                    countryCode = "gr";
+                    break;
+                case "Hungary":
+                    countryCode = "hu";
+                    break;
+                case "Iceland":
+                    countryCode = "is";
+                    break;
+                case "Italy":
+                    countryCode = "it";
+                    break;
+                case "Latvia":
+                    countryCode = "lv";
+                    break;
+                case "Lithuania":
+                    countryCode = "lt";
+                    break;
+                case "Luxembourg":
+                    countryCode = "lu";
+                    break;
+                case "Netherlands":
+                    countryCode = "nl";
+                    break;
+                case "Norway":
+                    countryCode = "no";
+                    break;
+                case "Poland":
+                    countryCode = "pl";
+                    break;
+                case "Portugal":
+                    countryCode = "pt";
+                    break;
+                case "Romania":
+                    countryCode = "ro";
+                    break;
+                case "Slovakia":
+                    countryCode = "sk";
+                    break;
+                case "Slovenia":
+                    countryCode = "si";
+                    break;
+                case "Spain":
+                    countryCode = "es";
+                    break;
+                case "Sweden":
+                    countryCode = "se";
+                    break;
+                case "Switzerland":
+                    countryCode = "ch";
+                    break;
+            }
+            localitiesWidget.setComponentRestrictions({ country: [countryCode] });
+        }
+    });
+
+    function MC_GetLongNamdByType(address_components, typeName) {
+        for (var addrComp in address_components) {
+            if (address_components[addrComp].types.length > 0 && address_components[addrComp].types[0] == typeName) {
+                return address_components[addrComp].long_name;
+            }
+        }
+        return "";
+    }
+
+    $(function () {
+        setTimeout(function () {
+            $("div.form-field--inputPassword span.toggle-password").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var input = $($(this).attr("toggle"));
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                }
+                else {
+                    input.attr("type", "password");
+                }
+            });
+        }, 1000);
+
+        setTimeout(function () {
+            $("input[data-field-type='AddressLine1']").after($("ul.localities-container"));
+        }, 1000);
+
+        $("div.form-field[data-type='AddressLine1']").hide();
+        $("div.form-field[data-type='City']").hide();
+        $("div.form-field[data-type='State']").hide();
+        $("div.form-field[data-type='Zip']").hide();
+        $("div.form-field[data-type='Country']").hide();
+        $("#FormField_42").hide();
+
+        $("div.create_account-recaptcha").hide();
+        $("div.form-actions").hide();
+        $("#aNextStep2").hide();
+        $("#FormField_45_input").attr('tabindex', 1);
+        $("div.form-field input[data-field-type='FirstName']").attr('tabindex', 2);
+        $("div.form-field input[data-field-type='LastName']").attr('tabindex', 3);
+        $("div.form-field input[data-field-type='Phone']").attr('tabindex', 4);
+        $("div.form-field input[data-field-type='EmailAddress']").attr('tabindex', 5);
+        $("div.form-field input[data-field-type='Password']").attr('tabindex', 6);
+        $("div.form-field input[data-field-type='ConfirmPassword']").attr('tabindex', 7);
+        $("#aNextStep1").attr('tabindex', 8);
+        $("div.form-field select[data-field-type='Country']").attr('tabindex', 9);
+        $("div.form-field input[data-field-type='AddressLine1']").attr('tabindex', 10);
+        $("div.form-field input[data-field-type='City']").attr('tabindex', 11);
+        $("div.form-field input[data-field-type='State']").attr('tabindex', 12);
+        $("div.form-field input[data-field-type='Zip']").attr('tabindex', 13);
+        $("div.form-field input[data-label='I do not want to receive postal offers']").attr('tabindex', 14);
+        $("div.form-field input[data-label='I do not want to receive email offers']").attr('tabindex', 15);
+        $("div.form - actions input[type='submit']").attr('tabindex', 16);
+        $("select.custom-style-grey").on('change', function () {
+            if ($(this).val() == "") {
+                $(this).closest("select").addClass("custom-style-grey");
+            }
+            else {
+                $(this).closest("select").removeClass("custom-style-grey");
+            }
+        });
+    });
+
+</script>

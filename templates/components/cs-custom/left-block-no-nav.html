@@ -1,0 +1,28 @@
+{{{region name="left-block__trustpilot"}}}
+{{> components/content-spots/trustpilot }}
+
+{{{region name="left-block__banner--shipping"}}}
+{{> components/content-spots/banner--shipping }}
+
+<!-- Newsletter -->
+<div class="signup-section left-signup custom-text">
+<div class="icons">
+    <svg><use xlink:href="#icon-mail"></use></svg>
+</div>
+<span>Email <p>signup</p></span>
+<p>Enter your email address and receive all updates!</p>
+<form class="form" action="{{urls.subscribe.action}}" method="post">
+    <fieldset class="form-fieldset">
+        <input type="hidden" name="action" value="subscribe">
+        <input type="hidden" name="nl_first_name" value="bc">
+        <input type="hidden" name="check" value="1">
+        <div class="form-field">
+            <label class="form-label is-srOnly" for="nl_email"></label>
+            <div class="form-prefixPostfix d-flex align-v-center">
+                <input class="form-input" id="nl_email" name="nl_email" type="email" value="" placeholder="Email Address...">
+                <button class="button" type="submit"><svg><use xlink:href="#icon-down-arrow"></use></svg></button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</div>

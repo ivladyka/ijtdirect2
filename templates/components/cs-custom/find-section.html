@@ -1,0 +1,93 @@
+<div class="find-section">
+    <div class="container">
+        <h2 class="text-center">
+            <!-- Change selector title based on page id -->
+            {{#if page.id '===' 56 }}
+            Find your Inkjet Cartridge
+            {{else if page.id '===' 58 }}
+            Find your Toner Cartridge
+            {{else}}
+            Find your Printer Cartridge
+            {{/if}}
+        </h2>
+        <div class="findsection-inner d-flex align-start">
+            <div class="find-cartridge">
+                <div class="select-inner">
+                    <div class="select-item">
+                        <select id="selectlevel1" class="form-select selectlevel1" aria-label="Type">
+                            <option selected value="javascript:void(0)" class="make">Select type</option>
+                        </select>
+                    </div>
+                    <div class="select-item">
+                        <select id="selectlevel2" class="selectlevel2 disabled form-select" disabled="disabled" aria-label="Manufacturer">
+                            <option selected value="javascript:void(0)">Select manufacturer</option>
+                        </select>
+                    </div>
+                    <div class="select-item">
+                        <select id="selectlevel3" class="selectlevel3 disabled form-select" disabled="disabled" aria-label="Series">
+                            <option selected value="javascript:void(0)">Select series</option>
+                        </select>
+                    </div>
+                    <div class="select-item">
+                        <select id="selectlevel4" class="selectlevel4 disabled form-select" disabled="disabled" aria-label="Model">
+                            <option value="">Select model</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="select-car-btn">
+                    <a id="quickSearchSubmit" onclick="javascript:void(0)" class="button button--primary go_btn" aria-label="Submit"><span>GO!</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  var categoryData = {
+      categories: [
+          {{#each categories}}
+              { 
+                  id: '{{id}}',
+                  name: '{{name}}',
+                  url: '{{url}}?hpcf',
+                  children: [
+                  {{#each children}}
+                      { 
+                          id: '{{id}}',
+                          name: '{{name}}',
+                          url: '{{url}}?hpcf',
+                          children: [
+                          {{#each children}}
+                              { 
+                                  id: '{{id}}',
+                                  name: '{{name}}',
+                                  url: '{{url}}?hpcf',
+                                  children: [
+                                  {{#each children}}
+                                      { 
+                                          id: '{{id}}',
+                                          name: '{{name}}',
+                                          url: '{{url}}?hpcf',
+                                          children: [
+                                          {{#each children}}
+                                              { 
+                                                  id: '{{id}}',
+                                                  name: '{{name}}',
+                                                  url: '{{url}}?hpcf',
+                                              },
+                                          {{/each}}
+                                          ]
+                                      },
+                                  {{/each}}
+                                  ]
+                              },
+                          {{/each}}
+                          ]
+                      },
+                  {{/each}}
+                  ]
+              },
+          {{/each}}
+      ]
+  }
+</script>

@@ -1,0 +1,118 @@
+// =============================================================================
+// ACCOUNT
+// =============================================================================
+
+
+// Account layouts
+// -----------------------------------------------------------------------------
+
+.account {
+    margin-bottom: spacing("single");
+}
+
+.account--fixed {
+    @include breakpoint("medium") {
+        margin: 0 auto;
+        width: grid-calc(8, $total-columns);
+    }
+}
+
+.account--fixedSmall {
+    @include breakpoint("medium") {
+        margin: 0 auto;
+        width: grid-calc(6, $total-columns);
+    }
+}
+
+.account--fixedLarge {
+    @include breakpoint("medium") {
+        margin: 0 auto;
+        width: grid-calc(9, $total-columns);
+    }
+}
+
+.account-head {
+    margin-bottom: spacing("double");
+    text-align: center;
+
+    .alertBox {
+        padding-left: spacing("double");
+        padding-right: spacing("double");
+        text-align: left;
+    }
+}
+
+.account-body {
+    @include grid-row($behavior: "nest");
+}
+
+.account-content {
+    @include grid-column(12);
+}
+
+.account-content--fixed {
+
+    @include breakpoint("medium") {
+        width: grid-calc(8, $total-columns);
+    }
+}
+
+.account-content--fixedSmall {
+
+    @include breakpoint("medium") {
+        width: grid-calc(6, $total-columns);
+    }
+}
+
+.account-sidebar {
+    @include grid-column(12);
+
+    @include breakpoint("medium") {
+        width: grid-calc(4, $total-columns);
+
+        .account-content--fixedSmall + & {
+            float: right;
+        }
+    }
+}
+
+.my-printers {
+    .account--heading {
+        border-bottom: container("border");
+        margin: 0;
+        padding-bottom: spacing("single");
+    }
+    &__table {
+        &-row {
+            align-items: center;
+            border-bottom: container("border");
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: spacing("base") 0;
+
+            .button.button--primary {
+                margin: 0 spacing('base');
+            }
+        }
+    }
+    &__image-container {
+        padding: spacing("base");
+
+        div {
+            height: 100px;
+            width: 100px;
+        }
+    }
+    &__printer-name {
+        flex-grow: 2;
+        padding: spacing("base");
+    }
+    &__actions {
+        justify-self: flex-end;
+    }
+    &__no-printers-message {
+        font-weight: 700;
+        margin: spacing('base') 0;
+    }
+}

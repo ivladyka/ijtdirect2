@@ -1,0 +1,519 @@
+{{#if settings.data_tag_enabled}}
+    <form class="listItem js-product" data-event-type="{{event}}" data-entity-id="{{id}}" data-position="{{position}}" data-name="{{name}}" data-product-category="{{#each category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{brand.name}}" data-product-price="{{#if price.with_tax}}{{price.with_tax.value}}{{else}}{{price.without_tax.value}}{{/if}}">
+{{else}}
+    <article class="listItem js-product">
+{{/if}}
+    <!-- Product Image -->
+    <!-- <figure class="listItem-figure">
+        {{> components/common/responsive-img  image=image  class="listItem-image"  fallback_size=theme_settings.productgallery_size lazyload=theme_settings.lazyload_mode default_image=theme_settings.default_image_product}}
+        {{#unless hide_product_quick_view}}
+            {{#if theme_settings.show_product_quick_view}}
+                <div class="listItem-figureBody">
+                    <a {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}} class="button button--small listItem-button quickview" data-product-id="{{id}}">{{lang 'products.quick_view'}}</a>
+                </div>
+            {{/if}}
+        {{/unless}}
+    </figure> -->
+    <div class="listItem-body">
+        <div class="listItem-content">
+            <!-- Product Image -->
+            <figure class="card-figure">
+                <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}>
+                    <div class="card-img-container">
+                        {{> components/common/responsive-img  image=image class="card-image" fallback_size=theme_settings.productgallery_size  lazyload=theme_settings.lazyload_mode  default_image=theme_settings.default_image_product }}
+                    </div>
+                </a>
+            </figure>
+            
+            <div class="listItem-details">
+                <!-- Product Name -->
+                <p class="listItem-title">
+                    <a href="{{url}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}>
+                        {{name}}
+                    </a>
+                </p>
+
+                <!-- Brand Name -->
+                {{#if brand.name}}
+                    <p class="listItem-brand">{{brand.name}}</p>
+                {{/if}}
+
+                <!-- Product Sku -->
+                {{#if sku}}
+                    <p class="listItem-sku">SKU: {{sku}}</p>
+                {{/if}}
+
+                <div class="listItem-MPN-list">
+                    {{#each custom_fields}}
+                        {{#if name '==' 'MPN-list'}}
+                            <span>Contains </span>
+                            <span>{{{value}}}</span>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <div class="listItem-features">
+                    <ul>
+                    {{#each product.custom_fields}}
+                        {{#if name '==' 'features1'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features2'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features3'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features4'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features5'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features6'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features7'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features8'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features9'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                        {{#if name '==' 'features10'}}
+                            <li>{{{value}}}</li>
+                        {{/if}}
+                    {{/each}}
+                    </ul>
+                </div>
+
+                <!-- Product ink value -->
+                <!-- <div class="ink-drop">
+                    {{#each custom_fields}}
+                    {{#if name '==' 'Inkdrop'}}
+                        <svg style="fill:{{value}};"><use xlink:href="#icon-inkdrop"></use></svg>
+                    {{/if}}
+                    {{/each}}
+                </div> -->
+
+                <!-- Display quick view -->
+                {{#unless hide_product_quick_view}}
+                    {{#if theme_settings.show_product_quick_view}}
+                        {{#if settings.data_tag_enabled}}
+                            <p class="more-info"><a class="card-figcaption-button quickview" data-event-type="product-click" data-product-id="{{id}}">More info</a></p>
+                        {{else}}
+                            <p class="more-info"><a class="card-figcaption-button quickview" data-product-id="{{id}}">More info</a></p>
+                        {{/if}}
+                    {{/if}}
+                {{/unless}}
+            </div>
+            <div class="listItem-info">
+                <div class="page-yield-info">
+                    <p class="listItem-title js-page-yield-title">Page Yields</p>
+                    <ul>
+                    {{#each product.custom_fields}}
+                        {{#if name '==' 'page-yields-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Black">
+                                    <svg class="page-yield-item-inkdrop--black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-pigment-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Pigment Black">
+                                    <svg class="page-yield-item-inkdrop--pigment-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-light-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Black">
+                                    <svg class="page-yield-item-inkdrop--light-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-matte-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Matte Black">
+                                    <svg class="page-yield-item-inkdrop--matte-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-photo-black'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Black">
+                                    <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Cyan">
+                                    <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-light-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Cyan">
+                                    <svg class="page-yield-item-inkdrop--light-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}  
+                        {{#if name '==' 'page-yields-photo-cyan'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Cyan">
+                                    <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Magenta">
+                                    <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-vivid-light-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Vivid Light Magenta">
+                                    <svg class="page-yield-item-inkdrop--vivid-light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-vivid-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Vivid Magenta">
+                                    <svg class="page-yield-item-inkdrop--vivid-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-light-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Magenta">
+                                    <svg class="page-yield-item-inkdrop--light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-photo-magenta'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Magenta">
+                                    <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>                        
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-yellow'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Yellow">
+                                    <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-colour'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Colour">
+                                    <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-photo-colour'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Colour">
+                                    <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                    <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Grey">
+                                    <svg class="page-yield-item-inkdrop--grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-light-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Light Grey">
+                                    <svg class="page-yield-item-inkdrop--light-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-dark-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Grey">
+                                    <svg class="page-yield-item-inkdrop--dark-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-photo-grey'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Grey">
+                                    <svg class="page-yield-item-inkdrop--photo-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-red'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Red">
+                                    <svg class="page-yield-item-inkdrop--red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-dark-red'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Red">
+                                    <svg class="page-yield-item-inkdrop--dark-red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Blue">
+                                    <svg class="page-yield-item-inkdrop--blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-dark-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Dark Blue">
+                                    <svg class="page-yield-item-inkdrop--dark-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-photo-blue'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Photo Blue">
+                                    <svg class="page-yield-item-inkdrop--photo-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-green'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Green">
+                                    <svg class="page-yield-item-inkdrop--green"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-orange'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Orange">
+                                    <svg class="page-yield-item-inkdrop--orange"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-violet'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Violet">
+                                    <svg class="page-yield-item-inkdrop--violet"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-chroma-optimizer'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Chroma Optimizer">
+                                    <svg class="page-yield-item-inkdrop--chroma-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-gloss-optimizer'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Gloss Optimizer">
+                                    <svg class="page-yield-item-inkdrop--gloss-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                        {{#if name '==' 'page-yields-clear'}}
+                            <li class="page-yield-item js-page-yield-details">
+                                <div class="page-yield-item-inkdrop" title="Clear">
+                                    <svg class="page-yield-item-inkdrop--clear"><use xlink:href="#icon-inkdrop"></use></svg>
+                                </div>
+                                <div class="page-yield-item-value">
+                                    <span>{{value}} {{#contains value "ml"}}{{else}}{{lang 'products.page_yield_unit'}}{{/contains}}</span>
+                                </div>   
+                            </li> 
+                        {{/if}}
+                    {{/each}}
+                    </ul>
+                </div>
+                <div class="product-reviews">
+                    <span class="rating--small">
+                        {{> components/products/ratings rating=product.rating}}
+                    </span>
+                    <a href="{{product.url}}#product-reviews" id="productReview_link">
+                        {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
+                    </a>
+                </div>
+            </div>
+            <div class="listItem-actions">
+                <div class="listItem-prices">
+                    <!-- Product Pricing add schema -->
+                    {{#if price}}
+                        <div class="listItem-price js-product-price" data-product-id="{{id}}">
+                            {{!-- <div class="listItem-price__label">{{lang 'products.our_price'}}</div> --}}
+                            {{> components/products/price price=price product=product}}
+                        </div>
+                    {{/if}}
+    
+                    <div class="js-bulk-price-table listItem-bulk-prices productView-info-bulkPricing"
+                    {{#if page_type '===' 'product'}}
+                        data-proid={{product.id}}
+                    {{else}} 
+                        data-proid={{id}}
+                    {{/if}}
+                    {{#each product.custom_fields}}
+                        {{#if name '==' 'promoCategory'}}
+                            data-promoCat={{value}}
+                        {{/if}}
+                    {{/each}}
+                    data-price={{price.with_tax.value}}
+                    data-curr={{price.with_tax.currency}}
+                    {{#each product.custom_fields}}
+                        {{#if name '==' 'PromoCategory'}}
+                            data-promo-category={{value}}
+                        {{/if}}
+                    {{/each}}
+                    >
+                        <table class="js-bulkPricing-table" data-product-id="{{id}}"> </table>
+                    </div>
+                </div>
+
+                <!-- Buy btn -->
+                <div class="productView-options">
+                    {{#if product.release_date }}
+                        <p>{{product.release_date}}</p>
+                    {{/if}}
+                    </form>
+                    <form class="form" method="post" action="/cart.php" enctype="multipart/form-data" data-cart-item-add="">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="{{id}}"/>
+                        {{#if stock_level '===' 0}}
+                        {{else}}
+                            {{> components/products/add-to-cart}}
+                        {{/if}}
+                        <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" data-event-type="product-click" class="button button--primary {{#if stock_level '===' 0}}button--no-stock{{/if}}" data-product-id="{{id}}">
+                            {{#if stock_level '===' 0}}
+                                {{lang 'products.restock_notify'}}
+                            {{else}}
+                                {{lang 'products.more_info'}}
+                            {{/if}}
+                        </a>
+                    </form>
+                </div>
+                  
+                <!-- Compare btn -->
+                {{#if show_compare}}
+                    <label class="button button--small" for="compare-{{id}}">
+                        {{lang "products.compare"}} <input type="checkbox" name="products[]" value="{{id}}" id="compare-{{id}}" data-compare-id="{{id}}">
+                    </label>
+                {{/if}}
+
+                <!-- Stock Level -->
+                <div class="listItem-stock-level">
+                    {{#if stock_level '===' 0}}
+                    <span class="listItem-stock-level__out-of-stock">Not in Stock</span>
+                    <!-- <svg><use xlink:href="#icon-x-mark"></use></svg> -->
+                    {{else}}
+                    <span class="listItem-stock-level__in-stock">In Stock</span>
+                    <!-- <svg><use xlink:href="#icon-verified"></use></svg> -->
+                    {{/if}}
+                </div>          
+            </div>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,400 @@
+// =============================================================================
+// SEARCH
+// =============================================================================
+
+.search-suggestion {
+    margin-bottom: spacing("single") + spacing("third");
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+.suggestion-title {
+    margin-top: 0;
+    text-transform: inherit;
+}
+
+.advancedSearch-form {
+    margin-bottom: spacing("double");
+
+    .form-row {
+        margin-bottom: -(spacing("single"));
+    }
+}
+
+.quickSearchResults {
+    margin-top: spacing("single");
+
+    @include breakpoint("medium") {
+        margin-top: 0;
+    }
+
+    .modal-close {
+        display: none;
+
+        @include breakpoint("medium") {
+            display: block;
+        }
+    }
+}
+
+.advancedSearch-separator {
+    display: none;
+}
+
+.advancedSearch-title {
+    margin: 0 0 spacing("single");
+    text-transform: inherit;
+}
+
+.search-price-range {
+    label {
+        display: inline;
+
+        // scss-lint:disable SelectorDepth, NestingDepth
+        input {
+            display: block;
+            padding-left: spacing("single");
+
+            @include breakpoint("small") {
+                display: inline;
+                width: 6rem;
+            }
+        }
+
+        // scss-lint:disable SelectorDepth, NestingDepth
+        span {
+            @include breakpoint("small") {
+                display: inline;
+                padding-left: spacing("single");
+                padding-right: spacing("single");
+            }
+        }
+    }
+}
+
+.category-suggestion-list {
+    @include grid-row($behavior: "nest");
+    list-style-type: none;
+}
+
+.category-suggestion {
+    @include grid-column(4);
+    font-size: fontSize("smaller");
+}
+
+.search-refine {
+    margin-left: spacing("single");
+}
+
+.quickSearchMessage {
+    font-size: fontSize("largest");
+    margin: spacing("single") 0 0;
+    text-align: center;
+}
+
+.kuContainer {
+    @media (max-width: 767px) {
+        .kuHeaderPattern {
+            display: none;
+        }
+    }
+    .kuHeaderPattern {
+        height: 7rem;
+        position: relative;
+        width: 100%;
+        &Section {
+            background-color: $theme-secondary-color;
+            bottom: 0;
+            position: absolute;
+            top: 0;
+            width: 36%;
+            &--1 {
+                clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);
+                right: 60%;                
+            }
+            &--2 {
+                clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%); 
+                right: 39%;               
+            }
+            &--3 {
+                clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 100%, 50% 50%, 0% 0%);                
+                right: 19%;
+            }
+            &--4 {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+                right: 0%;
+            }
+        }
+    }
+    h3 {
+        text-align: center;
+    }
+    .kuLandingResultsViewSwitchContainer {
+        display: none;
+    }
+    .ku-primary-heading-container {
+        align-items: center;
+        background-color: $theme-secondary-color;
+        display: flex;
+        height: 7rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+        margin-left: -1px;
+        padding: 0 1rem;
+
+        h3 {
+            color: $theme-white-color;
+            margin-bottom: 0;
+        }
+    }
+
+    .ku-categories {
+        &-list {
+            margin-bottom: 5rem !important;
+
+            @include breakpoint('medium') {
+                margin-bottom: 25vh !important;
+            }
+
+            a {
+                font-weight: 600;
+
+                @include breakpoint('medium') {
+                    font-size: fontSize("small");
+                }
+            }
+
+            li::marker {
+                color: $theme-secondary-color;
+            }
+        }
+    }
+    .kuResults {
+        .listItem {
+            &-title {
+                font-weight: 700;
+            }
+            &-price {
+                font-size: 15px;
+                font-weight: 700;
+                line-height: 24px;
+                text-align: center;
+            }
+            &-brand {
+                margin-bottom: 0.3rem;
+            }
+            &-sku {
+                margin-bottom: 0.3rem;
+            }
+            &-features {
+                li {
+                    display: list-item !important;
+                    float: none !important;
+                    line-height: 100%;
+                    padding: 5px 10px !important;
+                    width: auto !important;
+                }
+            }
+            &-actions {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                .button--primary {
+                    margin: 1rem 0;
+                }
+                &-stock-level {
+                    margin: 0.5rem 0
+                }
+            }
+            &-info {
+                li {
+                    padding: 5px;
+                    width: 100% !important;
+                }
+            }
+            .card-figure {
+                display: flex;
+                justify-content: center;
+                margin-top: 0;
+                mix-blend-mode: multiply;
+                padding: 0.5rem;
+                @include breakpoint("medium") {
+                    flex-direction: column;
+                }
+            }
+        }
+        
+        .page-yield-item {
+            align-items: center;
+            display: flex;
+            justify-content: flex-start;
+        
+            &-inkdrop {
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 8px;
+
+                @include breakpoint("medium") {
+                    width: 50%;
+                }
+
+                // Inkdrop colours
+                &--light-magenta, &--photo-magenta, &--vivid-light-magenta {
+                    fill:#ff80ff;
+                }
+
+                &--magenta, &--vivid-magenta {
+                    fill:#ff00ff;
+                }
+
+                &--violet {
+                    fill:#8f00ff;
+                }
+
+                &--light-cyan, &--photo-cyan {
+                    fill:#80ffff;
+                }
+
+                &--cyan {
+                    fill:#00ffff;
+                }
+
+                &--yellow {
+                    fill:#ffff00;
+                }
+
+                &--photo-grey, &--grey, &--light-grey {
+                    fill:#c0c0c0;
+                }
+
+                &--dark-grey {
+                    fill:#5A5A5A;
+                }
+
+                &--photo-black, &--black, &--matte-black, &--pigment-black {
+                    fill:#000000;
+                }
+
+                &--light-black {
+                    fill:#454545;
+                }
+
+                &--dark-red {
+                    fill:#c02020;
+                }
+
+                &--red {
+                    fill:#ff2020;
+                }
+
+                &--dark-blue {
+                    fill:#000080;
+                }
+
+                &--blue, &--photo-blue {
+                    fill:#0000ff;
+                }
+
+                &--orange {
+                    fill:#ff8000;
+                }
+
+                &--green {
+                    fill:#008000;
+                }
+
+                &--chroma-optimizer, &--clear, &--gloss-optimizer {
+                    fill:#ffffff;
+                }
+            }
+        
+            &-value {
+                display: flex;
+                text-align: left;
+                
+                @include breakpoint("medium") {
+                    width: 50%;
+                }
+            }
+        }
+    }
+    .kuFilters {
+        .kuFiltersTitleHeading {
+            background-color: $theme-dark-grey-color;
+            margin-bottom: 1px;
+            padding: 1rem 0 1rem 0.2rem;
+            text-align: left;
+        }
+        .kuFilterBox {
+            background-color: $theme-dark-grey-color;
+            margin-bottom: 1px;
+            padding-bottom: 25px;
+            padding-left: 0.2rem;
+            .kuFilterHead, .klevuFilterOption {
+                color:$theme-heading-color;
+                font-weight: 600;   
+            }
+            & .kuFilterHead.kuCollapse::after {
+                display: none;
+            }
+            & .kuFilterHead.kuExpand::after {
+                display: none;
+            }
+            &.kuMulticheck .kuFilterNames ul li.kuSelected span.kuFilterIcon:after {
+                border-color: $theme-heading-color !important;
+                margin-left: 1.5rem;
+            }
+            &.kuMulticheck .kuFilterNames ul li a:hover span.kuFilterIcon:after {
+                margin-left: 1.5rem;
+            }
+            .kuFilterHead {
+                border-bottom: none;
+            }
+            .kuFilterIcon {
+                margin-left: 1.5rem;
+                &::after {
+                    margin-left: 1.5rem;
+                }
+            }
+            &.kuMulticheck .kuFilterIcon:before {
+                border: 1px solid $theme-heading-color;            
+            }
+            &.kuMulticheck .kuFilterNames ul li a:hover span.kuFilterIcon:before {
+                background: transparent;
+                border: 1px solid $theme-heading-color;            
+            }
+            &.kuMulticheck .kuFilterNames ul li.kuSelected span.kuFilterIcon:before {
+                background: transparent;
+                border: 1px solid $theme-heading-color; 
+            }
+            .kuPriceSlider {
+                color: $theme-heading-color;
+                .noUi {
+                    &-connect {
+                        background-color: $theme-heading-color;
+                    }
+                }
+            }
+            .kuShowOpt {
+                bottom: 0px;
+                left: 22px;
+
+                .kuFilterDot {
+                    background-color: $theme-heading-color;
+                }
+            }
+            & .kuFilterNames ul li a span{
+                &.kufacet-text {
+                    max-width: 55%;
+                    width: 55%;
+                }
+                &.kuFilterTotal {
+                    margin-right: 1rem;
+                }
+            }
+        }
+    }
+}
+

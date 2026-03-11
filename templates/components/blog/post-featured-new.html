@@ -1,0 +1,31 @@
+{{assignVar "featured" "0"}}
+{{#each post.tags}}{{#if name '==' 'featured'}}{{assignVar "featured" "featuredpost"}}{{/if}}{{/each}}
+{{#if (getVar 'featured') '==' 'featuredpost'}}
+<h2 class="text-left featured-title">Featured Post</h2>
+<div class="featured-blog">
+    <div class="featured-blog-contents">
+        <div class="featured-blog-image" style="background-image: url('{{getImageSrcset post.thumbnail 1x="640w"}}'); ">
+           
+            {{> components/common/responsive-img image=post.thumbnail  fallback_size=theme_settings.blog_size lazyload=theme_settings.lazyload_mode}}
+        </div> 
+        <div class="featured-blog-text">
+            <ul class="topic-tags">
+                {{#each post.tags}}
+                {{#if name '!==' 'featured'}}
+                <li style="{{#if (occurrences name "relatedposttag-") '>=' 1}}display:none;{{/if}}">
+                    <a href="{{url}}">{{name}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+            </ul>
+            <h2 class="featured-blog-header">{{post.title}}</h2>
+            <div class="featured-blog-preview">{{{post.summary}}}</div> 
+            {{#if post.show_read_more}}
+            <a class="blog-read-more" href="{{url}}">Read more...</a>
+            {{/if}}
+        </div>
+
+      
+    </div>
+</div>
+{{/if}}

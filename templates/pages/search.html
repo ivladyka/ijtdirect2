@@ -1,0 +1,852 @@
+---
+product_results:
+    limit: {{theme_settings.searchpage_products_per_page}}
+cart: true
+---
+{{inject 'categoryTree' forms.search.category_options}}
+{{inject 'searchProductsPerPage' theme_settings.searchpage_products_per_page}}
+{{#partial "head"}}
+{{#if pagination.product_results.previous}}
+<link rel="prev" href="{{pagination.product_results.previous}}">
+{{/if}}
+{{#if pagination.product_results.next}}
+<link rel="next" href="{{pagination.product_results.next}}">
+{{/if}}
+{{/partial}}
+
+
+{{#partial "page"}}
+
+
+
+<script>
+    window._klvWebhook = window._klvWebhook || [];
+    window._klvWebhook.push({
+        object: "search",
+        scope: "landing",
+        name: "mainObject",
+        action: "build",
+        fire: function (data, scope) {
+            const myStorage = klevu.getGlobalSetting("storage.view").mergeFromGlobal();
+            if (!klevu.isUndefined(myStorage) && myStorage.getElement("productList") === "productList") {
+                myStorage.addElement("productList", "list");
+                myStorage.mergeToGlobal();
+            }
+        }
+    });
+</script>
+<section class="page">
+
+    <div class="klevuLanding klevuTarget"></div>
+    <div id="previewModal" class="modal modal--large" data-reveal>
+        <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
+            <span aria-hidden="true">&#215;</span>
+        </a>
+        <div class="modal-content"></div>
+        <div class="loadingOverlay"></div>
+    </div>
+
+    {{!--   {{#if product_results.products }}
+
+    <main class="page-content">
+
+        <div class="main-section-block d-flex align-start">
+            <div class="left-block">
+                {{> components/cs-custom/left-block-no-nav }}
+            </div>
+            <div class="middle-block">
+                {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+                <section class="nav">
+                    {{#if forms.search.query}}
+                    <div id="search-results-heading">
+                        {{>components/search/heading}}
+                    </div>
+                    {{/if}}
+                    <nav class="navBar navBar--sub">
+                        <ul class="navBar-section account-navigation">
+                            <li class="navBar-item">
+                                <a id="search-results-product-count" class="navBar-action" href="{{forms.search.product_url}}" data-product-results-toggle>
+                                    {{>components/search/product-count}}
+                                </a>
+                            </li>
+                            <li class="navBar-item">
+                                <a class="navBar-action" href="{{forms.search.content_url}}" data-content-results-toggle>
+                                    {{lang 'search.results.content_count' count=pagination.content_results.total}}
+                                </a>
+                            </li>
+                            {{#unless product_results.faceted_search_enabled}}
+                            <li class="navBar-item navBar-item--separate">
+                                <a class="navBar-action toggleLink" data-collapsible="advanced-search-content" href="#" aria-controls="advanced-search-content" aria-expanded="false">
+                                    <span class="toggleLink-text toggleLink-text--on">
+                                        {{lang 'forms.search.hide'}}
+                                    </span>
+                                    <span class="toggleLink-text toggleLink-text--off">
+                                        {{lang 'forms.search.show'}}
+                                    </span>
+                                </a>
+                            </li>
+                            {{/unless}}
+                        </ul>
+                    </nav>
+                    {{#unless product_results.faceted_search_enabled}}
+                    {{>components/search/advanced-search}}
+                    {{/unless}}
+                </section>
+                <div class="search-list" id="product-listing-container" {{#if forms.search.section '!=' 'product'}} class="u-hiddenVisually" {{/if}}>
+                    {{> components/search/product-listing}}
+                </div>
+
+                {{{region name="search_below_content"}}}
+                {{> components/cs-custom/bottom-searchbar}}
+            </div>
+            <div class="right-block">
+                {{> components/cs-custom/right-block }}
+            </div>
+        </div>
+
+    </main>
+    {{/if}}
+    --}}
+
+</section>
+
+{{/partial}}
+{{#partial "customfootersripts"}}
+<script src="https://js.klevu.com/theme/default/v2/search-results-page.js"></script>
+<script type="template/klevu" id="klevuLandingTemplateProductBlockCustom">
+        <li ku-product-block class="klevuProduct" data-id="<%=dataLocal.id%>">
+            <article class="listItem js-product">
+                <div class="listItem-body">
+                    <div class="listItem-content">
+                        <!-- Product Image -->
+                        <figure class="card-figure">
+
+                            <a data-id="<%=dataLocal.id%>" href="<%=dataLocal.url%>" class="klevuProductClick kuTrackRecentView">
+                                <img src="<%=dataLocal.image%>" origin="<%=dataLocal.image%>" onerror="klevu.dom.helpers.cleanUpProductImage(this)" alt="<%=dataLocal.name%>" class="kuProdImg">
+                                <%=helper.render('landingImageRollover', scope, data, dataLocal) %>
+                            </a>
+                        </figure>
+
+                        <div class="listItem-details">
+                            <!-- Product Name -->
+                            <a data-id="<%=dataLocal.id%>" href="<%=dataLocal.url%>" class="listItem-title">
+                                <%= dataLocal.name %>
+                            </a>
+
+                            <!-- Brand Name -->
+                            <p class="listItem-brand"><%= dataLocal.brand %></p>
+
+                            <!-- Product Sku -->
+                            <p class="listItem-sku">SKU: <%= dataLocal.sku %></p>
+
+                            <% if(dataLocal.mpn_list) { %>
+                                <div class="listItem-MPN-list">
+                                    <span>Contains </span>
+                                    <span><%= dataLocal.mpn_list %></span>
+                                </div>
+                            <% } %>
+
+                            <% if(dataLocal.features1) { %>
+                                <div class="listItem-features">
+                                    <ul>
+                                        <% if(dataLocal.features1) { %>
+                                            <li><%= dataLocal.features1%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features2) { %>
+                                            <li><%= dataLocal.features2%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features3) { %>
+                                            <li><%= dataLocal.features3%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features4) { %>
+                                            <li><%= dataLocal.features4%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features5) { %>
+                                            <li><%= dataLocal.features5%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features6) { %>
+                                            <li><%= dataLocal.features6%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features7) { %>
+                                            <li><%= dataLocal.features7%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features8) { %>
+                                            <li><%= dataLocal.features8%></li>
+                                        <% } %>
+                                        <% if(dataLocal.features9) { %>
+                                            <li><%= dataLocal.features9%></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            <% } %>
+
+                            <!-- Display quick view -->
+                            {{#unless hide_product_quick_view}}
+                                {{#if theme_settings.show_product_quick_view}}
+                                    {{#if settings.data_tag_enabled}}
+                                        <p class="more-info"><a class="card-figcaption-button quickview" data-event-type="product-click" data-product-id="<%=dataLocal.id%>">More info</a></p>
+                                    {{else}}
+                                        <p class="more-info"><a class="card-figcaption-button quickview" data-product-id="<%=dataLocal.id%>">More info</a></p>
+                                    {{/if}}
+                                {{/if}}
+                            {{/unless}}
+                        </div>
+
+                        <div class="listItem-info">
+                            <div class="page-yield-info">
+                                <%
+                                    const productOptions = Object.keys(dataLocal);
+
+                                    if (productOptions.some(option => option.includes('page_yields'))) {
+                                %>
+                                    <p class="listItem-title">Page Yields</p>
+                                <% } %>
+                                <ul>
+                                <% if(dataLocal.page_yields_black) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Black">
+                                            <svg class="page-yield-item-inkdrop--black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_black %>
+                                                <% if(!dataLocal.page_yields_black.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_pigment_black) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Pigment Black">
+                                            <svg class="page-yield-item-inkdrop--pigment-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_pigment_black %>
+                                                <% if(!dataLocal.page_yields_pigment_black.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_light_black) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Light Black">
+                                            <svg class="page-yield-item-inkdrop--light-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_light_black %>
+                                                <% if(!dataLocal.page_yields_light_black.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_matte_black) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Matte Black">
+                                            <svg class="page-yield-item-inkdrop--matte-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_matte_black %>
+                                                <% if(!dataLocal.page_yields_matte_black.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_black) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Black">
+                                            <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_black %>
+                                                <% if(!dataLocal.page_yields_photo_black.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_cyan) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Cyan">
+                                            <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_cyan %>
+                                                <% if(!dataLocal.page_yields_cyan.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_light_cyan) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Light Cyan">
+                                            <svg class="page-yield-item-inkdrop--light-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_light_cyan %>
+                                                <% if(!dataLocal.page_yields_light_cyan.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_cyan) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Cyan">
+                                            <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_cyan %>
+                                                <% if(!dataLocal.page_yields_photo_cyan.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_magenta) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Magenta">
+                                            <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_magenta %>
+                                                <% if(!dataLocal.page_yields_magenta.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_vivid_light_magenta) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Vivid Light Magenta">
+                                            <svg class="page-yield-item-inkdrop--vivid-light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_vivid_light_magenta %>
+                                                <% if(!dataLocal.page_yields_vivid_light_magenta.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_vivid_magenta) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Vivid Magenta">
+                                            <svg class="page-yield-item-inkdrop--vivid-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_vivid_magenta %>
+                                                <% if(!dataLocal.page_yields_vivid_magenta.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_light_magenta) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Light Magenta">
+                                            <svg class="page-yield-item-inkdrop--light-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_light_magenta %>
+                                                <% if(!dataLocal.page_yields_light_magenta.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_magenta) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Magenta">
+                                            <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_magenta %>
+                                                <% if(!dataLocal.page_yields_photo_magenta.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_yellow) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Yellow">
+                                            <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_yellow %>
+                                                <% if(!dataLocal.page_yields_yellow.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_colour) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Colour">
+                                            <svg class="page-yield-item-inkdrop--cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                            <svg class="page-yield-item-inkdrop--magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                            <svg class="page-yield-item-inkdrop--yellow"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_colour %>
+                                                <% if(!dataLocal.page_yields_colour.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_colour) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Colour">
+                                            <svg class="page-yield-item-inkdrop--photo-black"><use xlink:href="#icon-inkdrop"></use></svg>
+                                            <svg class="page-yield-item-inkdrop--photo-cyan"><use xlink:href="#icon-inkdrop"></use></svg>
+                                            <svg class="page-yield-item-inkdrop--photo-magenta"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_colour %>
+                                                <% if(!dataLocal.page_yields_photo_colour.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_grey) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Grey">
+                                            <svg class="page-yield-item-inkdrop--grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_grey %>
+                                                <% if(!dataLocal.page_yields_grey.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_light_grey) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Light Grey">
+                                            <svg class="page-yield-item-inkdrop--light-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_light_grey %>
+                                                <% if(!dataLocal.page_yields_light_grey.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_dark_grey) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Dark Grey">
+                                            <svg class="page-yield-item-inkdrop--dark-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_dark_grey %>
+                                                <% if(!dataLocal.page_yields_dark_grey.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_grey) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Grey">
+                                            <svg class="page-yield-item-inkdrop--photo-grey"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_grey %>
+                                                <% if(!dataLocal.page_yields_photo_grey.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_red) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Red">
+                                            <svg class="page-yield-item-inkdrop--red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_red %>
+                                                <% if(!dataLocal.page_yields_red.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_dark_red) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Dark Red">
+                                            <svg class="page-yield-item-inkdrop--dark-red"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_dark_red %>
+                                                <% if(!dataLocal.page_yields_dark_red.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_blue) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Blue">
+                                            <svg class="page-yield-item-inkdrop--blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_blue %>
+                                                <% if(!dataLocal.page_yields_blue.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_dark_blue) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Dark Blue">
+                                            <svg class="page-yield-item-inkdrop--dark-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_dark_blue %>
+                                                <% if(!dataLocal.page_yields_dark_blue.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_photo_blue) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Photo Blue">
+                                            <svg class="page-yield-item-inkdrop--photo-blue"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_photo_blue %>
+                                                <% if(!dataLocal.page_yields_photo_blue.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_green) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Green">
+                                            <svg class="page-yield-item-inkdrop--green"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_green %>
+                                                <% if(!dataLocal.page_yields_green.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_orange) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Orange">
+                                            <svg class="page-yield-item-inkdrop--orange"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_orange %>
+                                                <% if(!dataLocal.page_yields_orange.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_violet) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Violet">
+                                            <svg class="page-yield-item-inkdrop--violet"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_violet %>
+                                                <% if(!dataLocal.page_yields_violet.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_chroma_optimizer) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Chroma Optimizer">
+                                            <svg class="page-yield-item-inkdrop--chroma-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_chroma_optimizer %>
+                                                <% if(!dataLocal.page_yields_chroma_optimizer.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_gloss_optimizer) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Gloss Optimizer">
+                                            <svg class="page-yield-item-inkdrop--gloss-optimizer"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_gloss_optimizer %>
+                                                <% if(!dataLocal.page_yields_gloss_optimizer.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                <% if(dataLocal.page_yields_clear) { %>
+                                    <li class="page-yield-item">
+                                        <div class="page-yield-item-inkdrop" title="Clear">
+                                            <svg class="page-yield-item-inkdrop--clear"><use xlink:href="#icon-inkdrop"></use></svg>
+                                        </div>
+                                        <div class="page-yield-item-value">
+                                            <span>
+                                                <%= dataLocal.page_yields_clear %>
+                                                <% if(!dataLocal.page_yields_clear.includes("ml")) { %>
+                                                    {{lang 'products.page_yield_unit'}}
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </li>
+                                <% } %>
+                                </ul>
+                            </div>
+                            <div class="product-reviews">
+                                <span class="rating--small">
+                                    <% if (dataLocal.rating >= 1) { %>
+                                        <span class="icon icon--ratingFull"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } else { %>
+                                        <span class="icon icon--ratingEmpty"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } %>
+
+                                    <% if (dataLocal.rating >= 2) { %>
+                                        <span class="icon icon--ratingFull"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } else { %>
+                                        <span class="icon icon--ratingEmpty"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } %>
+
+                                    <% if (dataLocal.rating >= 3) { %>
+                                        <span class="icon icon--ratingFull"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } else { %>
+                                        <span class="icon icon--ratingEmpty"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } %>
+
+                                    <% if (dataLocal.rating >= 4) { %>
+                                        <span class="icon icon--ratingFull"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } else { %>
+                                        <span class="icon icon--ratingEmpty"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } %>
+
+                                    <% if (dataLocal.rating >= 5) { %>
+                                        <span class="icon icon--ratingFull"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } else { %>
+                                        <span class="icon icon--ratingEmpty"><svg><use xlink:href="#icon-star" /></svg></span>
+                                    <% } %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="listItem-actions">
+                            <div class="listItem-prices">
+                              <!-- Product Pricing -->
+                                    <div class="listItem-price js-product-price" data-product-id="{{id}}">
+                                   <% if ((dataLocal.salePrice * 100) < (dataLocal.price * 100)) { %>
+								  <span class="srWasPrice"> Was: <span class="strikethrough"><% } %>   £<%=dataLocal.price %><% if ((dataLocal.salePrice * 100) < (dataLocal.price * 100)) { %>
+								   </span></span><% } %>
+                                    </div>
+                                    <% if ((dataLocal.salePrice * 100) < (dataLocal.price * 100)) { %>
+                                        <span class="srNowPrice">Now: <strong>£<%= parseFloat(dataLocal.salePrice).toFixed(2) %></strong></span>
+									 <% } %>
+                            </div>
+                            <!-- Stock Level -->
+                            <div class="listItem-stock-level">
+                                <% if(dataLocal.inStock === 'yes') { %>
+                                <span class="listItem-stock-level__in-stock">In Stock</span>
+                                <% } else { %>
+                                <span class="listItem-stock-level__out-of-stock">Not in Stock</span>
+                                <% } %>
+                            </div>
+                            <!-- More Info btn -->
+                            <div class="productView-options">
+                                <a href="<%=dataLocal.url%>" data-event-type="product-click" class="button button--primary" data-product-id="<%=dataLocal.id%>">{{lang 'products.more_info'}}</a>
+                            </div>
+                            <div>
+                                 <%=helper.render('landingPageProductAddToCart',scope,data,dataLocal) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </li>
+</script>
+
+<script type="template/klevu" id="klevuLandingTemplateFiltersCustom">
+    <% if(data.query[dataLocal].filters.length > 0 ) { %>
+        <div class="kuHeaderPattern">
+            <div class="kuHeaderPatternSection kuHeaderPatternSection--1"></div>
+            <div class="kuHeaderPatternSection kuHeaderPatternSection--2"></div>
+            <div class="kuHeaderPatternSection kuHeaderPatternSection--3"></div>
+            <div class="kuHeaderPatternSection kuHeaderPatternSection--4"></div>
+        </div>
+        <div class="kuFilters" role="navigation" data-position="left" aria-label="Product Filters" tabindex="0">
+            <h3 class="kuFiltersTitleHeading"><%=helper.translate("Refine by")%></h3>
+            <% helper.each(data.query[dataLocal].filters,function(key,filter){ %>
+                <% if(filter.type == "OPTIONS"){ %>
+                    <div class="kuFilterBox klevuFilter <%=(filter.multiselect)?'kuMulticheck':''%>" data-filter="<%=filter.key%>" <% if(filter.multiselect){ %> data-singleselect="false" <% } else { %> data-singleselect="true"<% } %>>
+                        <div class="kuFilterHead <%=(filter.isCollapsed) ? 'kuExpand' : 'kuCollapse'%>">
+                            <% var filter_label = (filter.label=="klevu_price") ? "price" : filter.label; %>
+                            <%=helper.translate(filter_label)%>
+                        </div>
+                        <div data-optionCount="<%= filter.options.length %>" class="kuFilterNames <%= (filter.options.length <= 5 ) ? 'kuFilterShowAll': '' %> <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">
+                            <ul>
+                                <% helper.each(filter.options,function(key,filterOption){ %>
+                                    <li <% if(filterOption.selected ==true) { %> class="kuSelected"<% } %>>
+                                        <a target="_self" href="#" title="<%=helper.escapeHTML(filterOption.name)%>" class="klevuFilterOption<% if(filterOption.selected ==true) { %> klevuFilterOptionActive<% } %>" data-value="<%=helper.escapeHTML(filterOption.value)%>" >
+                                            <span class="kuFilterIcon"></span>
+                                            <span class="kufacet-text"><%=filterOption.name%></span>
+                                            <% if(filterOption.selected ==true) { %>
+                                                <span class="kuFilterCancel">X</span>
+                                            <% } else { %>
+                                                <span class="kuFilterTotal"><%=filterOption.count%></span>
+                                            <% } %>
+                                        </a>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                            <% if(filter.options.length > 5 ) { %>
+                                <div class="kuShowOpt" tabindex="-1">
+                                    <span class="kuFilterDot"></span>
+                                    <span class="kuFilterDot"></span>
+                                    <span class="kuFilterDot"></span>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } else if(filter.type == "SLIDER") { %>
+                    <div class="kuFilterBox klevuFilter" data-filter="<%=filter.key%>">
+                        <div class="kuFilterHead <%=(filter.isCollapsed) ? 'kuExpand' : 'kuCollapse'%>">
+                            <% var filter_label = (filter.label=="klevu_price") ? "price" : filter.label; %>
+                            <%=helper.translate(filter_label)%>
+                        </div>
+                        <div class="kuFilterNames sliderFilterNames <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">
+                            <div class="kuPriceSlider klevuSliderFilter" data-query = "<%=dataLocal%>">
+                                <div data-querykey = "<%=dataLocal%>" class="noUi-target noUi-ltr noUi-horizontal noUi-background kuSliderFilter kuPriceRangeSliderFilter<%=dataLocal%>"></div>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <!-- Other Facets -->
+                <% } %>
+            <% }); %>
+            <!-- <div class="kuFiltersFooter">
+                <a target="_self" href="javascript:void(0)" class="kuBtn kuFacetsSlideOut kuMobileFilterCloseBtn" role="button" tabindex="0" area-label=""><%=helper.translate("Close")%></a>
+            </div> -->
+        </div>
+    <% } %>
+</script>
+
+<script type="template/klevu" id="klevuLandingTemplatePaginationCustom">
+
+    <% if(data.query[dataLocal].result.length > 0 ) { %>
+        <% var productListLimit = data.query[dataLocal].meta.noOfResults; %>
+        <% var productListTotal = data.query[dataLocal].meta.totalResultsFound - 1; %>
+        <div class="kuPagination">
+            <% if(productListTotal > productListLimit) { %>
+                <% if(data.query[dataLocal].meta.offset > 0) { %>
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="0">
+                        &lt;&lt;
+                    </a>&nbsp;
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="<%=(data.query[dataLocal].meta.offset-productListLimit)%>">
+                        &lt;
+                    </a>&nbsp;
+                <% } %>
+                <% if(data.query[dataLocal].meta.offset > 0) { %>
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="<%=(data.query[dataLocal].meta.offset-productListLimit)%>">
+                        <%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit))%>
+                    </a>&nbsp;
+                <% } %>
+                <a href="javascript:void(0);" class="kuCurrent">
+                    <%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit)+1)%>
+                </a>&nbsp;
+                <% if(productListTotal >= data.query[dataLocal].meta.offset+productListLimit) { %>
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="<%=(data.query[dataLocal].meta.offset+productListLimit)%>">
+                        <%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit)+2)%>
+                    </a>&nbsp;
+                <% } %>
+                <% if(productListTotal >= data.query[dataLocal].meta.offset+productListLimit) { %>
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="<%=(data.query[dataLocal].meta.offset+productListLimit)%>">
+                        &gt;
+                    </a>&nbsp;
+                    <a target="_self" href="javascript:void(0)" class="klevuPaginate" data-offset="<%=(Math.floor(productListTotal/productListLimit)*productListLimit)%>">
+                        &gt;&gt;
+                    </a>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+</script>
+{{/partial}}
+{{> layout/base}}

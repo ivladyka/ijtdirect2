@@ -1,0 +1,19 @@
+<div class="similar-product">
+  {{#if product.related_products}}
+      <div class="title-section">
+          <h2>{{lang 'products.customers_also_purchased'}}</h2>
+      </div>
+  {{/if}}
+  {{#if product.related_products}}
+<div class="product-content" id="tab-related">
+    {{#if settings.data_tag_enabled}}
+    {{!> components/products/carousel-cartridge products=product.related_products columns=6 list="Related Products"}}
+    {{!> components/products/carousel products=product.related_products columns=6 list="Related Products"}}
+    {{else}}
+    {{!> components/products/carousel-cartridge products=product.related_products columns=6}}
+    {{> components/products/carousel products=product.related_products columns=6}}
+    {{/if}}
+</div>
+  {{/if}}
+</div>
+

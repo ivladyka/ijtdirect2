@@ -1,0 +1,99 @@
+
+<article class="card--alternate" {{#if settings.data_tag_enabled}} data-event-type="{{event}}" data-entity-id="{{id}}" data-position="{{position}}" data-name="{{name}}" data-product-category="{{#each category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{brand.name}}" data-product-price="{{#if price.with_tax}}{{price.with_tax.value}}{{else}}{{price.without_tax.value}}{{/if}}"  {{/if}}>
+    <!-- Product Image -->
+    <figure class="card-figure">
+        <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}>
+            <div class="card-img-container">
+                {{> components/common/responsive-img image=image class="card-image" fallback_size=theme_settings.productgallery_size lazyload=theme_settings.lazyload_mode default_image=theme_settings.default_image_product}}
+            </div>
+        </a>
+    </figure>
+    <div class="card-body">
+        <!-- Product Title -->
+        <h4 class="card-title">
+            <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}>{{name}}</a>
+        </h4>
+
+        <div class="product-mpn">
+            {{#each custom_fields}}
+              {{#if name '==' 'Condition'}}
+              <span class="productView-info-name">{{name}}:</span>
+              <span class="productView-info-value">{{value}}</span>
+              {{/if}}
+            {{/each}}
+        </div>
+
+        <div class="product-mpn">
+          {{#each custom_fields}}
+            {{#if name '==' 'MPN'}}
+            <span class="productView-info-name">Replacement for:</span>
+            <span class="productView-info-value">{{value}}</span>
+            {{/if}}
+          {{/each}}
+        </div>
+
+        <!-- Product ink value -->
+        <div class="ink-drop">
+            {{#each custom_fields}}
+                {{#if name '==' 'Inkdrop'}}
+                    <svg style="fill:{{value}};"><use xlink:href="#icon-inkdrop"></use></svg>
+                {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Product Price -->
+        <div class="alternate-card-text card-price js-product-price" data-test-info-type="price">
+            {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                {{> components/products/price price=price product=product}}
+            {{else}}
+                {{> components/common/login-for-pricing}}
+            {{/or}}
+        </div>
+
+        <!-- Amount of cartridges -->
+        <div class="product-cartridge">
+            {{#each custom_fields}}
+                {{#if name '==' 'Number of Cartridges'}}
+                    <span>{{value}} cartridges included</span>
+                {{/if}}
+            {{/each}}
+        </div>
+
+        {{#and rating show_rating}}
+            <div class="product-reviews" data-test-info-type="productRating">
+                <span class="rating--small">
+                    {{> components/amp/products/ratings rating=rating}}
+                </span>
+                <span>({{rating}})</span>
+            </div>
+        {{/and}}
+    </div>
+
+    <div class="card-figcaption-body">
+        {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+            {{#if show_cart_action}}
+                {{#if add_to_cart_url}}
+                    <a href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}" data-event-type="product-click" class="card-figcaption-button" data-product-id="{{id}}">{{lang 'products.more_info'}}</a>
+                    <span>|</span>
+                    <a href="{{add_to_cart_url}}" data-event-type="product-click" class="card-figcaption-button" data-product-id="{{id}}">{{lang 'products.buy_now'}}</a>
+                {{/if}}
+                {{#if pre_order}}
+                    <a href="{{pre_order_add_to_cart_url}}" data-event-type="product-click" class="button button--small card-figcaption-button">{{lang 'products.pre_order'}} <span>›</span></a>
+                {{/if}}
+                {{#if has_options }}
+                    <a 
+                    href="{{url}}{{#if categoryName}}?printer={{categoryName}}{{/if}}"
+                    data-event-type="product-click"
+                    class="card-figcaption-button"
+                    data-product-id="{{id}}">
+                        {{lang 'products.view_product'}} <span>›</span>
+                    </a>
+                {{/if}}
+                {{#if out_of_stock_message }}
+                    <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{out_of_stock_message}} <span>›</span></a>
+                {{/if}}
+            {{/if}}
+        {{/or}}
+    </div>
+
+</article>

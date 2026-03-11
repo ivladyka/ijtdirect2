@@ -1,0 +1,11 @@
+{{#if social_media}}
+    <ul class="footer-social-links socialLinks--alt footer-info-list">
+        {{#each social_media}}
+            <li class="footer-social-links-item">
+                <a class="icon icon--{{display_name}}" href="{{url}}" target="_blank" aria-label="{{display_name}}">
+                    <svg><use xlink:href="#icon-{{display_name}}" /></svg>
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}

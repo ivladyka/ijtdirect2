@@ -1,0 +1,11 @@
+
+{{#if blog.posts}}
+<div class="blog-posts blog-posts-resent">
+    {{#each (limit blog.posts 6)}}
+
+    {{> components/blog/recent-post post=this settings=../settings}}
+
+    {{/each}}
+    </div>
+{{/if}}
+

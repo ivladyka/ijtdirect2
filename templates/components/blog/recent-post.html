@@ -1,0 +1,35 @@
+<article class="blog recent-post">
+
+    <!-- {{#if tags}}
+     {{#each tags}}
+     {{#if @first}}
+     {{#if name '!==' 'insights and news'}}
+     <span class="saleTag">{{name}}</span>
+     {{/if}}
+     {{/if}}
+     {{/each}}
+     {{/if}}-->
+    <div class="blog-post-body">
+        <div class="blog-header">
+            <h2 class="blog-title">
+                <a href="{{post.url}}">{{post.title}}</a>
+            </h2>
+            <!--<p class="blog-date">{{#if post.author}}{{lang 'blog.posted_by' name=post.author}} on {{/if}}{{post.date_published}}</p>-->
+        </div>
+    </div>  
+    <div class="blog-post-figure">
+        {{#if post.thumbnail}}
+        <figure class="blog-thumbnail" style="background-image: url('{{getImage post.thumbnail "recent_post_size" }}')">
+            <a href="{{post.url}}">
+                <img class="lazyload" src="{{cdn 'img/loading.svg'}}" data-src="{{getImageSrcset post.thumbnail use_default_sizes=true}}" alt="{{post.thumbnail.alt}}" title="{{post.thumbnail.alt}}">
+            </a>
+        </figure>
+        {{/if}}
+    </div>
+    <!-- <div class="arrowBtn">
+         <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M19.4387 32.8819L33.1973 19.1233" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+             <path d="M32.919 33.0903L33.1964 19.1234L19.2295 19.4007" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+         </svg>
+     </div>-->
+</article>

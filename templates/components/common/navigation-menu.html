@@ -1,0 +1,63 @@
+<nav class="navPages">
+    
+        <!--li class="navPages-item">
+          <a href="#" class="navPages-action">Ink Cartridges</a>
+          <ul class="navPage-subMenu-list">
+            <li class="navPage-subMenu-item"><a class="navPage-subMenu-action" href="#">Cartridges 1</a></li>
+            <li class="navPage-subMenu-item"><a class="navPage-subMenu-action" href="#">Cartridges 2</a></li>
+            <li class="navPage-subMenu-item"><a class="navPage-subMenu-action" href="#">Cartridges 3</a></li>
+          </ul>
+        </li>
+        <li class="navPages-item">
+          <a href="#" class="navPages-action">toner Cartridges</a>
+        </li>
+        <li class="navPages-item">
+          <a href="#" class="navPages-action">free printer deals</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/laptops/" class="navPages-action">Laptops</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/pcs/" class="navPages-action">PC’s</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/tablets-ipads/" class="navPages-action">tablets & iPads</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/mobile-phones/" class="navPages-action">Mobile Phones</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/tech-gadgets/" class="navPages-action">Tech & Gadgets</a>
+        </li>
+        <li class="navPages-item">
+          <a href="/clearance-sale/" class="navPages-action">Clearance sale</a>
+        </li-->
+        <ul class="navPages-list sf-menu">
+        {{#unless theme_settings.hide_content_navigation}}
+            {{#each pages}}
+                {{#if name '==' 'Hardware'}}
+                {{#each children}}
+                  <li class="navPages-item">
+                      {{#if children}}
+                        <a class="navPages-action sf-with-ul" href="{{url}}">
+                        {{name}} 
+                        </a>
+                        <ul class="navPage-subMenu-list">
+                            {{#each children}}
+                                <li class="navPage-subMenu-item">
+                                    <a class="navPage-subMenu-action navPages-action" href="{{url}}">{{name}}</a>
+                                </li>
+                            {{/each}}
+                        </ul> 
+                        {{else}}
+                        <a class="navPages-action" href="{{url}}">{{name}}</a>
+                        
+                        {{/if}}
+                    </li>
+                  {{/each}}
+                {{/if}}  
+             {{/each}}
+        {{/unless}}
+        
+    </ul>
+</nav>

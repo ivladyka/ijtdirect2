@@ -1,0 +1,47 @@
+---
+blog:
+    posts:
+        limit: 15
+        pages: 3
+        summary: 200
+cart: true
+---
+{{#partial "page"}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<main class="page">
+    {{#unless theme_settings.hide_blog_page_heading }}
+    <h1 class="blog-heading">{{blog.name}}</h1>
+    {{/unless}}
+ 
+        {{#each blog.posts}}
+        {{> components/blog/post-featured post=this show_tags=true}}
+        {{/each}}   
+    <div class="blog-content">
+        <div class="blog-posts">
+            {{#each blog.posts}}
+            {{> components/blog/post post=this show_tags=true}}
+            {{/each}}
+        </div>
+
+        <div class="blog-tags">
+            <h4 class="blog-tags-heading">Top Topics</h4>
+            <ul class="topic-tags">
+                {{#each blog.posts}}
+                {{#each this.tags}}
+                {{#if name '!==' 'featured'}}
+                <li>
+                    <a href="{{url}}">{{name}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    {{> components/common/paginator pagination.blog}}
+</main>
+
+{{/partial}}
+{{> layout/base}}

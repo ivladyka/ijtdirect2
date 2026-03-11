@@ -1,0 +1,245 @@
+// =============================================================================
+// CARDS (CSS)
+// =============================================================================
+//
+// 1. Allow users to click the anchor tag on the image in the figcaption empty
+//    space. This provides a much larger and simpler hit state for navigating
+//    to the product details page. (Does not work in IE10 or earlier).
+// 2. Using translate3d to counter a chrome specific bug: When using a masonry
+//    styled layout via CSS column-count etc, transforms applied to descendants
+//    are made invisible, except for 3d transforms...
+//
+// -----------------------------------------------------------------------------
+
+.card {
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: spacing("half");
+        transition: all 0.15s ease;
+
+        @include breakpoint("small") {
+            padding: spacing("single");
+        }
+    }
+
+    .card-title {
+
+        a {
+            color: stencilColor("card-title-color");
+            &:hover{
+                color: stencilColor("card-title-color-hover");
+            }
+        }
+    }
+
+    .card-figure {
+        background: none;
+        padding: 18px 10px;
+        margin: 0;
+    }
+
+    .card-image {
+        mix-blend-mode: multiply;
+    }
+
+    .product-cartridge {
+        min-height: 20px;
+        margin-top: spacing("half");
+
+        span {
+            background-color: stencilColor("color-yellow");
+        }
+    }
+
+    .product-reviews {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .card-figcaption {
+
+        &-body {
+            align-items: center;
+            background-color: stencilColor("color-blueLight");
+            bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            font-weight: 600;
+            justify-content: center;
+            padding: spacing("half") spacing("single");
+            top: auto;
+            transform: none;
+            width: 100%;
+
+            span {
+                margin: 0 spacing("quarter");
+                visibility: hidden;
+            }
+        }
+    
+        &-button {
+            background: stencilColor("color-blue");
+            border-radius: 8px;
+            color: stencilColor("color-white");
+            margin: 0.2rem 0.7rem;
+            min-width: 100px;
+            padding: 0.6rem 1.1rem;
+            text-align: center;
+            white-space: nowrap;
+    
+            &:hover {
+                color: stencilColor("color-greyDarker");
+            }
+
+            &--green {
+                background: stencilColor("button--green-color");
+            }
+        }
+    }
+
+    .ink-drop {
+        display: none;
+    }
+}
+
+.card-img-container {
+    @include lazy-loaded-padding('productgallery_size');
+}
+
+.card-figcaption {
+    display: none;
+    margin: $card-figcaption-margin;
+    pointer-events: none; // 1
+
+    @include breakpoint("medium") {
+        display: block;
+    }
+}
+
+.card-figcaption-body {
+    display: $card-figcaption-body-display;
+    pointer-events: all; // 1
+    transform: translate3d(0, -50%, 0); // 2
+
+    .form {
+        gap: spacing("half");
+
+        .form-action {
+            margin: 0;
+
+            .button {
+                margin: 0;
+            }
+        }
+    }
+
+    .form-field--increments {
+        display: none;
+    }
+}
+
+.card-image {
+    @include lazy-loaded-img;
+    /* Object-fit polyfill */
+    border: 0;
+    font-family: 'object-fit: contain;';
+    max-height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+.card-title {
+    flex-grow: 1;
+    font-size: $card-title-fontSize;
+    margin: $card-title-margin;
+
+    > a {
+        text-decoration: $card-title-textDecoration;
+    }
+}
+
+.card-text {
+    margin-bottom: $card-text-marginBottom;
+
+    abbr {
+        border: 0;
+        color: inherit;
+        font-size: inherit;
+    }
+}
+
+.card-figcaption-button {
+    border: $card-figcaption-button-border;
+    display: $card-figcaption-button-display;
+    margin: $card-figcaption-button-margin;
+
+    &:active {
+        border: $card-figcaption-button-border;
+    }
+
+}
+
+.card-body {
+    margin-bottom: spacing("half");
+    font-size: $card-text-fontSize;
+
+    @include breakpoint("small") {
+        text-align: left;
+    }
+}
+
+//
+// Alternate card
+//
+// Purpose: Used to give the card alternative styling
+// -----------------------------------------------------------------------------
+
+.card--alternate {
+    background-color: stencilColor("card--alternate-backgroundColor");
+    border: 3px solid stencilColor("card--alternate-borderColor");
+    position: relative;
+    transition: all 0.15s ease;
+
+    .card-body {
+        padding: spacing("half");
+        transition: all 0.15s ease;
+
+        @include breakpoint("small") {
+            padding: spacing("single");
+        }
+    }
+
+    .card-title {
+
+        a {
+            color: stencilColor("color-blue");
+        }
+    }
+
+    .card-figure {
+        background: none;
+        padding: 18px 10px;
+    }
+
+    .card-image {
+        mix-blend-mode: multiply;
+        padding: 18px 10px;
+    }
+
+    .product-cartridge {
+        min-height: 20px;
+        margin-top: spacing("half");
+
+        span {
+            background-color: stencilColor("color-yellow");
+        }
+    }
+
+    .product-reviews {
+        margin-top: spacing("half");
+        text-align: center;
+    }
+}

@@ -1,0 +1,541 @@
+// =============================================================================
+// PRODUCT LIST (CSS)
+// =============================================================================
+
+
+// Product list
+// -----------------------------------------------------------------------------
+
+.productList {
+    @include u-listBullets("none");
+    margin: spacing("half") 0;
+
+    &__divider {
+        background-color: $color-blueDark;
+        padding: 5px;
+
+        h4 {
+            color: $color-white;
+            margin: 0;
+        }
+    }
+}
+
+
+// Product list item
+// -----------------------------------------------------------------------------
+
+.listItem {
+    
+    .card-figure {
+        background: none;
+        margin-top: - spacing("half");
+    }
+
+    .card-image {
+        mix-blend-mode: darken;
+    }
+}
+
+// QuickView button
+// -----------------------------------------------------------------------------
+
+.listItem-button {
+    background-color: $card-figcaption-button-background;
+    border-color: $card-figcaption-button-borderColor;
+    color: $card-figcaption-button-color;
+
+    &:hover {
+        background-color: $card-figcaption-button-backgroundHover;
+        border-color: $card-figcaption-button-borderColor;
+        color: $card-figcaption-button-color;
+    }
+}
+
+
+// List figure
+// -----------------------------------------------------------------------------
+
+.listItem-figure {
+    margin: 0 0 spacing("single");
+
+    @include breakpoint("small") {
+        margin-bottom: 0;
+        padding-left: spacing("half");
+        padding-right: spacing("half");
+        width: grid-calc(3, $total-columns);
+    }
+
+    @include breakpoint("large") {
+        position: relative;
+    }
+
+    .listItem-button {
+        margin: spacing("single") 0;
+
+        @include breakpoint("large") {
+            @include verticalPositionMiddle();
+            display: inline-block;
+            margin: 0 0 spacing("single");
+            pointer-events: all;
+            transform-style: preserve-3d;
+        }
+    }
+}
+
+.listItem-figureBody {
+    opacity: 1;
+    text-align: center;
+
+    @include breakpoint("large") {
+        bottom: 0;
+        height: 100%;
+        left: spacing("half");
+        opacity: 0;
+        position: absolute;
+        right: spacing("half");
+        top: 0;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.listItem-image {
+    width: 100%;
+}
+
+// List content
+// -----------------------------------------------------------------------------
+
+.listItem-content {
+    background-color: $theme-dark-grey-color;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: spacing("half") 0;
+    padding: spacing("half") 0;
+
+    @include breakpoint("medium") {
+        grid-template-columns: 1fr 2fr 1fr 1fr;
+    }
+
+    .productView-options .form {
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.listItem-details,
+.listItem-actions {
+
+    @include breakpoint("medium") {
+        padding-left: spacing("half");
+    }
+
+    @include breakpoint("large") {
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+
+
+// List details
+// -----------------------------------------------------------------------------
+
+.listItem-details {
+    padding: 0 spacing("half") spacing("half");
+
+    @include breakpoint("large") {
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.listItem-rating {
+    margin-bottom: spacing("quarter");
+}
+
+.listItem-brand {
+    color: color("greys", "light");
+    font-size: fontSize("base");
+    margin: 0 0 spacing("eighth");
+
+    @include breakpoint("medium") {
+        font-size: fontSize("smaller");
+        margin-bottom: 0;
+    }
+}
+
+.listItem-sku {
+    margin: 0;
+}
+
+.listItem-MPN-list {
+    font-style: italic;
+}
+
+.listItem-features {
+    padding: spacing("half");
+
+    ul {
+        list-style: disc;
+    }
+}
+
+.page-yield-info {
+    flex: 2;
+
+    @include breakpoint("medium") {
+        text-align: center;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+
+        li {
+            margin-bottom: spacing("quarter");
+        }
+
+        svg {
+            display: inline-block;
+            height: 24px;
+            width: 16px;
+            vertical-align: middle;
+            &:last-of-type {
+                margin-right: spacing("half");
+            }
+        }
+
+        span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+.listItem-title {
+    font-weight: 700;
+    margin: 0 0 spacing("half");
+
+    @include breakpoint("medium") {
+        
+    }
+
+    > a {
+        color: stencilColor("card-title-color");
+        &:hover{
+            color: stencilColor("card-title-color-hover");
+            text-decoration: none;
+        }
+    }
+}
+
+.listItem-summary {
+    margin: 0;
+}
+
+.listItem-price {
+    font-size: 15px;
+    font-weight: fontWeight("bold");
+    line-height: 24px;
+    text-align: center;
+
+    div {
+        display: inline;
+    }
+}
+
+
+// List info
+// -----------------------------------------------------------------------------
+
+.listItem-info {
+    padding: 0 spacing("half") spacing("single");
+
+    @include breakpoint("medium") {
+        position: relative;
+        text-align: center;
+    }
+
+    .product-reviews {
+        margin-top: spacing("half");
+        text-align: center;
+
+        @include breakpoint("medium") {
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+        }
+    }
+
+    .page-yield-info {
+        flex: 2;
+    
+        @include breakpoint("medium") {
+            text-align: center;
+        }
+    
+        ul {
+            list-style: none;
+            margin: 0;
+    
+            li {
+                margin-bottom: spacing("quarter");
+            }
+    
+            svg {
+                display: inline-block;
+                height: 24px;
+                margin-right: 4px;
+                vertical-align: middle;
+                width: 16px;
+            }
+    
+            span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+
+        .page-yield-item {
+            align-items: center;
+            display: flex;
+            justify-content: flex-start;
+        
+            &-inkdrop {
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 8px;
+
+                @include breakpoint("medium") {
+                    width: 50%;
+                }
+
+                // Inkdrop colours
+                &--light-magenta, &--photo-magenta, &--vivid-light-magenta {
+                    fill:#ff80ff;
+                }
+
+                &--magenta, &--vivid-magenta {
+                    fill:#ff00ff;
+                }
+
+                &--violet {
+                    fill:#8f00ff;
+                }
+
+                &--light-cyan, &--photo-cyan {
+                    fill:#80ffff;
+                }
+
+                &--cyan {
+                    fill:#00ffff;
+                }
+
+                &--yellow {
+                    fill:#ffff00;
+                }
+
+                &--photo-grey, &--grey, &--light-grey {
+                    fill:#c0c0c0;
+                }
+
+                &--dark-grey {
+                    fill:#5A5A5A;
+                }
+
+                &--photo-black, &--black, &--matte-black, &--pigment-black {
+                    fill:#000000;
+                }
+
+                &--light-black {
+                    fill:#454545;
+                }
+
+                &--dark-red {
+                    fill:#c02020;
+                }
+
+                &--red {
+                    fill:#ff2020;
+                }
+
+                &--dark-blue {
+                    fill:#000080;
+                }
+
+                &--blue, &--photo-blue {
+                    fill:#0000ff;
+                }
+
+                &--orange {
+                    fill:#ff8000;
+                }
+
+                &--green {
+                    fill:#008000;
+                }
+
+                &--chroma-optimizer, &--clear, &--gloss-optimizer {
+                    fill:#ffffff;
+                }
+            }
+        
+            &-value {
+                display: flex;
+                text-align: left;
+
+                @include breakpoint("medium") {
+                    width: 50%;
+                }
+            }
+        }
+    }
+}
+
+
+// List actions
+// -----------------------------------------------------------------------------
+//
+// 1. Magic number width to align closer to the intended design.
+//
+// -----------------------------------------------------------------------------
+
+.listItem-actions {
+    padding: 0 spacing("half");
+
+    @include breakpoint("large") {
+        vertical-align: middle;
+
+        .button--compare {
+            @include buttonSize("small");
+        }
+    }
+
+    .button {
+        margin-bottom: 0;
+
+        @include breakpoint("large") {
+
+            // scss-lint:disable NestingDepth
+            + .button {
+                margin: spacing("half") 0 0;
+            }
+        }
+    }
+
+    .button--no-stock {
+        @include breakpoint("medium") {
+            max-width: 122px;
+        }
+    }
+}
+
+
+// Product list when sidebar is present
+// -----------------------------------------------------------------------------
+
+.page-sidebar + .page-content {
+
+    .productList {
+
+        // scss-lint:disable SelectorDepth, NestingDepth
+        .listItem-details {
+
+            @include breakpoint("large") {
+                padding-right: spacing("double");
+            }
+        }
+
+        .listItem-actions {
+
+            @include breakpoint("large") {
+                width: 30%;
+            }
+        }
+    }
+}
+
+// Ink drops
+.ink-drop {
+    margin-top: spacing("half");
+
+    svg {
+        height: 20px;
+        width: 20px;
+    }
+}
+
+// Quantity
+.form-field--increments{
+    margin: spacing("quarter") spacing("half") spacing("quarter");
+
+  
+
+    .form-label{
+        display: none;
+    }
+}
+
+.form-increment{
+    border: 1px solid $theme-black-color;
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+
+    .form-input{
+        border: 0;
+        float: left;
+        height: 38px;
+        padding: 2px;
+        width: 38px;
+    }
+    
+    .button{
+        @include display-flex(flex);
+        @include align-item(flex-start);
+        margin: 0 !important;
+        padding: 4px 10px;
+        width: auto;
+
+        .icon{
+            width: 15px;
+            height: 11px;
+
+            svg{
+                fill:$theme-grey-font-color;
+            }
+        }
+        &:hover,&:focus{
+            svg{
+                fill:$theme-white-color;
+            }
+        }
+    }
+
+    .button-inc{
+        @include transform(rotate(-180deg));
+    }
+}
+
+//   Stock levels
+.listItem-stock-level {
+    text-align: center;
+    width: 100%;
+
+    &__out-of-stock {
+        color: $color-error;
+    }
+
+    &__in-stock {
+        color: $color-success;
+    }
+
+    span {
+        font-weight: 700;
+    }
+}

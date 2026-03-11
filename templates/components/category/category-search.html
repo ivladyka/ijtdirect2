@@ -1,0 +1,116 @@
+<div class="category-search">
+    <p class="category-search__heading">Search for your {{categoryName}} printer</p>
+    <div class="category-search__input-container">
+        <input id="cartridgeCategorySearch" class="category-search__input" type="text" placeholder="Search for your {{categoryName}} printer here" />
+        <button class="category-search__button" type="submit"><svg><use xlink:href="#icon-header-search"></use></svg></button>
+        <ul id="cartridgeCategorySearchDropdown" class="category-search__dropdown"></ul>
+    </div>
+    <p class="category-search__helper">Works best when you type your full printer model (e.g.Pixma MG5750)</p>
+</div>
+
+<script>
+    var scrollToElement = function(id) {
+        $('html, body').animate({
+            scrollTop: $(id).offset().top - 15
+        }, 500);
+        $(id).focus();
+    }
+</script>
+
+{{!-----------------------------------------------------------------}}
+{{!-- CATEGORY SEARCH FUCTIONALITY --}}
+{{!-----------------------------------------------------------------}}
+<script src="{{cdn 'assets/js/lib/elasticlunr.min.js'}}"></script>
+<script>
+
+    const cartridgeCategoryFlat = [
+        {{#each categories}}
+            {{#if name '==' "Cartridges"}}
+                {{#each children}}
+                    {{#if name '==' ../../../parentCategory }}
+                        {{#each children}}
+                            {{#if name '==' ../../../../../category.name }}
+                                { 
+                                    id: '{{id}}',
+                                    name: '{{name}}',
+                                    url: '{{url}}',
+                                },
+                                {{#each children}}
+                                    { 
+                                        id: '{{id}}',
+                                        name: '{{name}}',
+                                        url: '{{url}}',
+                                    },
+                                    {{#each children}}  
+                                        { 
+                                            id: '{{id}}',
+                                            name: '{{name}}',
+                                            url: '{{url}}',
+                                        },
+                                        {{#each children}}
+                                            { 
+                                                id: '{{id}}',
+                                                name: '{{name}}',
+                                                url: '{{url}}',
+                                            },
+                                        {{/each}}
+                                    {{/each}}
+                                {{/each}}
+                            {{/if}}
+                        {{/each}}
+                    {{/if}}
+                {{/each}}
+            {{/if}}
+        {{/each}}
+    ];
+
+    // Set up elasticlunr search
+    const index = elasticlunr(function () {
+        this.addField('name');
+        this.addField('url');
+        this.setRef('id');
+    });
+
+    for(item of cartridgeCategoryFlat) {
+        index.addDoc(item);
+    }
+
+    $(document).ready(function(){
+        const searchInput = document.getElementById('cartridgeCategorySearch');
+        const searchDropdown = document.getElementById('cartridgeCategorySearchDropdown');
+
+         const clearDropdown = () => {
+            searchDropdown.innerHTML = '';
+        }
+
+        searchInput.addEventListener('keyup', (e) => {
+            const searchResults = index.search(e.target.value);
+
+            if (searchResults.length) {
+                let searchList = '';
+                for (const result of searchResults) {
+                    searchList += `
+                    <button onClick="scrollToElement('#${result.doc.id}')" tabindex="0">
+                        ${result.doc.name}
+                    </button>`;
+                }
+                searchDropdown.innerHTML = searchList;
+            } else {
+                clearDropdown();
+            }
+        })
+
+        window.onclick = function(e) {
+            if (e.target != searchInput) {
+                clearDropdown();
+            }
+        }
+
+        $(document).keyup(function(e) {
+            if (e.key === "Escape") {
+                clearDropdown();
+            }
+        });
+
+    });
+</script>

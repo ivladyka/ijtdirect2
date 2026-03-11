@@ -1,0 +1,192 @@
+---
+products:
+    new:
+        limit: {{theme_settings.homepage_new_products_count}}
+    featured:
+        limit: {{theme_settings.homepage_featured_products_count}}
+    top_sellers:
+        limit: {{theme_settings.homepage_top_products_count}}
+carousel: {{theme_settings.homepage_show_carousel}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+cart: true
+---
+{{#partial "pageheader"}}
+<!-- company schema -->
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "IJT Direct",
+      "url": "https://www.ijtdirect.co.uk/",
+      "logo": "https://cdn11.bigcommerce.com/s-n8jwhmma29/images/stencil/470x84/ijt_direct_website_logo_do_not_delete_1704187031__06180.original.png",
+      "sameAs": [
+        "https://www.facebook.com/ijtdirect",
+        "https://twitter.com/ijtdirect"
+      ],
+      "address": [
+        {
+          "streetAddress": "Unit 1-6, Polham Lane",
+          "addressLocality": "Somerton",
+          "postalCode": "TA11 6SP",
+          "addressRegion": "Somerset",
+          "addressCountry": "UK"
+        }],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+         "telephone": "+44 (0) 800 083 4555",
+          "contactType": "customer service",
+          "email": "support@ijtdirect.co.uk",
+          "areaServed": "UK",
+          "availableLanguage": "en"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+44 (0) 800 083 4555",
+          "contactType": "sales",
+          "email": "sales@ijtdirect.co.uk",
+          "areaServed": "UK",
+          "availableLanguage": "en"
+        }
+      ]
+    }
+</script>
+<script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "IJT Direct",
+    "url": "https://www.ijtdirect.co.uk/",
+    "logo": "https://cdn11.bigcommerce.com/s-n8jwhmma29/images/stencil/470x84/ijt_direct_website_logo_do_not_delete_1704187031__06180.original.png",
+    "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Unit 1-6, Polham Lane",
+    "addressLocality": "Somerton",
+    "postalCode": "TA11 6SP",
+    "addressRegion": "Somerset",
+    "addressCountry": "UK"
+    },
+    "telephone": "+44 (0) 800 083 4555",
+    "openingHoursSpecification": [
+    {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+    ],
+    "opens": "08:30",
+    "closes": "17:30"
+    },
+    {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+    "Saturday"
+    ],
+    "opens": "09:00",
+    "closes": "13:00"
+    }
+    ],
+    "description": "We sell IJT branded recycled ink and toner cartridges as well as manufacturer originals through our website and telesales B2B and B2C teams",
+    "category": "Printer Consumables Retailer"
+    }
+</script>
+{{/partial}}
+{{#partial "hero"}}
+
+{{> components/cs-custom/home-search }}
+
+{{/partial}}
+{{#partial "page"}}
+
+{{#each shipping_messages}}
+{{> components/common/alert-info message}}
+{{/each}}
+
+<div class="main full">
+
+    {{!> components/cs-custom/brand-block }}
+
+
+    <div class="main-section-block  align-start  main-section-block-home">
+        <!-- <div class="left-block">
+        {{!> components/cs-custom/left-block }}
+    </div>
+        <div class="middle-block">
+        <div class="container home-categories-scrollbar">
+            {{!> components/cs-custom/home-categories-scroll}}
+        </div>-->
+        <div class="container ">
+            <h2 class="home-categories-title">Shop By Categories</h2>
+            {{> components/cs-custom/home-categories}}
+        </div>
+
+        {{{region name="home-top-middle"}}}
+        {{#and carousel carousel.slides.length}}
+        <div id="mycarousel" class="container">
+            {{!> components/carousel arrows=theme_settings.homepage_show_carousel_arrows play_pause_button=theme_settings.homepage_show_carousel_play_pause_button}}
+        </div>
+        {{/and}}
+
+        {{> components/cs-custom/new-free-printer-deals-2}}
+        {{!> components/cs-custom/new-free-printer-deals}}
+        <div class="container">
+            {{> components/cs-custom/middle-block }}
+        </div>
+        <!--</div>
+         <div class="right-block">
+        {{!> components/cs-custom/right-block }}
+    </div>-->
+    </div>
+
+    {{{region name="home_below_featured_products"}}}
+</div>
+<style>
+ 
+  
+        .home-search:before {
+            background-image: url("{{cdn 'img/ink-finder-background-white-mob.png'}}");
+        }
+    @media (min-width: 1025px) {
+        .home-search:before {
+            background-image: url("{{cdn 'img/ink-finder-background-white-mob.png'}}");
+        }
+    }
+    @media (min-width: 1440px) {
+        .home-search:before {
+            background-image: url("{{cdn 'img/ink-finder-background-white-desctop.png'}}");
+        }
+    }
+    @media (max-width: 767px) {
+        .home-search:before {
+            background-image: url("{{cdn 'img/ink-finder-background-white-mob3.png'}}");
+        }
+    }
+     @media (max-width: 480px) {
+        .home-search {
+            background-image: url("{{cdn 'img/ink-finder-background-mobile-open.jpg'}}");
+        }
+    }
+    .home-top-banner{
+        display:none;
+    }
+   .search-bar.mobile form,
+   .search-bar.desktop form{
+        display: none !important;
+
+    }
+    @media only screen and (max-width: 735px) {
+    .search-bar.mobile {
+          padding: 0px !important;
+    }
+}
+</style>
+
+
+{{/partial}}
+{{> layout/base-home}}

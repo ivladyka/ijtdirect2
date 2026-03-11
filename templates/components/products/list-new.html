@@ -1,0 +1,237 @@
+<ul class="productList" id="ijt-brand-cartridge-list">
+    {{#inArray (pluck (pluck products 'brand') 'name') 'IJT'}}
+        <div class="productList__divider">
+            <h2>IJT Recycled 
+                {{#if breadcrumbs.5.name}}
+                    {{breadcrumbs.5.name}}
+                {{/if}} 
+
+                {{#if breadcrumbs.2.name}}
+                    {{breadcrumbs.2.name}}
+                {{/if}}
+            </h2>
+        </div>
+    {{/inArray}}
+    {{#each products}}
+        {{#if brand.name '==' 'IJT'}}
+<li class="product" {{#if ../custom}} data-custom-product-id="{{id}}" {{/if}}>
+    {{>components/products/list-item-new printerName=../../breadcrumbs.3.name categoryName=../../category.name product=this show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event settings=../settings position=(add @index 1)}}
+</li>
+        {{/if}}
+    {{/each}}
+</ul>
+
+<ul class="productList" id="original-brand-cartridge-list">
+    {{#inArray (pluck (pluck products 'brand') 'name') breadcrumbs.3.name}}
+        <div class="productList__divider">
+            <h2>Original 
+                {{#if breadcrumbs.5.name}}
+                    {{breadcrumbs.5.name}}
+                {{/if}} 
+
+                {{#if breadcrumbs.2.name}}
+                    {{breadcrumbs.2.name}}
+                {{/if}}
+            </h2>
+        </div>
+    {{/inArray}}
+    {{#each products}}
+        {{#if brand.name '!==' 'IJT'}}
+<li class="product" {{#if ../custom}} data-custom-product-id="{{id}}" {{/if}}>
+    {{>components/products/list-item-new printerName=../../breadcrumbs.3.name categoryName=../../category.name product=this show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event settings=../settings position=(add @index 1)}}
+</li>
+        {{/if}}
+    {{/each}}
+</ul>
+
+<script>
+    fetch('/graphql', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {{ settings.storefront_api.token }}'
+        },
+        body: JSON.stringify({
+            query: `
+            query CategoryByUrl {
+                site {
+                    route(path: "{{category.url}}") {
+                        node {
+                            ... on Category {
+                            name
+                            entityId
+                            products {
+                                edges {
+                                    node {
+                                        name
+                                        path
+                                        entityId
+                                        options {
+                                            edges {
+                                                node {
+                                                    entityId
+                                                    displayName
+                                                    isRequired
+                                                    values {
+                                                        edges {
+                                                            node {
+                                                                entityId
+                                                                label
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        prices(includeTax: true) {
+                                            price {
+                                                ...PriceFields
+                                            }
+                                            bulkPricing {
+                                                minimumQuantity
+                                                maximumQuantity
+                                                ... on BulkPricingFixedPriceDiscount {
+                                                    price
+                                                }
+                                                ... on BulkPricingRelativePriceDiscount {
+                                                    priceAdjustment
+                                                }
+                                                ... on BulkPricingPercentageDiscount {
+                                                    percentOff
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+
+            fragment PriceFields on Money {
+                value
+                currencyCode
+            }
+            `
+        }),
+    })
+    .then(res => res.json())
+            .then(res => {
+                const productData = res.data.site;
+                const productList = productData.route.node.products.edges;
+                buildBulkPricingTable(productList);
+                addProductOptions(productList);
+            });
+
+    const buildBulkPricingTable = (productList) => {
+        let bulkPricingData;
+
+        productList.forEach(productData => {
+            bulkPricingData = productData.node.prices.bulkPricing;
+
+            if (bulkPricingData.length) {
+                const productId = productData.node.entityId;
+                const productPriceElement = $(".js-product-price[data-product-id=" + productId + "]")[0];
+                const productPriceValue = productData.node.prices.price.value;
+                const bulkPricingTableElement = $(".js-bulkPricing-table[data-product-id=" + productId + "]")[0];
+
+                // Hide product price if bulk pricing exists
+                productPriceElement.style.display = "none";
+
+                // Add table header
+                bulkPricingTableElement.insertRow();
+                bulkPricingTableElement.insertAdjacentHTML('afterbegin', "<th class='productView-info-bulkPricing__title' colspan='2'>{{lang 'products.bulk_pricing.instructions'}}</th>");
+
+                // If minimum qty of the first bulk price item is greater than 1 then add to array for retail price
+                if (bulkPricingData[0].minimumQuantity > 1) {
+                    bulkPricingData.unshift({
+                        "minimumQuantity": 1,
+                        "maximumQuantity": bulkPricingData[0].minimumQuantity - 1,
+                        "price": productPriceValue
+                    });
+                }
+
+                for (const bulkPrice of bulkPricingData) {
+                    // Qty variables
+                    const bulkPricingDataMin = bulkPrice.minimumQuantity;
+                    let bulkPricingDataMax = bulkPrice.maximumQuantity;
+                    let bulkPricingQtyOperator = " - ";
+
+                    // Price variables
+                    let priceToDisplay;
+
+                    // Update pricing string based on bulk pricing discount type
+                    if (bulkPrice.hasOwnProperty("priceAdjustment")) {
+                        priceToDisplay = "£" + bulkPrice.priceAdjustment.toFixed(2) + " off";
+                    } else if (bulkPrice.hasOwnProperty("percentOff")) {
+                        priceToDisplay = bulkPrice.percentOff + "%" + " off";
+                    } else {
+                        priceToDisplay = "£" + bulkPrice.price.toFixed(2);
+                    }
+
+                    // If maxiumum qty is * then assign empty string and change operator +/-
+                    if (bulkPricingDataMax == null) {
+                        bulkPricingDataMax = "";
+                        bulkPricingQtyOperator = " + ";
+                    }
+
+                    // Add new row to table
+                    let tableRow = bulkPricingTableElement.insertRow();
+
+                    // Add new cell and text for qty
+                    let qtyCell = tableRow.insertCell();
+
+                    if (bulkPricingDataMin == bulkPricingDataMax) { // If min qty is same as max qty then only display min qty
+                        let qtyText = document.createTextNode(bulkPricingDataMin);
+                        qtyCell.appendChild(qtyText);
+                    } else {
+                        let qtyText = document.createTextNode(bulkPricingDataMin + bulkPricingQtyOperator + bulkPricingDataMax);
+                        qtyCell.appendChild(qtyText);
+                    }
+
+                    // Add new cell and text for price
+                    let priceCell = tableRow.insertCell();
+                    priceCell.classList.add("js-bulk-price");
+                    let priceText = document.createTextNode(priceToDisplay);
+                    priceCell.appendChild(priceText);
+                }
+            }
+        })
+    }
+
+    const addProductOptions = (productList) => {
+
+        productList.forEach(productData => {
+            const optionData = productData.node.options.edges;
+            if (optionData.length) { // If product has options
+                const categoryId = {{category.id}};
+                const productId = productData.node.entityId;
+                const productIdInput = $("input[name='product_id'][value='" + productId + "']")[0];
+
+                // Create new option input with attributes for Suitable For option
+                const suitableForOptionInput = document.createElement("input");
+                suitableForOptionInput.style.display = "none";
+                suitableForOptionInput.setAttribute("type", "text");
+                suitableForOptionInput.setAttribute("id", "attribute_text_" + optionData[0].node.entityId);
+                suitableForOptionInput.setAttribute("name", "attribute[" + optionData[0].node.entityId + "]");
+                suitableForOptionInput.setAttribute("value", "{{category.name}}");
+
+                // Create new option input with attributes for Category ID option
+                const categoryIdOptionInput = document.createElement("input");
+                categoryIdOptionInput.style.display = "none";
+                categoryIdOptionInput.setAttribute("type", "text");
+                categoryIdOptionInput.setAttribute("id", "attribute_text_" + optionData[1].node.entityId);
+                categoryIdOptionInput.setAttribute("name", "attribute[" + optionData[1].node.entityId + "]");
+                categoryIdOptionInput.setAttribute("value", categoryId);
+
+                // Add new option input to the form
+                productIdInput.after(suitableForOptionInput, categoryIdOptionInput);
+                suitableForOptionInput.after(categoryIdOptionInput);
+            }
+        })
+    }
+
+</script>

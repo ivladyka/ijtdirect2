@@ -1,0 +1,71 @@
+---
+product:
+    videos:
+        limit: {{theme_settings.productpage_videos_count}}
+    reviews:
+        limit: {{theme_settings.productpage_reviews_count}}
+    related_products:
+        limit: {{theme_settings.productpage_related_products_count}}
+    similar_by_views:
+        limit: {{theme_settings.productpage_similar_by_views_count}}
+cart: true
+
+---
+{{#partial "page"}}
+<div>
+  
+    
+</div>
+    <div class="product-page-content default-product main-section-block d-flex align-start">
+        <div class="left-block">
+            {{> components/cs-custom/left-block-no-nav }}
+        </div>
+        <div class="middle-block" itemscope itemtype="https://schema.org/Product">
+            {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+            {{#each product.shipping_messages}}
+            {{> components/common/alert-info message}}
+            {{/each}}
+            <div class="product-header">
+                {{#each product.custom_fields}}
+                {{#if name '==' 'heading'}}
+                <h1 class="product-header__title" itemprop="name">{{value}}<span id="productViewTitleFor"></span></h1>
+                {{/if}}
+                {{/each}}
+            </div>
+            <div class="product-inner-section">
+                {{> components/products/product-view-new schema=true  }}
+                <article class="productView-description" {{#if schema}} itemprop="description" {{/if}}>
+                    {{#if theme_settings.show_product_details_tabs}}
+                    {{> components/products/description-tabs}}
+                    {{else}}
+                    {{> components/products/description}}
+                    {{/if}}
+                </article>
+                <div id="previewModal" class="modal modal--large" data-reveal>
+                    <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
+                        <span aria-hidden="true">&#215;</span>
+                    </a>
+                    <div class="modal-content"></div>
+                    <div class="loadingOverlay"></div>
+                </div>
+
+                {{{region name="product_below_content"}}}
+                {{> components/products/tabs}}
+            </div>
+            <div class="product-review-section-trustpilot">
+                <div class="title-section">
+                    <h2>What our customers are saying</h2>
+                    <a href="https://www.trustpilot.com/review/www.ijtdirect.co.uk?utm_medium=trustbox&utm_source=Slider">View all <span>›</span></a>
+                </div>
+                <!-- TrustBox widget - Slider --> <div class="trustpilot-widget" data-locale="en-US" data-template-id="54ad5defc6454f065c28af8b" data-businessunit-id="4b1ec23a000064000504d8ed" data-style-height="240px" data-style-width="100%" data-theme="light" data-stars="1,2,3,4,5"> <a href="https://www.trustpilot.com/review/www.ijtdirect.co.uk" target="_blank" rel="noopener">Trustpilot</a> </div> <!-- End TrustBox widget -->
+            </div>
+            {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+            {{> components/cs-custom/bottom-searchbar}}
+        </div>
+        <div class="right-block">
+            {{> components/cs-custom/right-block }}
+        </div>
+    </div>
+
+    {{/partial}}
+    {{> layout/base}}

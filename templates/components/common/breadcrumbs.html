@@ -1,0 +1,106 @@
+<!--<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+    {{#unless theme_settings.hide_breadcrumbs }}
+    {{#each breadcrumbs}}
+    <li class="breadcrumb {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{/each}}
+    {{/unless}}
+    </ul>
+-->
+{{assignVar 'breadcrumbcount' 0}}
+{{assignVar 'breadcrumbcountcurent' 1}}
+{{assignVar 'breadcrumbcountpenultimatecurent' 1}}
+{{assignVar 'breadcrumbcountpenultimate' 0}}
+{{#unless theme_settings.hide_breadcrumbs }}
+{{#each breadcrumbs}}
+<span style="display:none">
+    {{incrementVar 'breadcrumbcount'}}
+</span>
+{{#if @last}}{{else}}
+<span style="display:none">
+    {{incrementVar 'breadcrumbcountpenultimate'}}
+</span>
+{{/if}}
+{{/each}}
+{{/unless}}
+<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+    {{#unless theme_settings.hide_breadcrumbs }}
+    {{#if (getVar 'breadcrumbcount') '>=' 3}}
+    {{#each breadcrumbs}}
+    {{#if @first}}
+    <li class="breadcrumb   {{#if @first}}breadcrumb-home{{/if}} {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span style="display:none">{{incrementVar 'breadcrumbcountcurent'}}</span>
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label breadcrumb-small" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{else if (getVar 'breadcrumbcountcurent') '==' 2}}
+    <li class="breadcrumb  {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <span style="display:none">{{incrementVar 'breadcrumbcountcurent'}}</span>
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label breadcrumb-small" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{/if}}
+    {{/each}}
+    {{#if (getVar 'breadcrumbcount') '>=' 5}}
+    <li class="breadcrumb">
+        ...
+    </li>
+    {{/if}}
+    {{#each breadcrumbs}}
+    {{#if @last}}
+    <li class="breadcrumb {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label breadcrumb-small-last" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small-last">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{else if (getVar 'breadcrumbcountpenultimatecurent') '==' (getVar 'breadcrumbcountpenultimate')}}
+    <li class="breadcrumb {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label  breadcrumb-small" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{else}}
+    <span style="display:none">{{incrementVar 'breadcrumbcountpenultimatecurent'}}</span>
+    {{/if}}
+
+    {{/each}}
+    {{else}}
+    {{#each breadcrumbs}}
+    <li class="breadcrumb {{#if @last}}is-active{{/if}}" data-name="{{dashcase name}}" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        {{#or @last (if url "==" null)}}
+        <meta itemprop="item" content="{{url}}">
+        <span class="breadcrumb-label  breadcrumb-small" itemprop="name">{{name}}</span>
+        {{else}}
+        <a href="{{url}}" class="breadcrumb-label" itemprop="item"><span itemprop="name" class="breadcrumb-small">{{name}}</span></a>
+        {{/or}}
+        <meta itemprop="position" content="{{add @index 1}}" />
+    </li>
+    {{/each}}
+    {{/if}}
+    {{/unless}}
+</ul>

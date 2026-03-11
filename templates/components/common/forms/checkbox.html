@@ -1,0 +1,22 @@
+{{#if label '==' 'I do not want to receive email offers' }}<div class="form-field create_account-custon-checkbox custon-checkbox2" style="display:none;">
+    {{/if}}
+    {{#if label '==' 'I do not want to receive postal offers' }}<div class="form-field create_account-custon-checkbox custon-checkbox1" style="display:none;">
+        {{/if}}
+        <div class="form-field" id="{{id}}" data-validation="{{validation}}" {{#if private_id}} data-type="{{private_id}}" {{/if}}>
+            <label class="form-label" for="{{id}}" style="{{#if label '==' 'I do not want to receive postal offers'}}display:none;{{else if label '==' 'I do not want to receive email offers'}}display:none;{{/if}}">
+                {{label}}
+                {{#if required}}
+                <small>{{lang 'common.required' }}</small>
+                {{/if}}
+            </label>
+            {{#if checkboxes}}
+            {{#each checkboxes}}
+            <input type="checkbox" value="{{value}}" name="{{name}}" id="{{name}}" data-label="{{label}}" class="form-checkbox" {{#if checked}} checked{{/if}} {{#if private_id}} data-field-type="{{private_id}}" {{/if}}>
+            <label class="form-label {{class}}" for="{{name}}">{{label}}</label>
+            {{/each}}
+            {{/if}}
+        </div>
+        {{#if label '==' 'I do not want to receive email offers'}}
+    </div>{{/if}}
+    {{#if label '==' 'I do not want to receive postal offers'}}
+</div>{{/if}}

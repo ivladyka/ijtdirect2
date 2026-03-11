@@ -1,0 +1,71 @@
+// =============================================================================
+// PRICE (CSS)
+// =============================================================================
+
+.price--rrp,
+.price--non-sale,
+.price--discounted {
+    text-decoration: line-through;
+}
+
+.price-section--minor {
+    color: color("greys", "light");
+}
+
+// Needs to be specific to override the default styling
+.listItem-price,
+.card-price,
+.productView-price {
+    
+    .price-section .price.global-promo-applied {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+}
+
+.price__initial {
+    align-self: center;
+    color: $theme-grey-font-color;
+    font-size: 14px;
+    text-decoration: line-through;
+    margin-right: spacing("half");
+}
+
+.price__saving {
+    background-color: $theme-sale-color;
+    color: $theme-white-color;
+    display: inline-block;
+    line-height: 1.5;
+    margin-left: 1rem;
+    padding: 0 0.5rem 2.5rem 2.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%);
+}
+
+// Card specific overides
+.card-price {
+
+    .price-section .price.global-promo-applied {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .price__initial {
+        flex-basis: auto;
+        margin-right: 0.5rem;
+    }
+
+    .price__saving {
+        flex-basis: 100%;
+        font-size: 16px;
+        margin: 0;
+        order: -1;
+    }
+}
+
+

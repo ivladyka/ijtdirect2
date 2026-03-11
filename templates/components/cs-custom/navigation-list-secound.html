@@ -1,0 +1,86 @@
+<ul class="navPage-subMenu-list" id="custom-category-container"></ul>
+
+<!-- make sure below div (category-subcategory-list) should be hidden -->
+<div class="category-subcategory-list" id="hidden-cat-box" style="display: none;">
+  <ul class="navPage-subMenu-list">
+    {{#each categories}}
+        <li class="{{#if is_active}}active{{/if}}" data-url="{{url}}" data-name="{{dashcase name}}">       
+          <a class="first-level navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}} {{#if children}} <svg class="arrowdwn"><use xlink:href="#icon-down-arrow"></use></svg> {{/if}}</a>
+          {{#if children}}
+          <ul class="toggle_content">
+              {{#each children}}
+                  <li class="{{#if is_active}}active{{/if}}" data-url="{{url}}" data-name="{{dashcase name}}">
+                    <a class="first-level navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                    {{#if children}}
+                        <ul>
+                          {{#each children}}
+                              <li class="{{#if is_active}}active{{/if}}" data-url="{{url}}" data-name="{{dashcase name}}">
+                                <a class="first-level navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                                {{#if children}}
+                                    <ul>
+                                      {{#each children}}
+                                        <li class="{{#if is_active}}active{{/if}}" data-url="{{url}}" data-name="{{dashcase name}}">
+                                          <a class="first-level navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                                        </li>
+
+                                        {{#if count '>' 0}}
+                                        <li class="sort-product" style="display: none;">
+                                          <div class="title-section">
+                                            <h2>Most popular {{name}}</h2>
+                                            <a href="{{url}}">View all <span>›</span></a>
+                                          </div>
+                                          <ul class="productGrid"><li><img src="{{cdn 'img/loading.svg'}}" /></li></ul>
+                                        </li>
+                                      {{/if}}
+
+                                      {{/each}}
+                                    </ul>
+                              {{/if}}
+                              </li>
+
+
+                              {{#if count '>' 0}}
+                              <li class="sort-product" style="display: none;">
+                                <div class="title-section">
+                                  <h2>Most popular {{name}}</h2>
+                                  <a href="{{url}}">View all <span>›</span></a>
+                                </div>
+                                <ul class="productGrid"><li><img src="{{cdn 'img/loading.svg'}}" /></li></ul>
+                              </li>
+                            {{/if}}
+
+                          {{/each}}
+                        </ul>
+                    {{/if}}
+                  </li>
+
+
+                  {{#if count '>' 0}}
+                  <li class="sort-product" style="display: none;">
+                    <div class="title-section">
+                      <h2>Most popular {{name}}</h2>
+                      <a href="{{url}}">View all <span>›</span></a>
+                    </div>
+                    <ul class="productGrid"><li><img src="{{cdn 'img/loading.svg'}}" /></li></ul>
+                  </li>
+                {{/if}}
+
+              {{/each}}
+          </ul>
+          {{/if}}
+        </li>
+
+        {{#if count '>' 0}}
+        <li class="sort-product" style="display: none;">
+          <div class="title-section">
+            <h2>Most popular {{name}}</h2>
+            <a href="{{url}}">View all <span>›</span></a>
+          </div>
+          <ul class="productGrid"><li><img src="{{cdn 'img/loading.svg'}}" /></li></ul>
+        </li>
+      {{/if}}
+
+    {{/each}}
+  </ul>
+</div>
+
